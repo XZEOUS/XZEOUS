@@ -59,7 +59,9 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .product-card{overflow:hidden;transition:.35s}
 .product-card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.35);box-shadow:0 25px 80px rgba(76,29,149,.14)}
-.product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate}
+.product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate;background-size:cover;background-position:center}
+.preset-art{background-image:url("preset-pack.jpg")}
+.cc-art{background-image:url("color-collection.jpg")}
 .product-art:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,92,246,.10),transparent 45%,rgba(56,189,248,.08));z-index:-1}
 .product-art:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(65px);background:#7c3aed;opacity:.18;top:30px;left:50%;transform:translateX(-50%);z-index:-1}
 .art-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(139,92,246,.18),transparent 42%);pointer-events:none}
@@ -115,17 +117,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="products-grid">
 
 <div class="product-card glass" data-product="presets">
-<div class="product-art preset-art">
-<div class="art-glow"></div>
-<div class="art-top"><span>01</span><span>DIGITAL PRODUCT</span></div>
-<div class="product-box">
-<div class="box-line"></div>
-<div class="box-x">XZ</div>
-<div class="box-title">PRESET<br>PACK</div>
-<div class="box-sub">MOTION • GLOW • TRANSITIONS</div>
-</div>
-<div class="art-bottom">XZEOUS / PRESETS</div>
-</div>
+<div class="product-art preset-art"></div>
 <div class="product-body">
 <div class="product-tag">XZEOUS PRESETS</div>
 <h3>Preset Pack</h3>
@@ -136,13 +128,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 
 <div class="product-card glass" data-product="cc">
-<div class="product-art cc-art">
-<div class="art-glow"></div>
-<div class="art-top"><span>02</span><span>DIGITAL PRODUCT</span></div>
-<div class="cc-frame"><div class="raw">RAW</div><div class="arrow">→</div><div class="graded">CC</div></div>
-<div class="cc-label">COLOR • TONE • MOOD</div>
-<div class="art-bottom">XZEOUS / COLOR COLLECTION</div>
-</div>
+<div class="product-art cc-art"></div>
 <div class="product-body">
 <div class="product-tag">XZEOUS CC</div>
 <h3>Color Collection</h3>
