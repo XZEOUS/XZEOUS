@@ -29,7 +29,8 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .secondary{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}
 .avatar-area{display:flex;justify-content:center;align-items:center;min-height:440px}
 .avatar-ring{width:350px;height:350px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(167,139,250,.25);box-shadow:0 0 100px rgba(139,92,246,.18),inset 0 0 80px rgba(56,189,248,.05);animation:float 5s ease-in-out infinite}
-.avatar{width:245px;height:315px;border-radius:130px 130px 90px 90px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 25%,#5b3285,transparent 35%),linear-gradient(145deg,#21132f,#09070e);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.avatar{width:245px;height:315px;border-radius:130px 130px 90px 90px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 25%,#5b3285,transparent 35%),linear-gradient(145deg,#21132f,#09070e);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.5);overflow:hidden}
+.avatar img,.about-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:inherit}
 .avatar span,.about-avatar span{font-size:65px;font-weight:900;color:rgba(255,255,255,.08)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 .tag{color:#a78bfa;font-size:10px;font-weight:bold;letter-spacing:2px;margin-bottom:15px}
@@ -47,16 +48,43 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .work{height:330px;position:relative;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.1)}.work img{width:100%;height:100%;object-fit:cover;transition:.5s}.work:hover img{transform:scale(1.08)}
 .work-info{position:absolute;right:0;bottom:0;width:100%;padding:25px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
 .resource-icon{font-size:28px;color:#a78bfa}.resource h3{margin-top:15px}
-.about{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px;align-items:center}.about-avatar{width:280px;height:350px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:140px;background:radial-gradient(circle,#512b78,transparent 45%),#0d0915;border:1px solid rgba(255,255,255,.1)}
+.about{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px;align-items:center}.about-avatar{width:280px;height:350px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:140px;background:radial-gradient(circle,#512b78,transparent 45%),#0d0915;border:1px solid rgba(255,255,255,.1);overflow:hidden}
 .about-text h2{font-size:clamp(38px,5vw,55px)}.about-text p{color:#9991a4;line-height:2;margin-top:20px}.zeus-box{margin-top:25px;padding:20px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#c8c0d0;line-height:2;font-size:13px}
 .faq{max-width:850px;margin:auto}.faq-item{margin-bottom:10px;overflow:hidden}.question{width:100%;padding:21px;color:#fff;background:transparent;border:0;display:flex;justify-content:space-between;text-align:right;cursor:pointer;font-weight:bold}.answer{display:none;padding:0 21px 21px;color:#9991a4;line-height:2;font-size:12px}.faq-item.open .answer{display:block}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.contact-box{padding:30px}.contact-box p{color:#9991a4;line-height:2;margin-top:12px}.contact-link{display:block;margin-top:12px;padding:15px;border-radius:15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:.25s}.contact-link:hover{background:rgba(139,92,246,.1)}.contact-link small{display:block;color:#a78bfa;font-size:9px}.contact-link strong{display:block;direction:ltr;text-align:right;margin-top:5px}
+.theme-toggle-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
+.theme-toggle-btn:hover{background:rgba(244,114,182,.18);transform:scale(1.08)}
+body.theme-cute{filter:hue-rotate(65deg) saturate(1.2)}
+body.theme-cute img,body.theme-cute video{filter:hue-rotate(-65deg) saturate(.85)}
+.signup-box{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,3,10,.75);backdrop-filter:blur(10px)}
+.signup-box.open{display:flex}
+.signup-card{width:100%;max-width:380px;background:linear-gradient(160deg,#1a1224,#0c0813);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:30px 26px;position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.signup-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.06);border:0;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px}
+.signup-card h3{font-size:19px;margin-bottom:6px}
+.signup-card p{color:#9991a4;font-size:12px;margin-bottom:20px}
+.signup-field{margin-bottom:12px}
+.signup-field label{display:block;font-size:11px;color:#c4b5fd;margin-bottom:6px}
+.signup-field input{width:100%;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:13px}
+.signup-field input:focus{outline:0;border-color:#a78bfa}
+.signup-submit{width:100%;margin-top:8px;padding:13px;border:0;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;font-weight:bold;font-size:13px;cursor:pointer;font-family:inherit}
+.signup-note{font-size:10px;color:#7a7383;margin-top:14px;line-height:1.7;text-align:center}
+.signup-success{display:none;text-align:center;padding:10px 0}
+.signup-success.show{display:block}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%)!important;z-index:999999!important;width:max-content;min-width:300px;max-width:calc(100vw - 24px);height:70px;display:flex!important;align-items:center;justify-content:center;gap:5px;padding:7px;border-radius:25px;background:rgba(20,16,30,.70);border:1px solid rgba(255,255,255,.17);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 1px 1px rgba(255,255,255,.18);opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 .xzeous-dock a{width:70px;height:56px;flex:0 0 70px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:18px;color:#aaa3b5;transition:.25s ease;-webkit-tap-highlight-color:transparent}.xzeous-dock a:hover{color:#fff;background:rgba(139,92,246,.18);transform:translateY(-4px);box-shadow:0 8px 25px rgba(139,92,246,.18)}.xzeous-dock a:active{transform:scale(.88)}.dock-icon{font-size:21px;line-height:1;display:block}.dock-label{font-size:9px;line-height:1;white-space:nowrap;display:block}
 footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-logo{direction:ltr;text-align:center;font-size:clamp(75px,16vw,190px);font-weight:900;letter-spacing:-10px;background:linear-gradient(90deg,#fff,#8b5cf6,#38bdf8,#fff);background-size:300%;-webkit-background-clip:text;color:transparent;animation:gradient 7s linear infinite}@keyframes gradient{to{background-position:300%}}.footer-text{text-align:center;color:#77717f;margin-top:30px;line-height:1.8}
 .reveal{opacity:0;transform:translateY(25px);transition:.7s}.reveal.visible{opacity:1;transform:none}
 
 .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.sold-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:rgba(139,92,246,.12);border:1px solid rgba(167,139,250,.25);color:#c4b5fd;font-size:11px;font-weight:bold;margin-top:14px}
+.out-of-stock .product-art{filter:grayscale(.6) brightness(.55)}
+.stock-ribbon{position:absolute;top:16px;left:16px;padding:7px 14px;border-radius:20px;background:rgba(239,68,68,.18);border:1px solid rgba(248,113,113,.4);color:#fca5a5;font-size:10px;font-weight:bold;letter-spacing:1px;z-index:3;backdrop-filter:blur(8px)}
+.buy-disabled{background:rgba(255,255,255,.05)!important;color:#7a7383!important;box-shadow:none!important;cursor:not-allowed!important;border:1px solid rgba(255,255,255,.08)}
+.restock-box{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding:11px 16px;border-radius:30px;background:rgba(239,68,68,.07);border:1px solid rgba(248,113,113,.2)}
+.restock-btn{border:0;cursor:pointer;font-family:inherit;padding:8px 15px;border-radius:20px;background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;font-size:11px;font-weight:bold;white-space:nowrap;transition:.2s}
+.restock-btn:hover{transform:translateY(-2px)}
+.restock-btn:disabled{opacity:.55;cursor:default;transform:none}
+.restock-count{color:#fca5a5;font-size:11px}.restock-count strong{color:#fff}
 .product-card{overflow:hidden;transition:.35s}
 .product-card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.35);box-shadow:0 25px 80px rgba(76,29,149,.14)}
 .product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate;background-size:cover;background-position:center}
@@ -75,12 +103,12 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .product-body{padding:28px}.product-tag{font-size:9px;letter-spacing:2px;color:#a78bfa}.product-body h3{font-size:28px;margin:9px 0}.product-body p{font-size:12px;color:#9991a4;line-height:2;min-height:48px}.product-price{display:flex;align-items:baseline;gap:12px;margin-top:20px}.product-price .old-price{font-size:11px}.product-price strong{font-size:25px;color:#fff}.product-view{border:0;color:#fff;cursor:pointer;margin-top:20px;font-family:inherit}
 .product-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100000;display:none;align-items:center;justify-content:center;padding:20px}.product-modal.show{display:flex}.modal-box{width:min(680px,100%);padding:30px;border-radius:28px;background:rgba(18,13,27,.88);border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 100px rgba(0,0,0,.65);position:relative}.modal-close{position:absolute;top:15px;left:15px;width:35px;height:35px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;cursor:pointer}.modal-content{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center}.modal-art{height:300px;border-radius:20px;overflow:hidden}.modal-box h2{font-size:32px}.modal-box p{color:#aaa2b2;line-height:2;font-size:12px;margin:15px 0}.modal-price{font-size:27px;font-weight:900}.modal-price del{font-size:11px;color:#625d69;margin-left:8px;font-weight:normal}
 
-@media(max-width:850px){.navlinks{display:none}.hero-grid,.course-grid,.about,.contact-grid{grid-template-columns:1fr}.hero{text-align:center}.hero-description{margin-left:auto;margin-right:auto}.buttons{justify-content:center}.cards,.portfolio,.resources{grid-template-columns:1fr 1fr}}
+@media(max-width:850px){.navlinks{display:none}.hero-grid,.course-grid,.about,.contact-grid{grid-template-columns:1fr}.hero{text-align:center}.hero-description{margin-left:auto;margin-right:auto}.buttons{justify-content:center}.cards,.portfolio,.resources{grid-template-columns:1fr 1fr}.nav>div>a.nav-button{display:none}#signupOpen{padding:9px 12px!important;font-size:11px!important}}
 @media(max-width:600px){
 .products-grid{grid-template-columns:1fr}.product-art{height:330px}.modal-content{grid-template-columns:1fr}.modal-art{height:220px}
 section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{width:280px;height:280px}.avatar{width:200px;height:270px}.cards,.portfolio,.resources{grid-template-columns:1fr}.features{grid-template-columns:1fr}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:max(10px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;width:calc(100vw - 20px)!important;min-width:0!important;max-width:none!important;height:66px!important;padding:6px!important;gap:3px!important;border-radius:23px!important;display:flex!important;visibility:visible!important;opacity:1!important;z-index:999999!important}
-.xzeous-dock a{width:25%!important;flex:1 1 25%!important;height:54px!important;min-width:0!important;display:flex!important;border-radius:17px!important}.dock-icon{font-size:19px!important}.dock-label{font-size:8px!important}footer{padding-bottom:130px}
+.xzeous-dock a{width:20%!important;flex:1 1 20%!important;height:54px!important;min-width:0!important;display:flex!important;border-radius:17px!important}.dock-icon{font-size:18px!important}.dock-label{font-size:7px!important}footer{padding-bottom:130px}
 }
 </style>
 </head>
@@ -89,9 +117,16 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <nav class="nav">
 <a href="#home" class="logo">XZ<span>EOUS</span></a>
 <div class="navlinks">
-<a href="#course">محصولات</a><a href="#curriculum">سرفصل‌ها</a><a href="#portfolio">نمونه‌کار</a><a href="#resources">منابع</a><a href="#zeus">آقو زئوس</a><a href="#faq">FAQ</a>
+<a href="#course">محصولات</a><a href="#curriculum">سرفصل‌ها</a><a href="#resources">منابع</a><a href="#zeus">آقو زئوس</a><a href="#faq">FAQ</a>
 </div>
+<div style="display:flex;gap:10px;align-items:center">
+<div style="display:flex;align-items:center;gap:6px">
+<button id="themeToggle" class="theme-toggle-btn" title="حالت کیوت">🎀</button>
+<span id="themeLabel" style="font-size:10px;color:#f472b6;font-weight:bold">صورتی</span>
+</div>
+<button id="signupOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit">ثبت‌نام</button>
 <a href="#contact" class="nav-button">ارتباط</a>
+</div>
 </nav>
 
 <section class="hero" id="home">
@@ -100,9 +135,9 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="badge">XZEOUS EDITING ACADEMY</div>
 <h1><span class="gradient">XZEOUS</span></h1>
 <p class="hero-description">ادیت فقط کنار هم گذاشتن چند کلیپ نیست.<br><strong>اینجا یاد می‌گیری ایده‌ات رو به چیزی تبدیل کنی که واقعاً دیده بشه.</strong></p>
-<div class="buttons"><a href="#course" class="btn primary">مشاهده محصولات ↙</a><a href="#portfolio" class="btn secondary">نمونه‌کارها</a></div>
+<div class="buttons"><a href="#course" class="btn primary">مشاهده محصولات ↙</a><a href="#faq" class="btn secondary">سوالات متداول</a></div>
 </div>
-<div class="avatar-area"><div class="avatar-ring"><div class="avatar"><span>XZ</span></div></div></div>
+<div class="avatar-area"><div class="avatar-ring"><div class="avatar"><img src="xzeous-hero.jpg" alt="XZEOUS"></div></div></div>
 </div></div>
 </section>
 
@@ -116,25 +151,37 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 
 <div class="products-grid">
 
-<div class="product-card glass" data-product="presets">
+<div class="product-card glass out-of-stock" data-product="presets">
+<div class="stock-ribbon">ناموجود</div>
 <div class="product-art preset-art"></div>
 <div class="product-body">
 <div class="product-tag">XZEOUS PRESETS</div>
 <h3>Preset Pack</h3>
 <p>یک پکیج شیک برای سرعت دادن به Workflow و ساخت Motion و افکت‌های تمیز.</p>
 <div class="product-price"><span class="old-price">۴۹۰,۰۰۰ تومان</span><strong>۲۲۱,۰۰۰ تومان</strong></div>
-<button class="btn primary product-view" data-product="presets">مشاهده محصول ↗</button>
+<div class="sold-badge">🔥 ۱۰ نفر خریدن</div>
+<button class="btn buy-disabled" disabled>ناموجود</button>
+<div class="restock-box">
+<span class="restock-count">😭 <strong data-restock-count="presets">۰</strong> نفر خواستن موجود شه</span>
+<button class="restock-btn" data-restock-btn="presets">تروخدا موجودش کن 🥺</button>
+</div>
 </div>
 </div>
 
-<div class="product-card glass" data-product="cc">
+<div class="product-card glass out-of-stock" data-product="cc">
+<div class="stock-ribbon">ناموجود</div>
 <div class="product-art cc-art"></div>
 <div class="product-body">
 <div class="product-tag">XZEOUS CC</div>
 <h3>Color Collection</h3>
 <p>Color Correction و Color Grading برای رسیدن به رنگ‌های سینمایی و یکدست.</p>
 <div class="product-price"><span class="old-price">۲۵۰,۰۰۰ تومان</span><strong>۱۹۹,۰۰۰ تومان</strong></div>
-<button class="btn primary product-view" data-product="cc">مشاهده محصول ↗</button>
+<div class="sold-badge">🔥 ۱۰ نفر خریدن</div>
+<button class="btn buy-disabled" disabled>ناموجود</button>
+<div class="restock-box">
+<span class="restock-count">😭 <strong data-restock-count="cc">۰</strong> نفر خواستن موجود شه</span>
+<button class="restock-btn" data-restock-btn="cc">تروخدا موجودش کن 🥺</button>
+</div>
 </div>
 </div>
 
@@ -152,13 +199,6 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="glass card"><div class="number">06 / FINAL</div><h3>Final Project</h3><p>ساخت یک پروژه کامل از صفر تا خروجی نهایی.</p></div>
 </div></div></section>
 
-<section id="portfolio" class="reveal"><div class="container"><div class="heading"><div class="tag">PORTFOLIO</div><h2>نمونه‌کارها</h2><p>چند نمونه تصویری برای نمایش فضای کاری و سبک XZEOUS.</p></div>
-<div class="portfolio">
-<div class="work"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=80" alt="Creative Motion"><div class="work-info"><h3>Creative Motion</h3></div></div>
-<div class="work"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=80" alt="Short Form"><div class="work-info"><h3>Short Form Edit</h3></div></div>
-<div class="work"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=80" alt="Cinematic"><div class="work-info"><h3>Cinematic Edit</h3></div></div>
-</div></div></section>
-
 <section id="resources" class="reveal"><div class="container"><div class="heading"><div class="tag">RESOURCES</div><h2>منابع آموزشی</h2></div>
 <div class="resources">
 <div class="glass resource"><div class="resource-icon">◈</div><h3>Project Files</h3><p>فایل پروژه‌های آموزشی</p></div>
@@ -170,12 +210,12 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div></div></section>
 
 <section id="about" class="reveal"><div class="container"><div class="about">
-<div class="about-avatar"><span>XZ</span></div>
+<div class="about-avatar"><img src="aghoo-zeus.png" alt="XZEOUS"></div>
 <div class="about-text"><div class="tag">ABOUT XZEOUS</div><h2>ادیت فقط یک نرم‌افزار نیست.</h2><p>هدف XZEOUS اینه که ادیتور فقط تکنیک حفظ نکنه؛ بلکه بفهمه چرا یک Cut جواب میده، چرا یک Motion خوب دیده میشه و چطور یک ایده خام رو به تصویر تبدیل کنه.</p></div>
 </div></div></section>
 
 <section id="zeus" class="reveal"><div class="container"><div class="about">
-<div class="about-avatar"><span>AZ</span></div>
+<div class="about-avatar"><img src="aghoo-zeus.png" alt="آقو زئوس"></div>
 <div class="about-text"><div class="tag">MEET AGHOO ZEUS</div><h2>آقو زئوس،<br>ادیتور پشت XZEOUS.</h2>
 <div class="zeus-box">🎬 Video Editor | XZEOUS<br>𖤐 TikTok • Anime • Reels • Ads<br>𖤐 3+ Years Experience<br>𖤐 After Effects<br>⛓ Open for Work ↳</div></div>
 </div></div></section>
@@ -202,6 +242,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <a href="#course"><span class="dock-icon">✦</span><span class="dock-label">محصولات</span></a>
 <a href="#about"><span class="dock-icon">◈</span><span class="dock-label">درباره من</span></a>
 <a href="#contact"><span class="dock-icon">↗</span><span class="dock-label">ارتباط</span></a>
+<a href="#faq"><span class="dock-icon">?</span><span class="dock-label">سوالات</span></a>
 </nav>
 
 
@@ -216,6 +257,27 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <p id="modalDesc">توضیحات محصول</p>
 <div class="modal-price"><del id="modalOld">۰</del> <span id="modalNew">۰</span></div>
 <a id="modalBuy" class="btn primary" target="_blank" href="https://t.me/XZEOUS_AE" style="margin-top:20px">خرید محصول ↗</a>
+
+<div class="signup-box" id="signupBox">
+<div class="signup-card">
+<button class="signup-close" id="signupClose">×</button>
+<div id="signupForm">
+<h3>عضویت در XZEOUS 🎀</h3>
+<p>یوزرنیم، ایمیل و رمز دلخواهتو وارد کن.</p>
+<div class="signup-field"><label>یوزرنیم</label><input type="text" id="suUsername" placeholder="مثلاً xzeous_fan"></div>
+<div class="signup-field"><label>ایمیل</label><input type="email" id="suEmail" placeholder="you@email.com"></div>
+<div class="signup-field"><label>رمز عبور</label><input type="password" id="suPassword" placeholder="یه رمز دلخواه"></div>
+<button class="signup-submit" id="suSubmit">ثبت‌نام 🖤</button>
+<div class="signup-note">این فرم فعلاً روی خود مرورگرت ذخیره میشه و بک‌اند امن نداره؛ برای عضویت واقعی و امن نیاز به اتصال به یه سرویس مثل Firebase داریم.</div>
+</div>
+<div class="signup-success" id="signupSuccess">
+<div style="font-size:40px;margin-bottom:10px">🖤</div>
+<h3 id="successMsg">خوش اومدی!</h3>
+<p>ثبت‌نامت انجام شد.</p>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 </div>
@@ -246,6 +308,53 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remo
 
 document.querySelectorAll(".question").forEach(button=>{
 button.addEventListener("click",()=>button.parentElement.classList.toggle("open"));
+});
+function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+const themeBtn=document.getElementById("themeToggle"),themeLabel=document.getElementById("themeLabel");
+if(safeGet("xzeous_theme")==="cute"){document.body.classList.add("theme-cute");themeBtn.textContent="🖤";themeLabel.textContent="اصلی";}
+themeBtn.addEventListener("click",()=>{
+const isCute=document.body.classList.toggle("theme-cute");
+themeBtn.textContent=isCute?"🖤":"🎀";
+themeLabel.textContent=isCute?"اصلی":"صورتی";
+safeSet("xzeous_theme",isCute?"cute":"default");
+});
+
+const signupBox=document.getElementById("signupBox"),signupOpen=document.getElementById("signupOpen"),signupClose=document.getElementById("signupClose"),signupForm=document.getElementById("signupForm"),signupSuccess=document.getElementById("signupSuccess"),successMsg=document.getElementById("successMsg");
+signupOpen.addEventListener("click",()=>{signupBox.classList.add("open");signupForm.style.display="block";signupSuccess.classList.remove("show");});
+signupClose.addEventListener("click",()=>signupBox.classList.remove("open"));
+signupBox.addEventListener("click",e=>{if(e.target===signupBox)signupBox.classList.remove("open");});
+document.getElementById("suSubmit").addEventListener("click",()=>{
+const u=document.getElementById("suUsername").value.trim(),em=document.getElementById("suEmail").value.trim(),pw=document.getElementById("suPassword").value;
+if(!u&&!em){alert("حداقل یوزرنیم یا ایمیل رو وارد کن 🙂‍↕️");return;}
+const users=JSON.parse(safeGet("xzeous_users")||"[]");
+users.push({username:u,email:em,password:pw,date:new Date().toISOString()});
+safeSet("xzeous_users",JSON.stringify(users));
+successMsg.textContent="خوش اومدی"+(u?" "+u:"")+"! 🖤";
+signupForm.style.display="none";
+signupSuccess.classList.add("show");
+document.getElementById("suUsername").value="";document.getElementById("suEmail").value="";document.getElementById("suPassword").value="";
+});
+
+function toFa(n){return String(n).replace(/[0-9]/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);}
+const restockBase={presets:24,cc:31};
+document.querySelectorAll("[data-restock-btn]").forEach(btn=>{
+const key=btn.dataset.restockBtn;
+const countEl=document.querySelector('[data-restock-count="'+key+'"]');
+const storeKey="restock_"+key, votedKey="restock_voted_"+key;
+let count=parseInt(safeGet(storeKey))||restockBase[key];
+countEl.textContent=toFa(count);
+if(safeGet(votedKey)){btn.disabled=true;btn.textContent="مرسی، ثبت شد 🖤";}
+btn.addEventListener("click",()=>{
+if(safeGet(votedKey))return;
+count++;
+safeSet(storeKey,count);
+safeSet(votedKey,"1");
+countEl.textContent=toFa(count);
+btn.disabled=true;
+btn.textContent="مرسی، ثبت شد 🖤";
+});
 });
 const glow=document.createElement("div");
 glow.style.cssText="position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);filter:blur(20px);transform:translate(-50%,-50%)";
