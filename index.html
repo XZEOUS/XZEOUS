@@ -55,8 +55,19 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.contact-box{padding:30px}.contact-box p{color:#9991a4;line-height:2;margin-top:12px}.contact-link{display:block;margin-top:12px;padding:15px;border-radius:15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:.25s}.contact-link:hover{background:rgba(139,92,246,.1)}.contact-link small{display:block;color:#a78bfa;font-size:9px}.contact-link strong{display:block;direction:ltr;text-align:right;margin-top:5px}
 .theme-toggle-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
 .theme-toggle-btn:hover{background:rgba(244,114,182,.18);transform:scale(1.08)}
-#themeScope.theme-cute{filter:hue-rotate(65deg) saturate(1.2)}
-#themeScope.theme-cute img,#themeScope.theme-cute video{filter:hue-rotate(-65deg) saturate(.85)}
+#themeScope.theme-cute{--cute-pink:#f472b6;--cute-purple:#c084fc}
+#themeScope.theme-cute .nav-button,
+#themeScope.theme-cute .primary,
+#themeScope.theme-cute .signup-submit{background:linear-gradient(135deg,#f472b6,#a855f7);box-shadow:0 15px 40px rgba(244,114,182,.20)}
+#themeScope.theme-cute .gradient{background:linear-gradient(90deg,#fff,#f9a8d4,#c084fc);-webkit-background-clip:text;color:transparent}
+#themeScope.theme-cute .tag,
+#themeScope.theme-cute .product-tag,
+#themeScope.theme-cute .resource-icon{color:#f9a8d4}
+#themeScope.theme-cute .navlinks a:hover,
+#themeScope.theme-cute .contact-link:hover{color:#fff}
+#themeScope.theme-cute .contact-link:hover{background:rgba(244,114,182,.10)}
+#themeScope.theme-cute img,
+#themeScope.theme-cute video{filter:none!important}
 .signup-box{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,3,10,.75);backdrop-filter:blur(10px)}
 .signup-box.open{display:flex}
 .signup-card{width:100%;max-width:380px;background:linear-gradient(160deg,#1a1224,#0c0813);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:30px 26px;position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6)}
@@ -167,6 +178,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div id="reviewsList" style="display:flex;flex-direction:column;gap:14px"></div>
 </div></section>
 
+<section id="course" class="reveal">
 <div class="container">
 <div class="heading">
 <div class="tag">XZEOUS PRODUCTS</div>
@@ -421,7 +433,13 @@ try{
 if(authMode==="signup"){
 if(!u){authError.textContent="یوزرنیم رو وارد کن";authError.style.display="block";suSubmit.disabled=false;return;}
 const cred=await auth.createUserWithEmailAndPassword(em,pw);
-await db.collection("users").doc(cred.user.uid).set({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+try{
+  await db.collection("users").doc(cred.user.uid).set({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+}catch(profileErr){
+  console.error("XZEOUS profile save error:",profileErr.code,profileErr.message,profileErr);
+  // Authentication succeeded; keep a local profile so the user is not told signup failed.
+  safeSet("xzeous_profile_"+cred.user.uid,JSON.stringify({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL}));
+}
 successMsg.textContent="خوش اومدی "+u+"! 🖤";
 }else{
 await auth.signInWithEmailAndPassword(em,pw);
@@ -432,8 +450,20 @@ signupSuccess.classList.add("show");
 document.getElementById("suUsername").value="";document.getElementById("suEmail").value="";document.getElementById("suPassword").value="";
 setTimeout(()=>signupBox.classList.remove("open"),1400);
 }catch(e){
-const msgs={"auth/email-already-in-use":"این ایمیل قبلاً ثبت‌نام کرده، وارد شو","auth/wrong-password":"رمز اشتباهه","auth/user-not-found":"حسابی با این ایمیل پیدا نشد","auth/weak-password":"رمز باید حداقل ۶ کاراکتر باشه","auth/invalid-email":"ایمیل نامعتبره"};
-authError.textContent=msgs[e.code]||"مشکلی پیش اومد، دوباره امتحان کن";
+const msgs={
+"auth/email-already-in-use":"این ایمیل قبلاً ثبت‌نام کرده، وارد شو.",
+"auth/wrong-password":"رمز اشتباهه.",
+"auth/invalid-credential":"ایمیل یا رمز عبور اشتباهه.",
+"auth/user-not-found":"حسابی با این ایمیل پیدا نشد.",
+"auth/weak-password":"رمز باید حداقل ۶ کاراکتر باشه.",
+"auth/invalid-email":"ایمیل نامعتبره.",
+"auth/operation-not-allowed":"ورود با ایمیل/رمز در Firebase فعال نشده.",
+"auth/network-request-failed":"اتصال به اینترنت یا Firebase مشکل داره.",
+"permission-denied":"اکانت ساخته شد، ولی ذخیره پروفایل در Firestore اجازه داده نشد. قوانین Firestore را بررسی کن.",
+"failed-precondition":"Firestore هنوز تنظیم نشده یا Database ساخته نشده."
+};
+console.error("XZEOUS auth error:",e.code,e.message,e);
+authError.textContent=msgs[e.code]||("خطای Firebase: "+(e.code||"unknown"));
 authError.style.display="block";
 }
 suSubmit.disabled=false;
@@ -467,8 +497,18 @@ navAuthLabel.textContent="ثبت‌نام";
 auth.onAuthStateChanged(async user=>{
 currentUser=user;
 if(user){
-const doc=await db.collection("users").doc(user.uid).get();
-currentProfile=doc.exists?doc.data():{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+try{
+  const doc=await db.collection("users").doc(user.uid).get();
+  currentProfile=doc.exists?doc.data():{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+}catch(profileErr){
+  console.error("XZEOUS profile read error:",profileErr.code,profileErr.message,profileErr);
+  try{
+    const local=JSON.parse(safeGet("xzeous_profile_"+user.uid)||"null");
+    currentProfile=local||{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+  }catch(_){
+    currentProfile={username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+  }
+}
 }else{
 currentProfile=null;
 }
