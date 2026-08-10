@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XZEOUS — Editing Academy</title>
+<title>XZEOUS — Editing shop</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#05030a;color:#fff;font-family:Arial,Tahoma,sans-serif;overflow-x:hidden}
+@font-face{font-family:"Doran";src:url("Doran-VF[@mimvid].ttf") format("truetype");font-weight:100 900;font-display:swap}
+body{background:#05030a;color:#fff;font-family:"Doran",Arial,Tahoma,sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 section{scroll-margin-top:100px;padding:100px 0}
 .container{width:min(1150px,calc(100% - 30px));margin:auto}
@@ -54,8 +55,8 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.contact-box{padding:30px}.contact-box p{color:#9991a4;line-height:2;margin-top:12px}.contact-link{display:block;margin-top:12px;padding:15px;border-radius:15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:.25s}.contact-link:hover{background:rgba(139,92,246,.1)}.contact-link small{display:block;color:#a78bfa;font-size:9px}.contact-link strong{display:block;direction:ltr;text-align:right;margin-top:5px}
 .theme-toggle-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
 .theme-toggle-btn:hover{background:rgba(244,114,182,.18);transform:scale(1.08)}
-body.theme-cute{filter:hue-rotate(65deg) saturate(1.2)}
-body.theme-cute img,body.theme-cute video{filter:hue-rotate(-65deg) saturate(.85)}
+#themeScope.theme-cute{filter:hue-rotate(65deg) saturate(1.2)}
+#themeScope.theme-cute img,#themeScope.theme-cute video{filter:hue-rotate(-65deg) saturate(.85)}
 .signup-box{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,3,10,.75);backdrop-filter:blur(10px)}
 .signup-box.open{display:flex}
 .signup-card{width:100%;max-width:380px;background:linear-gradient(160deg,#1a1224,#0c0813);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:30px 26px;position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6)}
@@ -68,6 +69,14 @@ body.theme-cute img,body.theme-cute video{filter:hue-rotate(-65deg) saturate(.85
 .signup-field input:focus{outline:0;border-color:#a78bfa}
 .signup-submit{width:100%;margin-top:8px;padding:13px;border:0;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;font-weight:bold;font-size:13px;cursor:pointer;font-family:inherit}
 .signup-note{font-size:10px;color:#7a7383;margin-top:14px;line-height:1.7;text-align:center}
+.signup-error{color:#fca5a5;font-size:11px;margin-bottom:10px;display:none}
+.review-card{display:flex;gap:14px;padding:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.review-avatar{width:42px;height:42px;border-radius:50%;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:15px;background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
+.review-avatar img{width:100%;height:100%;object-fit:cover}
+.review-owner-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(139,92,246,.18);border:1px solid rgba(167,139,250,.35);color:#c4b5fd;font-size:9px;font-weight:bold;padding:2px 8px;border-radius:10px;margin-right:6px}
+.review-stars{color:#facc15;font-size:13px;letter-spacing:1px}
+.review-text{color:#c8c0d0;font-size:13px;margin-top:6px;line-height:1.8}
+.review-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .signup-success{display:none;text-align:center;padding:10px 0}
 .signup-success.show{display:block}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%)!important;z-index:999999!important;width:max-content;min-width:300px;max-width:calc(100vw - 24px);height:70px;display:flex!important;align-items:center;justify-content:center;gap:5px;padding:7px;border-radius:25px;background:rgba(20,16,30,.70);border:1px solid rgba(255,255,255,.17);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 1px 1px rgba(255,255,255,.18);opacity:1!important;visibility:visible!important;pointer-events:auto!important}
@@ -75,7 +84,7 @@ body.theme-cute img,body.theme-cute video{filter:hue-rotate(-65deg) saturate(.85
 footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-logo{direction:ltr;text-align:center;font-size:clamp(75px,16vw,190px);font-weight:900;letter-spacing:-10px;background:linear-gradient(90deg,#fff,#8b5cf6,#38bdf8,#fff);background-size:300%;-webkit-background-clip:text;color:transparent;animation:gradient 7s linear infinite}@keyframes gradient{to{background-position:300%}}.footer-text{text-align:center;color:#77717f;margin-top:30px;line-height:1.8}
 .reveal{opacity:0;transform:translateY(25px);transition:.7s}.reveal.visible{opacity:1;transform:none}
 
-.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .sold-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;background:rgba(139,92,246,.12);border:1px solid rgba(167,139,250,.25);color:#c4b5fd;font-size:11px;font-weight:bold;margin-top:14px}
 .out-of-stock .product-art{filter:grayscale(.6) brightness(.55)}
 .stock-ribbon{position:absolute;top:16px;left:16px;padding:7px 14px;border-radius:20px;background:rgba(239,68,68,.18);border:1px solid rgba(248,113,113,.4);color:#fca5a5;font-size:10px;font-weight:bold;letter-spacing:1px;z-index:3;backdrop-filter:blur(8px)}
@@ -85,11 +94,13 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .restock-btn:hover{transform:translateY(-2px)}
 .restock-btn:disabled{opacity:.55;cursor:default;transform:none}
 .restock-count{color:#fca5a5;font-size:11px}.restock-count strong{color:#fff}
+.stock-ribbon.limited{background:rgba(34,197,94,.18);border-color:rgba(74,222,128,.4);color:#86efac}
 .product-card{overflow:hidden;transition:.35s}
 .product-card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.35);box-shadow:0 25px 80px rgba(76,29,149,.14)}
 .product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate;background-size:cover;background-position:center}
 .preset-art{background-image:url("preset-pack.jpg")}
 .cc-art{background-image:url("color-collection.jpg")}
+.neptune-art{background-image:url("pic001.png")}
 .product-art:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,92,246,.10),transparent 45%,rgba(56,189,248,.08));z-index:-1}
 .product-art:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(65px);background:#7c3aed;opacity:.18;top:30px;left:50%;transform:translateX(-50%);z-index:-1}
 .art-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(139,92,246,.18),transparent 42%);pointer-events:none}
@@ -108,7 +119,7 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .products-grid{grid-template-columns:1fr}.product-art{height:330px}.modal-content{grid-template-columns:1fr}.modal-art{height:220px}
 section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{width:280px;height:280px}.avatar{width:200px;height:270px}.cards,.portfolio,.resources{grid-template-columns:1fr}.features{grid-template-columns:1fr}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:max(10px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;width:calc(100vw - 20px)!important;min-width:0!important;max-width:none!important;height:66px!important;padding:6px!important;gap:3px!important;border-radius:23px!important;display:flex!important;visibility:visible!important;opacity:1!important;z-index:999999!important}
-.xzeous-dock a{width:20%!important;flex:1 1 20%!important;height:54px!important;min-width:0!important;display:flex!important;border-radius:17px!important}.dock-icon{font-size:18px!important}.dock-label{font-size:7px!important}footer{padding-bottom:130px}
+.xzeous-dock a{width:16.6%!important;flex:1 1 16.6%!important;height:54px!important;min-width:0!important;display:flex!important;border-radius:17px!important}.dock-icon{font-size:17px!important}.dock-label{font-size:6.5px!important}footer{padding-bottom:130px}
 }
 </style>
 </head>
@@ -117,18 +128,18 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <nav class="nav">
 <a href="#home" class="logo">XZ<span>EOUS</span></a>
 <div class="navlinks">
-<a href="#course">محصولات</a><a href="#curriculum">سرفصل‌ها</a><a href="#resources">منابع</a><a href="#zeus">آقو زئوس</a><a href="#faq">FAQ</a>
+<a href="#course">محصولات</a><a href="#reviews">نظرات</a><a href="#faq">FAQ</a>
 </div>
 <div style="display:flex;gap:10px;align-items:center">
-<div style="display:flex;align-items:center;gap:6px">
-<button id="themeToggle" class="theme-toggle-btn" title="حالت کیوت">🎀</button>
-<span id="themeLabel" style="font-size:10px;color:#f472b6;font-weight:bold">صورتی</span>
-</div>
-<button id="signupOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit">ثبت‌نام</button>
+<button id="signupOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px">
+<span id="navAvatar" style="display:none;width:20px;height:20px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#8b5cf6,#7c3aed);align-items:center;justify-content:center;font-size:10px;font-weight:bold"></span>
+<span id="navAuthLabel">ثبت‌نام</span>
+</button>
 <a href="#contact" class="nav-button">ارتباط</a>
 </div>
 </nav>
 
+<div id="themeScope">
 <section class="hero" id="home">
 <div class="container"><div class="hero-grid">
 <div>
@@ -141,7 +152,21 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div></div>
 </section>
 
-<section id="course" class="reveal">
+<section id="reviews" class="reveal"><div class="container">
+<div class="heading"><div class="tag">REVIEWS</div><h2>نظرات کاربرا</h2><p>تجربه‌ی بقیه از محصولات و همکاری با XZEOUS.</p></div>
+
+<div class="glass" style="padding:22px;border-radius:20px;margin-bottom:22px" id="reviewFormBox">
+<div id="reviewLoggedOut" style="text-align:center;color:#9991a4;font-size:13px">برای ثبت نظر باید <a href="javascript:void(0)" id="reviewLoginLink" style="color:#c4b5fd">وارد حساب</a> بشی.</div>
+<div id="reviewLoggedIn" style="display:none">
+<div id="starPicker" style="display:flex;gap:6px;font-size:22px;margin-bottom:12px;cursor:pointer;justify-content:center"></div>
+<textarea id="reviewText" placeholder="نظرت رو بنویس..." style="width:100%;min-height:70px;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:13px;resize:vertical"></textarea>
+<button class="signup-submit" id="submitReview" style="margin-top:10px">ثبت نظر</button>
+</div>
+</div>
+
+<div id="reviewsList" style="display:flex;flex-direction:column;gap:14px"></div>
+</div></section>
+
 <div class="container">
 <div class="heading">
 <div class="tag">XZEOUS PRODUCTS</div>
@@ -155,15 +180,15 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="stock-ribbon">ناموجود</div>
 <div class="product-art preset-art"></div>
 <div class="product-body">
-<div class="product-tag">XZEOUS PRESETS</div>
+<div class="product-tag">XZEOUS SHAKE PRESETS</div>
 <h3>Preset Pack</h3>
-<p>یک پکیج شیک برای سرعت دادن به Workflow و ساخت Motion و افکت‌های تمیز.</p>
+<p>پک پریست شیک این پک دارای 12 تا پریست شیک هستش قبلش پیشنایز هارو دانلود کنین.</p>
 <div class="product-price"><span class="old-price">۴۹۰,۰۰۰ تومان</span><strong>۲۲۱,۰۰۰ تومان</strong></div>
-<div class="sold-badge">🔥 ۱۰ نفر خریدن</div>
+<div class="sold-badge">🔥 7 نفر خریدن</div>
 <button class="btn buy-disabled" disabled>ناموجود</button>
 <div class="restock-box">
 <span class="restock-count">😭 <strong data-restock-count="presets">۰</strong> نفر خواستن موجود شه</span>
-<button class="restock-btn" data-restock-btn="presets">تروخدا موجودش کن 🥺</button>
+<button class="restock-btn" data-restock-btn="presets">تروخدا موجودش کن 😭</button>
 </div>
 </div>
 </div>
@@ -174,14 +199,26 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="product-body">
 <div class="product-tag">XZEOUS CC</div>
 <h3>Color Collection</h3>
-<p>Color Correction و Color Grading برای رسیدن به رنگ‌های سینمایی و یکدست.</p>
+<p>دارای 10 الا 15 تا پریست اصلاح رنگ تمیز خوراک ادیت های تیک تاکی.</p>
 <div class="product-price"><span class="old-price">۲۵۰,۰۰۰ تومان</span><strong>۱۹۹,۰۰۰ تومان</strong></div>
 <div class="sold-badge">🔥 ۱۰ نفر خریدن</div>
 <button class="btn buy-disabled" disabled>ناموجود</button>
 <div class="restock-box">
 <span class="restock-count">😭 <strong data-restock-count="cc">۰</strong> نفر خواستن موجود شه</span>
-<button class="restock-btn" data-restock-btn="cc">تروخدا موجودش کن 🥺</button>
+<button class="restock-btn" data-restock-btn="cc">تروخدا موجودش کن 😭</button>
 </div>
+</div>
+</div>
+
+<div class="product-card glass" data-product="neptune">
+<div class="stock-ribbon limited">فقط ۴ عدد باقی مونده</div>
+<div class="product-art neptune-art"></div>
+<div class="product-body">
+<div class="product-tag">XZEOUS EDIT PACK</div>
+<h3>Neptune's Prime Edit Pack</h3>
+<p>دارای محتویات: 3x Framer، 2x Blurs، 2x Glows، 2x CCs، 10x Overlays، 3x Random Presets، 15x SFX (Whooshes + Useful Sounds)، 3x Shakes، 2x Twitches.</p>
+<div class="product-price"><span class="old-price">۱۵۰,۰۰۰ تومان</span><strong>۹۹,۰۰۰ تومان</strong></div>
+<button class="btn primary product-view" data-product="neptune">مشاهده محصول ↗</button>
 </div>
 </div>
 
@@ -189,34 +226,10 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 </section>
 
-<section id="curriculum" class="reveal"><div class="container"><div class="heading"><div class="tag">CURRICULUM</div><h2>سرفصل‌های دوره</h2><p>هر بخش برای یک مهارت واقعی طراحی شده.</p></div>
-<div class="cards">
-<div class="glass card"><div class="number">01 / FOUNDATION</div><h3>Workflow</h3><p>مدیریت پروژه، فایل‌ها و ساختار درست تایم‌لاین.</p></div>
-<div class="glass card"><div class="number">02 / EDITING</div><h3>Cut & Timing</h3><p>Cut، ریتم و هماهنگی تصویر با موسیقی.</p></div>
-<div class="glass card"><div class="number">03 / MOTION</div><h3>Motion Graphics</h3><p>Text Animation و ساخت Motion حرفه‌ای.</p></div>
-<div class="glass card"><div class="number">04 / EFFECTS</div><h3>Effects</h3><p>Glow، Blur، Distortion و Compositing.</p></div>
-<div class="glass card"><div class="number">05 / SOUND</div><h3>Sound Design</h3><p>SFX، Layering و ساخت حس سینمایی با صدا.</p></div>
-<div class="glass card"><div class="number">06 / FINAL</div><h3>Final Project</h3><p>ساخت یک پروژه کامل از صفر تا خروجی نهایی.</p></div>
-</div></div></section>
-
-<section id="resources" class="reveal"><div class="container"><div class="heading"><div class="tag">RESOURCES</div><h2>منابع آموزشی</h2></div>
-<div class="resources">
-<div class="glass resource"><div class="resource-icon">◈</div><h3>Project Files</h3><p>فایل پروژه‌های آموزشی</p></div>
-<div class="glass resource"><div class="resource-icon">✦</div><h3>Presets</h3><p>Presetهای کاربردی</p></div>
-<div class="glass resource"><div class="resource-icon">⌁</div><h3>SFX</h3><p>منابع صوتی و افکت</p></div>
-<div class="glass resource"><div class="resource-icon">◎</div><h3>Fonts</h3><p>فونت‌های مورد استفاده</p></div>
-<div class="glass resource"><div class="resource-icon">▣</div><h3>References</h3><p>منابع الهام و رفرنس</p></div>
-<div class="glass resource"><div class="resource-icon">↗</div><h3>Updates</h3><p>محتوای جدید دوره</p></div>
-</div></div></section>
 
 <section id="about" class="reveal"><div class="container"><div class="about">
 <div class="about-avatar"><img src="aghoo-zeus.png" alt="XZEOUS"></div>
-<div class="about-text"><div class="tag">ABOUT XZEOUS</div><h2>ادیت فقط یک نرم‌افزار نیست.</h2><p>هدف XZEOUS اینه که ادیتور فقط تکنیک حفظ نکنه؛ بلکه بفهمه چرا یک Cut جواب میده، چرا یک Motion خوب دیده میشه و چطور یک ایده خام رو به تصویر تبدیل کنه.</p></div>
-</div></div></section>
-
-<section id="zeus" class="reveal"><div class="container"><div class="about">
-<div class="about-avatar"><img src="aghoo-zeus.png" alt="آقو زئوس"></div>
-<div class="about-text"><div class="tag">MEET AGHOO ZEUS</div><h2>آقو زئوس،<br>ادیتور پشت XZEOUS.</h2>
+<div class="about-text"><div class="tag">ABOUT XZEOUS</div><h2>ادیت فقط یک نرم‌افزار نیست.</h2>
 <div class="zeus-box">🎬 Video Editor | XZEOUS<br>𖤐 TikTok • Anime • Reels • Ads<br>𖤐 3+ Years Experience<br>𖤐 After Effects<br>⛓ Open for Work ↳</div></div>
 </div></div></section>
 
@@ -225,6 +238,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="glass faq-item"><button class="question">برای دوره و پریست ها باید After Effects بلد باشم؟<span>+</span></button><div class="answer">برای پریست ها نه زیاد اگه داخل اد کردنشون مشکل خوردید به پشتیباینی پیام بدید برای دوره ادیت هم دوتا پنل داریم صفر تا صد و ادیت حرفه ای </div></div>
 <div class="glass faq-item"><button class="question">بعد از خرید محصول چه چیزی دریافت می‌کنم؟<span>+</span></button><div class="answer">بسته به محصول، فایل Preset یا مجموعه CC دریافت می‌کنی. جزئیات دقیق هر محصول در صفحه خرید قرار می‌گیرد.</div></div>
 <div class="glass faq-item"><button class="question">چطور محصول را تهیه کنم؟<span>+</span></button><div class="answer">روی دکمه خرید محصول بزن یا از طریق آیدی تلگرام @XZEOUS_AE پیام بده.</div></div>
+<div class="glass faq-item"><button class="question">شومبول میخوام🥵😭😢<span>+</span></button><div class="answer">تموم کردیم🥺.</div></div>
 </div></div></section>
 
 <section id="contact" class="reveal"><div class="container"><div class="heading"><div class="tag">CONTACT</div><h2>ارتباط با XZEOUS</h2><p>برای سفارش، همکاری یا خرید محصول مستقیماً پیام بده.</p></div>
@@ -237,14 +251,20 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="glass contact-box"><h2>آماده همکاری؟</h2><p>برای سفارش ادیت، پروژه یا هر سوالی از طریق تلگرام پیام بده.</p><a href="https://t.me/XZEOUS_AE" target="_blank" class="btn primary" style="margin-top:25px">پیام به XZEOUS ↗</a></div>
 </div></div></section>
 
+
+
+<footer><div class="container"><div class="footer-logo">XZEOUS</div><div class="footer-text">XZEOUS × ROXY<br>Built with imagination.</div></div></footer>
+</div>
+
+
 <nav class="xzeous-dock">
 <a href="#home"><span class="dock-icon">⌂</span><span class="dock-label">خانه</span></a>
 <a href="#course"><span class="dock-icon">✦</span><span class="dock-label">محصولات</span></a>
 <a href="#about"><span class="dock-icon">◈</span><span class="dock-label">درباره من</span></a>
 <a href="#contact"><span class="dock-icon">↗</span><span class="dock-label">ارتباط</span></a>
 <a href="#faq"><span class="dock-icon">?</span><span class="dock-label">سوالات</span></a>
+<a href="javascript:void(0)" id="themeToggle"><span class="dock-icon" id="themeIcon">🎀</span><span class="dock-label" id="themeLabel">کیوت</span></a>
 </nav>
-
 
 <div class="product-modal" id="productModal">
 <div class="modal-box">
@@ -254,42 +274,73 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div>
 <div class="tag" id="modalTag">XZEOUS PRODUCT</div>
 <h2 id="modalTitle">Product</h2>
-<p id="modalDesc">توضیحات محصول</p>
+<p id="modalDesc" style="white-space:pre-line">توضیحات محصول</p>
 <div class="modal-price"><del id="modalOld">۰</del> <span id="modalNew">۰</span></div>
 <a id="modalBuy" class="btn primary" target="_blank" href="https://t.me/XZEOUS_AE" style="margin-top:20px">خرید محصول ↗</a>
+
+</div>
+</div>
+</div>
+</div>
+
 
 <div class="signup-box" id="signupBox">
 <div class="signup-card">
 <button class="signup-close" id="signupClose">×</button>
 <div id="signupForm">
-<h3>عضویت در XZEOUS 🎀</h3>
-<p>یوزرنیم، ایمیل و رمز دلخواهتو وارد کن.</p>
-<div class="signup-field"><label>یوزرنیم</label><input type="text" id="suUsername" placeholder="مثلاً xzeous_fan"></div>
+<h3 id="authTitle">عضویت در XZEOUS 🎀</h3>
+<p id="authSubtitle">یوزرنیم، ایمیل و رمز دلخواهتو وارد کن.</p>
+<div class="signup-field" id="usernameField"><label>یوزرنیم</label><input type="text" id="suUsername" placeholder="مثلاً xzeous_fan"></div>
 <div class="signup-field"><label>ایمیل</label><input type="email" id="suEmail" placeholder="you@email.com"></div>
 <div class="signup-field"><label>رمز عبور</label><input type="password" id="suPassword" placeholder="یه رمز دلخواه"></div>
+<div class="signup-error" id="authError"></div>
 <button class="signup-submit" id="suSubmit">ثبت‌نام 🖤</button>
-<div class="signup-note">این فرم فعلاً روی خود مرورگرت ذخیره میشه و بک‌اند امن نداره؛ برای عضویت واقعی و امن نیاز به اتصال به یه سرویس مثل Firebase داریم.</div>
+<div style="text-align:center;margin-top:12px;font-size:11px;color:#9991a4" id="authSwitch">قبلاً عضو شدی؟ <a href="javascript:void(0)" id="switchToLogin" style="color:#c4b5fd">وارد شو</a></div>
 </div>
 <div class="signup-success" id="signupSuccess">
 <div style="font-size:40px;margin-bottom:10px">🖤</div>
 <h3 id="successMsg">خوش اومدی!</h3>
-<p>ثبت‌نامت انجام شد.</p>
+<p>وارد حسابت شدی.</p>
 </div>
 </div>
 </div>
 
+<div class="signup-box" id="accountBox">
+<div class="signup-card">
+<button class="signup-close" id="accountClose">×</button>
+<div style="text-align:center;margin-bottom:16px">
+<div id="accountAvatar" style="width:70px;height:70px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:24px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);overflow:hidden"></div>
+<h3 id="accountUsername">-</h3>
+<p id="accountEmail" style="color:#9991a4;font-size:11px">-</p>
 </div>
-</div>
+<div class="signup-field"><label>لینک عکس پروفایل (اختیاری)</label><input type="text" id="suPhoto" placeholder="https://..."></div>
+<button class="signup-submit" id="saveProfile">ذخیره تغییرات</button>
+<button class="signup-submit" id="logoutBtn" style="background:rgba(255,255,255,.06);margin-top:10px">خروج از حساب</button>
 </div>
 </div>
 
-<footer><div class="container"><div class="footer-logo">XZEOUS</div><div class="footer-text">XZEOUS × ROXY<br>Built with imagination.</div></div></footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyCBWxEXrnv7oX7HxfDqTMQo7_C1Wj4WDC8",authDomain:"sait-xzeous-497d2.firebaseapp.com",projectId:"sait-xzeous-497d2",storageBucket:"sait-xzeous-497d2.firebasestorage.app",messagingSenderId:"809456726878",appId:"1:809456726878:web:f0c66c51047d9bb6f4d5cf",measurementId:"G-NQB4W8TXVS"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), db=firebase.firestore();
+const OWNER_EMAIL="kiyan3461@gmail.com";
+let currentUser=null, currentProfile=null;
+function avatarColorFor(str){let h=0;for(let i=0;i<str.length;i++)h=str.charCodeAt(i)+((h<<5)-h);return "hsl("+(h%360)+",65%,45%)";}
+function renderAvatar(el,username,photoURL){
+if(photoURL){el.innerHTML='<img src="'+photoURL+'" alt="">';}
+else{el.style.background=avatarColorFor(username||"?");el.textContent=(username||"?").charAt(0).toUpperCase();}
+}
+</script>
 <script>
 
 const products={
 presets:{tag:"XZEOUS PRESETS",title:"Preset Pack",desc:"پکیج Presetهای شیک برای Motion، Glow، Transitions و سریع‌تر کردن Workflow ادیت.",old:"۴۹۰,۰۰۰ تومان",price:"۲۲۱,۰۰۰ تومان",cls:"preset-art"},
-cc:{tag:"XZEOUS CC",title:"Color Collection",desc:"مجموعه اصلاح رنگ و Color Grading برای ساخت رنگ‌های سینمایی و یکدست.",old:"۲۵۰,۰۰۰ تومان",price:"۱۹۹,۰۰۰ تومان",cls:"cc-art"}
+cc:{tag:"XZEOUS CC",title:"Color Collection",desc:"مجموعه اصلاح رنگ و Color Grading برای ساخت رنگ‌های سینمایی و یکدست.",old:"۲۵۰,۰۰۰ تومان",price:"۱۹۹,۰۰۰ تومان",cls:"cc-art"},
+neptune:{tag:"XZEOUS EDIT PACK",title:"Neptune's Prime Edit Pack",desc:"دارای محتویات زیر می‌باشد:\n- 3x Framer\n- 2x Blurs\n- 2x Glows\n- 2x CCs\n- 10x Overlays\n- 3x Random Presets\n- 15x SFX (Whooshes, Useful Sounds)\n- 3x Shakes\n- 2x Twitches",old:"۱۵۰,۰۰۰ تومان",price:"۹۹,۰۰۰ تومان",cls:"neptune-art"}
 };
 const modal=document.getElementById("productModal"), modalArt=document.getElementById("modalArt");
 document.querySelectorAll(".product-view").forEach(btn=>btn.addEventListener("click",()=>{
@@ -312,30 +363,173 @@ button.addEventListener("click",()=>button.parentElement.classList.toggle("open"
 function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
-const themeBtn=document.getElementById("themeToggle"),themeLabel=document.getElementById("themeLabel");
-if(safeGet("xzeous_theme")==="cute"){document.body.classList.add("theme-cute");themeBtn.textContent="🖤";themeLabel.textContent="اصلی";}
+const themeBtn=document.getElementById("themeToggle"),themeIcon=document.getElementById("themeIcon"),themeLabel=document.getElementById("themeLabel"),themeScope=document.getElementById("themeScope");
+if(safeGet("xzeous_theme")==="cute"){themeScope.classList.add("theme-cute");themeIcon.textContent="😡";themeLabel.textContent="عادی";}
 themeBtn.addEventListener("click",()=>{
-const isCute=document.body.classList.toggle("theme-cute");
-themeBtn.textContent=isCute?"🖤":"🎀";
-themeLabel.textContent=isCute?"اصلی":"صورتی";
+const isCute=themeScope.classList.toggle("theme-cute");
+themeIcon.textContent=isCute?"😡":"🎀";
+themeLabel.textContent=isCute?"عادی":"کیوت";
 safeSet("xzeous_theme",isCute?"cute":"default");
 });
 
 const signupBox=document.getElementById("signupBox"),signupOpen=document.getElementById("signupOpen"),signupClose=document.getElementById("signupClose"),signupForm=document.getElementById("signupForm"),signupSuccess=document.getElementById("signupSuccess"),successMsg=document.getElementById("successMsg");
-signupOpen.addEventListener("click",()=>{signupBox.classList.add("open");signupForm.style.display="block";signupSuccess.classList.remove("show");});
+const accountBox=document.getElementById("accountBox"),accountClose=document.getElementById("accountClose");
+const authTitle=document.getElementById("authTitle"),authSubtitle=document.getElementById("authSubtitle"),usernameField=document.getElementById("usernameField"),authError=document.getElementById("authError"),suSubmit=document.getElementById("suSubmit"),authSwitch=document.getElementById("authSwitch"),switchToLogin=document.getElementById("switchToLogin");
+let authMode="signup";
+
+function setAuthMode(mode){
+authMode=mode;
+authError.style.display="none";
+if(mode==="signup"){
+authTitle.textContent="عضویت در XZEOUS 🎀";authSubtitle.textContent="یوزرنیم، ایمیل و رمز دلخواهتو وارد کن.";
+usernameField.style.display="block";suSubmit.textContent="ثبت‌نام 🖤";
+authSwitch.innerHTML='قبلاً عضو شدی؟ <a href="javascript:void(0)" id="switchToLogin" style="color:#c4b5fd">وارد شو</a>';
+}else{
+authTitle.textContent="ورود به حساب";authSubtitle.textContent="ایمیل و رمزتو وارد کن.";
+usernameField.style.display="none";suSubmit.textContent="ورود";
+authSwitch.innerHTML='حساب نداری؟ <a href="javascript:void(0)" id="switchToLogin" style="color:#c4b5fd">ثبت‌نام کن</a>';
+}
+document.getElementById("switchToLogin").addEventListener("click",()=>setAuthMode(mode==="signup"?"login":"signup"));
+}
+
+function openAuthModal(){
+if(currentUser){openAccountModal();return;}
+setAuthMode("signup");
+signupBox.classList.add("open");signupForm.style.display="block";signupSuccess.classList.remove("show");
+}
+function openAccountModal(){
+document.getElementById("accountUsername").textContent=currentProfile?currentProfile.username:"-";
+document.getElementById("accountEmail").textContent=currentUser.email;
+document.getElementById("suPhoto").value=(currentProfile&&currentProfile.photoURL)||"";
+renderAvatar(document.getElementById("accountAvatar"),currentProfile&&currentProfile.username,currentProfile&&currentProfile.photoURL);
+accountBox.classList.add("open");
+}
+signupOpen.addEventListener("click",openAuthModal);
 signupClose.addEventListener("click",()=>signupBox.classList.remove("open"));
 signupBox.addEventListener("click",e=>{if(e.target===signupBox)signupBox.classList.remove("open");});
-document.getElementById("suSubmit").addEventListener("click",()=>{
+accountClose.addEventListener("click",()=>accountBox.classList.remove("open"));
+accountBox.addEventListener("click",e=>{if(e.target===accountBox)accountBox.classList.remove("open");});
+const reviewLoginLink=document.getElementById("reviewLoginLink");
+if(reviewLoginLink)reviewLoginLink.addEventListener("click",openAuthModal);
+
+suSubmit.addEventListener("click",async()=>{
 const u=document.getElementById("suUsername").value.trim(),em=document.getElementById("suEmail").value.trim(),pw=document.getElementById("suPassword").value;
-if(!u&&!em){alert("حداقل یوزرنیم یا ایمیل رو وارد کن 🙂‍↕️");return;}
-const users=JSON.parse(safeGet("xzeous_users")||"[]");
-users.push({username:u,email:em,password:pw,date:new Date().toISOString()});
-safeSet("xzeous_users",JSON.stringify(users));
-successMsg.textContent="خوش اومدی"+(u?" "+u:"")+"! 🖤";
+authError.style.display="none";
+if(!em||!pw){authError.textContent="ایمیل و رمز رو وارد کن";authError.style.display="block";return;}
+suSubmit.disabled=true;
+try{
+if(authMode==="signup"){
+if(!u){authError.textContent="یوزرنیم رو وارد کن";authError.style.display="block";suSubmit.disabled=false;return;}
+const cred=await auth.createUserWithEmailAndPassword(em,pw);
+await db.collection("users").doc(cred.user.uid).set({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+successMsg.textContent="خوش اومدی "+u+"! 🖤";
+}else{
+await auth.signInWithEmailAndPassword(em,pw);
+successMsg.textContent="خوش برگشتی! 🖤";
+}
 signupForm.style.display="none";
 signupSuccess.classList.add("show");
 document.getElementById("suUsername").value="";document.getElementById("suEmail").value="";document.getElementById("suPassword").value="";
+setTimeout(()=>signupBox.classList.remove("open"),1400);
+}catch(e){
+const msgs={"auth/email-already-in-use":"این ایمیل قبلاً ثبت‌نام کرده، وارد شو","auth/wrong-password":"رمز اشتباهه","auth/user-not-found":"حسابی با این ایمیل پیدا نشد","auth/weak-password":"رمز باید حداقل ۶ کاراکتر باشه","auth/invalid-email":"ایمیل نامعتبره"};
+authError.textContent=msgs[e.code]||"مشکلی پیش اومد، دوباره امتحان کن";
+authError.style.display="block";
+}
+suSubmit.disabled=false;
 });
+
+document.getElementById("saveProfile").addEventListener("click",async()=>{
+if(!currentUser)return;
+const photo=document.getElementById("suPhoto").value.trim();
+await db.collection("users").doc(currentUser.uid).update({photoURL:photo||null});
+currentProfile.photoURL=photo||null;
+updateNavUI();
+accountBox.classList.remove("open");
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+await auth.signOut();
+accountBox.classList.remove("open");
+});
+
+function updateNavUI(){
+const navAvatar=document.getElementById("navAvatar"),navAuthLabel=document.getElementById("navAuthLabel");
+if(currentUser&&currentProfile){
+navAvatar.style.display="flex";
+renderAvatar(navAvatar,currentProfile.username,currentProfile.photoURL);
+navAuthLabel.textContent=currentProfile.username;
+}else{
+navAvatar.style.display="none";
+navAuthLabel.textContent="ثبت‌نام";
+}
+}
+
+auth.onAuthStateChanged(async user=>{
+currentUser=user;
+if(user){
+const doc=await db.collection("users").doc(user.uid).get();
+currentProfile=doc.exists?doc.data():{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+}else{
+currentProfile=null;
+}
+updateNavUI();
+renderReviewForm();
+});
+
+function renderReviewForm(){
+const loggedOut=document.getElementById("reviewLoggedOut"),loggedIn=document.getElementById("reviewLoggedIn");
+if(currentUser){loggedOut.style.display="none";loggedIn.style.display="block";}
+else{loggedOut.style.display="block";loggedIn.style.display="none";}
+}
+
+let selectedStars=5;
+const starPicker=document.getElementById("starPicker");
+function renderStarPicker(){
+starPicker.innerHTML="";
+for(let i=1;i<=5;i++){
+const s=document.createElement("span");
+s.textContent=i<=selectedStars?"★":"☆";
+s.style.color=i<=selectedStars?"#facc15":"#4b4555";
+s.addEventListener("click",()=>{selectedStars=i;renderStarPicker();});
+starPicker.appendChild(s);
+}
+}
+renderStarPicker();
+
+document.getElementById("submitReview").addEventListener("click",async()=>{
+if(!currentUser)return;
+const text=document.getElementById("reviewText").value.trim();
+if(!text)return;
+await db.collection("reviews").add({
+uid:currentUser.uid,username:currentProfile.username,photoURL:currentProfile.photoURL||null,
+isOwner:!!currentProfile.isOwner,rating:selectedStars,text:text,
+createdAt:firebase.firestore.FieldValue.serverTimestamp()
+});
+document.getElementById("reviewText").value="";
+selectedStars=5;renderStarPicker();
+});
+
+function starsStr(n){return "★".repeat(n)+"☆".repeat(5-n);}
+db.collection("reviews").orderBy("createdAt","desc").limit(30).onSnapshot(snap=>{
+const list=document.getElementById("reviewsList");
+if(snap.empty){list.innerHTML='<p style="color:#7a7383;font-size:12px;text-align:center">هنوز نظری ثبت نشده، اولین نفر باش 🖤</p>';return;}
+list.innerHTML="";
+snap.forEach(docSnap=>{
+const r=docSnap.data();
+const card=document.createElement("div");
+card.className="review-card";
+const avatarHtml=r.photoURL?'<img src="'+r.photoURL+'" alt="">':(r.username||"?").charAt(0).toUpperCase();
+const avatarStyle=r.photoURL?"":("background:"+avatarColorFor(r.username||"?"));
+card.innerHTML=`
+<div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div>
+<div style="flex:1">
+<div class="review-meta">${r.isOwner?'<span class="review-owner-badge">🖤 Owner</span>':''}<strong>${r.username||"کاربر"}</strong><span class="review-stars">${starsStr(r.rating||5)}</span></div>
+<div class="review-text">${(r.text||"").replace(/</g,"&lt;")}</div>
+</div>`;
+list.appendChild(card);
+});
+});
+
 
 function toFa(n){return String(n).replace(/[0-9]/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);}
 const restockBase={presets:24,cc:31};
