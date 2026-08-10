@@ -325,7 +325,9 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <h3 id="accountUsername">-</h3>
 <p id="accountEmail" style="color:#9991a4;font-size:11px">-</p>
 </div>
+<div class="signup-field"><label>یوزرنیم</label><input type="text" id="suEditUsername" placeholder="یوزرنیم جدید"></div>
 <div class="signup-field"><label>لینک عکس پروفایل (اختیاری)</label><input type="text" id="suPhoto" placeholder="https://..."></div>
+<div class="signup-error" id="profileError"></div>
 <button class="signup-submit" id="saveProfile">ذخیره تغییرات</button>
 <button class="signup-submit" id="logoutBtn" style="background:rgba(255,255,255,.06);margin-top:10px">خروج از حساب</button>
 </div>
@@ -413,6 +415,8 @@ function openAccountModal(){
 document.getElementById("accountUsername").textContent=currentProfile?currentProfile.username:"-";
 document.getElementById("accountEmail").textContent=currentUser.email;
 document.getElementById("suPhoto").value=(currentProfile&&currentProfile.photoURL)||"";
+document.getElementById("suEditUsername").value=(currentProfile&&currentProfile.username)||"";
+document.getElementById("profileError").style.display="none";
 renderAvatar(document.getElementById("accountAvatar"),currentProfile&&currentProfile.username,currentProfile&&currentProfile.photoURL);
 accountBox.classList.add("open");
 }
@@ -472,10 +476,26 @@ suSubmit.disabled=false;
 document.getElementById("saveProfile").addEventListener("click",async()=>{
 if(!currentUser)return;
 const photo=document.getElementById("suPhoto").value.trim();
-await db.collection("users").doc(currentUser.uid).update({photoURL:photo||null});
+const newUsername=document.getElementById("suEditUsername").value.trim();
+const profileError=document.getElementById("profileError");
+profileError.style.display="none";
+if(!newUsername){profileError.textContent="یوزرنیم نمی‌تونه خالی باشه";profileError.style.display="block";return;}
+const saveBtn=document.getElementById("saveProfile");saveBtn.disabled=true;
+try{
+await db.collection("users").doc(currentUser.uid).set({username:newUsername,photoURL:photo||null,email:currentUser.email,isOwner:currentUser.email===OWNER_EMAIL},{merge:true});
+currentProfile.username=newUsername;
 currentProfile.photoURL=photo||null;
+safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
 updateNavUI();
+document.getElementById("accountUsername").textContent=newUsername;
+renderAvatar(document.getElementById("accountAvatar"),newUsername,currentProfile.photoURL);
 accountBox.classList.remove("open");
+}catch(e){
+console.error("XZEOUS profile update error:",e.code,e.message,e);
+profileError.textContent="ذخیره نشد: قوانین Firestore رو چک کن (permission-denied یعنی Rule اجازه نمی‌ده)";
+profileError.style.display="block";
+}
+saveBtn.disabled=false;
 });
 document.getElementById("logoutBtn").addEventListener("click",async()=>{
 await auth.signOut();
