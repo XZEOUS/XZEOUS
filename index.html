@@ -547,6 +547,7 @@ currentProfile=null;
 }
 updateNavUI();
 renderReviewForm();
+if(typeof renderReviewsList==="function")renderReviewsList();
 });
 
 function renderReviewForm(){
@@ -595,7 +596,10 @@ submitBtn.disabled=false;
 });
 
 function starsStr(n){return "★".repeat(n)+"☆".repeat(5-n);}
-db.collection("reviews").orderBy("createdAt","desc").limit(30).onSnapshot(snap=>{
+let lastReviewsSnap=null;
+function renderReviewsList(){
+if(!lastReviewsSnap)return;
+const snap=lastReviewsSnap;
 const list=document.getElementById("reviewsList");
 if(snap.empty){list.innerHTML='<p style="color:#7a7383;font-size:12px;text-align:center">هنوز نظری ثبت نشده، اولین نفر باش 🖤</p>';return;}
 list.innerHTML="";
@@ -615,6 +619,10 @@ card.innerHTML=`
 </div>`;
 list.appendChild(card);
 });
+}
+db.collection("reviews").orderBy("createdAt","desc").limit(30).onSnapshot(snap=>{
+lastReviewsSnap=snap;
+renderReviewsList();
 });
 document.getElementById("reviewsList").addEventListener("click",async(e)=>{
 const btn=e.target.closest(".review-delete-btn");
