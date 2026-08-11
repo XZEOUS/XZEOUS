@@ -27,7 +27,13 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .hero h1{direction:ltr;font-size:clamp(75px,12vw,155px);line-height:.8;letter-spacing:-9px;margin-top:25px}
 .gradient{background:linear-gradient(90deg,#fff,#c084fc,#38bdf8);-webkit-background-clip:text;color:transparent}
 .hero-description{max-width:600px;margin-top:35px;color:#aaa2b2;line-height:2;font-size:14px}.hero-description strong{color:#fff}
-.buttons{display:flex;gap:12px;margin-top:28px}.btn{display:inline-block;padding:14px 21px;border-radius:14px;font-size:12px;font-weight:bold;transition:.25s}.btn:hover{transform:translateY(-3px)}
+.buttons{display:flex;gap:12px;margin-top:28px}.btn{display:inline-block;padding:14px 21px;border-radius:14px;font-size:12px;font-weight:bold;transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}.btn:hover{transform:translateY(-3px) scale(1.03)}
+.btn.primary:hover,.nav-button:hover{box-shadow:0 15px 45px rgba(139,92,246,.45)}
+.btn.secondary:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.25)}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.25),transparent);transform:skewX(-20deg);transition:left .6s ease}
+.btn:hover::after{left:130%}
+.nav-button{transition:transform .3s,box-shadow .3s}
+.nav-button:hover{transform:translateY(-2px) scale(1.04)}
 .secondary{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}
 .avatar-area{display:flex;justify-content:center;align-items:center;min-height:440px}
 .avatar-ring{width:350px;height:350px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(167,139,250,.25);box-shadow:0 0 100px rgba(139,92,246,.18),inset 0 0 80px rgba(56,189,248,.05);animation:float 5s ease-in-out infinite}
@@ -89,6 +95,8 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .review-stars{color:#facc15;font-size:13px;letter-spacing:1px}
 .review-text{color:#c8c0d0;font-size:13px;margin-top:6px;line-height:1.8}
 .review-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.review-delete-btn{margin-right:auto;background:none;border:none;color:#7a7383;cursor:pointer;font-size:13px;opacity:.7;transition:.2s}
+.review-delete-btn:hover{opacity:1;color:#ff6b6b}
 .signup-success{display:none;text-align:center;padding:10px 0}
 .signup-success.show{display:block}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%)!important;z-index:999999!important;width:max-content;min-width:300px;max-width:calc(100vw - 24px);height:70px;display:flex!important;align-items:center;justify-content:center;gap:5px;padding:7px;border-radius:25px;background:rgba(20,16,30,.70);border:1px solid rgba(255,255,255,.17);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 1px 1px rgba(255,255,255,.18);opacity:1!important;visibility:visible!important;pointer-events:auto!important}
@@ -107,9 +115,12 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .restock-btn:disabled{opacity:.55;cursor:default;transform:none}
 .restock-count{color:#fca5a5;font-size:11px}.restock-count strong{color:#fff}
 .stock-ribbon.limited{background:rgba(34,197,94,.18);border-color:rgba(74,222,128,.4);color:#86efac}
-.product-card{overflow:hidden;transition:.35s}
-.product-card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.35);box-shadow:0 25px 80px rgba(76,29,149,.14)}
-.product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate;background-size:cover;background-position:center}
+.product-card{overflow:hidden;transition:transform .4s,border-color .4s,box-shadow .4s}
+.product-card:hover{transform:translateY(-10px) scale(1.015);border-color:rgba(167,139,250,.45);box-shadow:0 30px 90px rgba(76,29,149,.25)}
+.product-art{height:390px;position:relative;overflow:hidden;background:#08060d;isolation:isolate;background-size:cover;background-position:center;transition:transform .5s ease,filter .5s ease}
+.product-card:hover .product-art{transform:scale(1.06);filter:brightness(1.1) saturate(1.1)}
+.product-view{transition:transform .3s,box-shadow .3s;display:inline-block}
+.product-card:hover .product-view{transform:translateX(-4px)}
 .preset-art{background-image:url("preset-pack.jpg")}
 .cc-art{background-image:url("color-collection.jpg")}
 .neptune-art{background-image:url("pic001.png")}
@@ -594,14 +605,29 @@ const card=document.createElement("div");
 card.className="review-card";
 const avatarHtml=r.photoURL?'<img src="'+r.photoURL+'" alt="">':(r.username||"?").charAt(0).toUpperCase();
 const avatarStyle=r.photoURL?"":("background:"+avatarColorFor(r.username||"?"));
+const canDelete=currentUser&&(currentUser.uid===r.uid||(currentProfile&&currentProfile.isOwner));
+const deleteBtnHtml=canDelete?'<button class="review-delete-btn" data-review-id="'+docSnap.id+'" title="حذف">🗑️</button>':'';
 card.innerHTML=`
 <div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div>
 <div style="flex:1">
-<div class="review-meta">${r.isOwner?'<span class="review-owner-badge">🖤 Owner</span>':''}<strong>${r.username||"کاربر"}</strong><span class="review-stars">${starsStr(r.rating||5)}</span></div>
+<div class="review-meta">${r.isOwner?'<span class="review-owner-badge">🖤 Owner</span>':''}<strong>${r.username||"کاربر"}</strong><span class="review-stars">${starsStr(r.rating||5)}</span>${deleteBtnHtml}</div>
 <div class="review-text">${(r.text||"").replace(/</g,"&lt;")}</div>
 </div>`;
 list.appendChild(card);
 });
+});
+document.getElementById("reviewsList").addEventListener("click",async(e)=>{
+const btn=e.target.closest(".review-delete-btn");
+if(!btn)return;
+if(!confirm("مطمئنی می‌خوای این کامنت رو حذف کنی؟"))return;
+btn.disabled=true;
+try{
+await db.collection("reviews").doc(btn.dataset.reviewId).delete();
+}catch(err){
+console.error("XZEOUS review delete error:",err.code,err.message,err);
+alert("حذف نشد: Rule فایراستور اجازه نمی‌ده ("+(err.code||err.message)+")");
+btn.disabled=false;
+}
 });
 
 
