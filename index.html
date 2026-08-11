@@ -8,7 +8,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 @font-face{font-family:"Doran";src:url("Doran-VF[@mimvid].ttf") format("truetype");font-weight:100 900;font-display:swap}
-body{background:#05030a;color:#fff;font-family:"Doran",Arial,Tahoma,sans-serif;overflow-x:hidden}
+body{background:#05030a;color:#fff;font-family:"Doran",Arial,Tahoma,sans-serif;overflow-x:hidden;transition:background .4s}
+body.theme-cute-bg{background:linear-gradient(160deg,#1c0f24,#170a20 45%,#0f0715)}
 a{color:inherit;text-decoration:none}
 section{scroll-margin-top:100px;padding:100px 0}
 .container{width:min(1150px,calc(100% - 30px));margin:auto}
@@ -378,9 +379,10 @@ function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
 const themeBtn=document.getElementById("themeToggle"),themeIcon=document.getElementById("themeIcon"),themeLabel=document.getElementById("themeLabel"),themeScope=document.getElementById("themeScope");
-if(safeGet("xzeous_theme")==="cute"){themeScope.classList.add("theme-cute");themeIcon.textContent="😡";themeLabel.textContent="عادی";}
+if(safeGet("xzeous_theme")==="cute"){themeScope.classList.add("theme-cute");document.body.classList.add("theme-cute-bg");themeIcon.textContent="😡";themeLabel.textContent="عادی";}
 themeBtn.addEventListener("click",()=>{
 const isCute=themeScope.classList.toggle("theme-cute");
+document.body.classList.toggle("theme-cute-bg",isCute);
 themeIcon.textContent=isCute?"😡":"🎀";
 themeLabel.textContent=isCute?"عادی":"کیوت";
 safeSet("xzeous_theme",isCute?"cute":"default");
@@ -560,6 +562,12 @@ document.getElementById("submitReview").addEventListener("click",async()=>{
 if(!currentUser)return;
 const text=document.getElementById("reviewText").value.trim();
 if(!text)return;
+const submitBtn=document.getElementById("submitReview");
+let errBox=document.getElementById("reviewSubmitError");
+if(!errBox){errBox=document.createElement("div");errBox.id="reviewSubmitError";errBox.style.cssText="color:#ff6b6b;font-size:11px;margin-top:8px;display:none";submitBtn.insertAdjacentElement("afterend",errBox);}
+errBox.style.display="none";
+submitBtn.disabled=true;
+try{
 await db.collection("reviews").add({
 uid:currentUser.uid,username:currentProfile.username,photoURL:currentProfile.photoURL||null,
 isOwner:!!currentProfile.isOwner,rating:selectedStars,text:text,
@@ -567,6 +575,12 @@ createdAt:firebase.firestore.FieldValue.serverTimestamp()
 });
 document.getElementById("reviewText").value="";
 selectedStars=5;renderStarPicker();
+}catch(e){
+console.error("XZEOUS review submit error:",e.code,e.message,e);
+errBox.textContent="ثبت نظر با خطا مواجه شد: Rule فایراستور بخش reviews رو چک کن ("+(e.code||e.message)+")";
+errBox.style.display="block";
+}
+submitBtn.disabled=false;
 });
 
 function starsStr(n){return "★".repeat(n)+"☆".repeat(5-n);}
