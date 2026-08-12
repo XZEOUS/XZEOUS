@@ -97,6 +97,28 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .review-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .review-delete-btn{margin-right:auto;background:none;border:none;color:#7a7383;cursor:pointer;font-size:13px;opacity:.7;transition:.2s}
 .review-delete-btn:hover{opacity:1;color:#ff6b6b}
+.premium-badge{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;font-size:8px;color:#0c0813;margin:0 2px;vertical-align:middle}
+.premium-box{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.premium-box-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:bold}
+.premium-status-off{color:#7a7383;font-size:10px;font-weight:normal}
+.premium-status-on{color:#facc15;font-size:10px;font-weight:normal}
+.premium-colors{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.premium-swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s}
+.premium-swatch.active{border-color:#fff;transform:scale(1.12)}
+.clickable-name{cursor:pointer}
+.clickable-name:hover{text-decoration:underline}
+.pv-banner{height:95px}
+.pv-avatar{width:86px;height:86px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:28px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);overflow:hidden;border:4px solid #0c0813}
+.pv-avatar img{width:100%;height:100%;object-fit:cover}
+.emoji-item.sticker-emoji{font-size:19px}
+.premium-lock-row{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;font-size:10px;color:#9991a4;width:100%}
+.premium-lock-row a{color:#c4b5fd;cursor:pointer}
+.premium-plans{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.premium-plan-card{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:.2s}
+.premium-plan-card:hover{background:rgba(139,92,246,.12);border-color:rgba(167,139,250,.3)}
+.premium-plan-name{font-size:12px;font-weight:bold}
+.premium-plan-cta{font-size:10px;color:#9991a4;margin-top:3px}
+.premium-plan-price{font-size:13px;color:#c4b5fd;font-weight:900;white-space:nowrap}
 .conv-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;cursor:pointer;transition:.2s}
 .conv-item:hover{background:rgba(255,255,255,.05)}
 .conv-item .conv-info{flex:1;min-width:0}
@@ -353,10 +375,38 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <p id="accountEmail" style="color:#9991a4;font-size:11px">-</p>
 </div>
 <div class="signup-field"><label>یوزرنیم</label><input type="text" id="suEditUsername" placeholder="یوزرنیم جدید"></div>
+<div class="signup-field"><label>نام</label><input type="text" id="suName" placeholder="اسمت"></div>
+<div class="signup-field"><label>بیو</label><textarea id="suBio" placeholder="یه چیزی درباره خودت بنویس..." style="width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:inherit;font-size:13px;resize:vertical;min-height:60px"></textarea></div>
+<div class="signup-field"><label>سن</label><input type="number" id="suAge" placeholder="سنت" min="1" max="120"></div>
 <div class="signup-field"><label>لینک عکس پروفایل (اختیاری)</label><input type="text" id="suPhoto" placeholder="https://..."></div>
 <div class="signup-error" id="profileError"></div>
 <button class="signup-submit" id="saveProfile">ذخیره تغییرات</button>
+
+<div class="premium-box" id="premiumBox">
+<div class="premium-box-head"><span>💎 زئوس پرمیوم</span><span id="premiumStatusTag" class="premium-status-off">غیرفعال</span></div>
+<p style="color:#9991a4;font-size:11px;line-height:1.8;margin-top:6px">رنگ اختصاصی دور عکس و اسمت، بنر رنگی تو پروفایل، یه آیکون و تیک رنگی کنار اسمت، و دسترسی به ایموجی‌های مخصوص تو چت.</p>
+<div id="premiumActiveArea" style="display:none">
+<div class="premium-colors" id="premiumColors"></div>
+<button class="signup-submit" id="togglePremiumBtn" style="margin-top:10px;background:rgba(255,255,255,.06)">غیرفعال‌سازی پرمیوم</button>
+</div>
+<div id="premiumPlansArea" class="premium-plans"></div>
+</div>
+
 <button class="signup-submit" id="logoutBtn" style="background:rgba(255,255,255,.06);margin-top:10px">خروج از حساب</button>
+</div>
+</div>
+
+<div class="signup-box" id="profileViewBox">
+<div class="signup-card" style="max-width:340px;padding:0;overflow:hidden">
+<button class="signup-close" id="profileViewClose" style="z-index:2">×</button>
+<div id="pvBanner" class="pv-banner"></div>
+<div style="padding:0 26px 26px;margin-top:-45px;text-align:center;position:relative">
+<div id="pvAvatar" class="pv-avatar"></div>
+<h3 id="pvName" style="margin-top:12px"></h3>
+<p id="pvUsername" style="color:#9991a4;font-size:12px" dir="ltr"></p>
+<div id="pvAge" style="color:#c4b5fd;font-size:11px;margin-top:4px"></div>
+<p id="pvBio" style="color:#c8c0d0;font-size:13px;line-height:1.8;margin-top:14px"></p>
+</div>
 </div>
 </div>
 
@@ -410,6 +460,23 @@ function avatarColorFor(str){let h=0;for(let i=0;i<str.length;i++)h=str.charCode
 function renderAvatar(el,username,photoURL){
 if(photoURL){el.innerHTML='<img src="'+photoURL+'" alt="">';}
 else{el.style.background=avatarColorFor(username||"?");el.textContent=(username||"?").charAt(0).toUpperCase();}
+}
+const PREMIUM_COLORS=["#8b5cf6","#f472b6","#38bdf8","#facc15","#34d399","#f87171"];
+function applyPremiumRing(el,profile){
+if(profile&&profile.isPremium){el.style.boxShadow="0 0 0 2px "+(profile.premiumColor||"#8b5cf6");}
+else{el.style.boxShadow="";}
+}
+function nameBadgeHtml(profile){
+if(!profile)return"";
+if(profile.isOwner)return' <span class="review-owner-badge">🖤 Owner</span>';
+if(profile.isPremium){
+const c=profile.premiumColor||"#8b5cf6";
+return ' <span class="premium-badge" style="background:'+c+'">✔</span>';
+}
+return"";
+}
+function nameColorStyle(profile){
+return (profile&&profile.isPremium)?("color:"+(profile.premiumColor||"#8b5cf6")):"";
 }
 </script>
 <script>
@@ -513,10 +580,80 @@ document.getElementById("accountUsername").textContent=currentProfile?currentPro
 document.getElementById("accountEmail").textContent=currentUser.email;
 document.getElementById("suPhoto").value=(currentProfile&&currentProfile.photoURL)||"";
 document.getElementById("suEditUsername").value=(currentProfile&&currentProfile.username)||"";
+document.getElementById("suName").value=(currentProfile&&currentProfile.name)||"";
+document.getElementById("suBio").value=(currentProfile&&currentProfile.bio)||"";
+document.getElementById("suAge").value=(currentProfile&&currentProfile.age)||"";
 document.getElementById("profileError").style.display="none";
 renderAvatar(document.getElementById("accountAvatar"),currentProfile&&currentProfile.username,currentProfile&&currentProfile.photoURL);
+applyPremiumRing(document.getElementById("accountAvatar"),currentProfile);
+renderPremiumBox();
 accountBox.classList.add("open");
 }
+let selectedPremiumColor=PREMIUM_COLORS[0];
+const PREMIUM_TELEGRAM_USERNAME="XZEOUS_AE";
+const PREMIUM_PLANS=[
+{label:"اشتراک ۱ ماهه",price:"۵۷,۰۰۰ تومان"},
+{label:"اشتراک ۳ ماهه",price:"۱۳۰,۰۰۰ تومان"},
+{label:"اشتراک ۱ ساله",price:"۲۹۹,۰۰۰ تومان"}
+];
+function premiumTelegramLink(plan){
+const msg="سلام، می‌خوام "+plan.label+" زئوس پرمیوم رو بخرم 💎";
+return "https://t.me/"+PREMIUM_TELEGRAM_USERNAME+"?text="+encodeURIComponent(msg);
+}
+function renderPremiumBox(){
+const isPremium=!!(currentProfile&&currentProfile.isPremium);
+selectedPremiumColor=(currentProfile&&currentProfile.premiumColor)||PREMIUM_COLORS[0];
+const tag=document.getElementById("premiumStatusTag");
+tag.textContent=isPremium?"فعاله":"غیرفعال";
+tag.className=isPremium?"premium-status-on":"premium-status-off";
+document.getElementById("premiumActiveArea").style.display=isPremium?"block":"none";
+const plansArea=document.getElementById("premiumPlansArea");
+plansArea.style.display=isPremium?"none":"flex";
+if(isPremium){
+const colorsBox=document.getElementById("premiumColors");
+colorsBox.innerHTML=PREMIUM_COLORS.map(c=>'<div class="premium-swatch'+(c===selectedPremiumColor?" active":"")+'" data-color="'+c+'" style="background:'+c+'"></div>').join("");
+}else{
+plansArea.innerHTML=PREMIUM_PLANS.map(p=>
+'<a class="premium-plan-card" target="_blank" href="'+premiumTelegramLink(p)+'"><div><div class="premium-plan-name">'+p.label+'</div><div class="premium-plan-cta">خرید در تلگرام ↗</div></div><div class="premium-plan-price">'+p.price+'</div></a>'
+).join("");
+}
+}
+document.getElementById("premiumColors").addEventListener("click",async e=>{
+const sw=e.target.closest(".premium-swatch");
+if(!sw||!currentUser||!(currentProfile&&currentProfile.isPremium))return;
+selectedPremiumColor=sw.dataset.color;
+document.querySelectorAll(".premium-swatch").forEach(s=>s.classList.toggle("active",s===sw));
+try{
+const data={premiumColor:selectedPremiumColor};
+await db.collection("users").doc(currentUser.uid).set(data,{merge:true});
+await db.collection("publicProfiles").doc(currentUser.uid).set(data,{merge:true});
+currentProfile.premiumColor=selectedPremiumColor;
+safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
+applyPremiumRing(document.getElementById("accountAvatar"),currentProfile);
+updateNavUI();
+}catch(err){console.error("XZEOUS premium color error:",err.code,err.message,err);}
+});
+document.getElementById("togglePremiumBtn").addEventListener("click",async()=>{
+if(!currentUser)return;
+const btn=document.getElementById("togglePremiumBtn");
+btn.disabled=true;
+try{
+const data={isPremium:false,premiumColor:null};
+await db.collection("users").doc(currentUser.uid).set(data,{merge:true});
+await db.collection("publicProfiles").doc(currentUser.uid).set(data,{merge:true});
+currentProfile.isPremium=false;
+currentProfile.premiumColor=null;
+safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
+renderPremiumBox();
+applyPremiumRing(document.getElementById("accountAvatar"),currentProfile);
+updateNavUI();
+if(typeof renderEmojiBar==="function")renderEmojiBar();
+}catch(e){
+console.error("XZEOUS premium toggle error:",e.code,e.message,e);
+alert("تغییر وضعیت پرمیوم ذخیره نشد: "+(e.code||e.message));
+}
+btn.disabled=false;
+});
 signupOpen.addEventListener("click",openAuthModal);
 signupClose.addEventListener("click",()=>signupBox.classList.remove("open"));
 signupBox.addEventListener("click",e=>{if(e.target===signupBox)signupBox.classList.remove("open");});
@@ -535,12 +672,13 @@ if(authMode==="signup"){
 if(!u){authError.textContent="یوزرنیم رو وارد کن";authError.style.display="block";suSubmit.disabled=false;return;}
 const cred=await auth.createUserWithEmailAndPassword(em,pw);
 try{
-  await db.collection("users").doc(cred.user.uid).set({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  await db.collection("publicProfiles").doc(cred.user.uid).set({username:u,photoURL:null});
+  const newProfileData={username:u,name:null,bio:null,age:null,photoURL:null,isOwner:em===OWNER_EMAIL,isPremium:false,premiumColor:null};
+  await db.collection("users").doc(cred.user.uid).set(Object.assign({email:em,createdAt:firebase.firestore.FieldValue.serverTimestamp()},newProfileData));
+  await db.collection("publicProfiles").doc(cred.user.uid).set(newProfileData);
 }catch(profileErr){
   console.error("XZEOUS profile save error:",profileErr.code,profileErr.message,profileErr);
   // Authentication succeeded; keep a local profile so the user is not told signup failed.
-  safeSet("xzeous_profile_"+cred.user.uid,JSON.stringify({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL}));
+  safeSet("xzeous_profile_"+cred.user.uid,JSON.stringify({username:u,name:null,bio:null,age:null,photoURL:null,isOwner:em===OWNER_EMAIL,isPremium:false,premiumColor:null}));
 }
 successMsg.textContent="خوش اومدی "+u+"! 🖤";
 }else{
@@ -575,15 +713,19 @@ document.getElementById("saveProfile").addEventListener("click",async()=>{
 if(!currentUser)return;
 const photo=document.getElementById("suPhoto").value.trim();
 const newUsername=document.getElementById("suEditUsername").value.trim();
+const newName=document.getElementById("suName").value.trim();
+const newBio=document.getElementById("suBio").value.trim();
+const newAgeRaw=document.getElementById("suAge").value.trim();
+const newAge=newAgeRaw?parseInt(newAgeRaw):null;
 const profileError=document.getElementById("profileError");
 profileError.style.display="none";
 if(!newUsername){profileError.textContent="یوزرنیم نمی‌تونه خالی باشه";profileError.style.display="block";return;}
 const saveBtn=document.getElementById("saveProfile");saveBtn.disabled=true;
 try{
-await db.collection("users").doc(currentUser.uid).set({username:newUsername,photoURL:photo||null,email:currentUser.email,isOwner:currentUser.email===OWNER_EMAIL},{merge:true});
-await db.collection("publicProfiles").doc(currentUser.uid).set({username:newUsername,photoURL:photo||null});
-currentProfile.username=newUsername;
-currentProfile.photoURL=photo||null;
+const updateData={username:newUsername,name:newName||null,bio:newBio||null,age:newAge,photoURL:photo||null};
+await db.collection("users").doc(currentUser.uid).set(Object.assign({email:currentUser.email,isOwner:currentUser.email===OWNER_EMAIL},updateData),{merge:true});
+await db.collection("publicProfiles").doc(currentUser.uid).set(updateData,{merge:true});
+Object.assign(currentProfile,updateData);
 safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
 updateNavUI();
 document.getElementById("accountUsername").textContent=newUsername;
@@ -601,12 +743,35 @@ await auth.signOut();
 accountBox.classList.remove("open");
 });
 
+const profileViewBox=document.getElementById("profileViewBox");
+document.getElementById("profileViewClose").addEventListener("click",()=>profileViewBox.classList.remove("open"));
+profileViewBox.addEventListener("click",e=>{if(e.target===profileViewBox)profileViewBox.classList.remove("open");});
+function openProfileView(profile){
+if(!profile)return;
+const isPremium=!!profile.isPremium,color=profile.premiumColor||"#8b5cf6";
+document.getElementById("pvBanner").style.background=isPremium?("linear-gradient(135deg,"+color+",#0c0813)"):"linear-gradient(135deg,#3b2a55,#0c0813)";
+const pvAvatar=document.getElementById("pvAvatar");
+renderAvatar(pvAvatar,profile.username,profile.photoURL);
+pvAvatar.style.boxShadow=isPremium?("0 0 0 3px "+color):"";
+document.getElementById("pvName").innerHTML=(profile.name?profile.name:profile.username||"کاربر")+nameBadgeHtml(profile);
+document.getElementById("pvUsername").textContent="@"+(profile.username||"کاربر");
+document.getElementById("pvAge").textContent=profile.age?("سن: "+profile.age):"";
+document.getElementById("pvAge").style.display=profile.age?"block":"none";
+document.getElementById("pvBio").textContent=profile.bio||"بیویی ثبت نشده.";
+profileViewBox.classList.add("open");
+}
+function bindProfileOpen(el,profile){
+el.classList.add("clickable-name");
+el.addEventListener("click",()=>openProfileView(profile));
+}
+
 function updateNavUI(){
 const navAvatar=document.getElementById("navAvatar"),navAuthLabel=document.getElementById("navAuthLabel");
 if(currentUser&&currentProfile){
 navAvatar.style.display="flex";
 renderAvatar(navAvatar,currentProfile.username,currentProfile.photoURL);
-navAuthLabel.textContent=currentProfile.username;
+applyPremiumRing(navAvatar,currentProfile);
+navAuthLabel.innerHTML=currentProfile.username+nameBadgeHtml(currentProfile);
 }else{
 navAvatar.style.display="none";
 navAuthLabel.textContent="ثبت‌نام";
@@ -618,14 +783,14 @@ currentUser=user;
 if(user){
 try{
   const doc=await db.collection("users").doc(user.uid).get();
-  currentProfile=doc.exists?doc.data():{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+  currentProfile=doc.exists?doc.data():{username:user.email.split("@")[0],name:null,bio:null,age:null,email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL,isPremium:false,premiumColor:null};
 }catch(profileErr){
   console.error("XZEOUS profile read error:",profileErr.code,profileErr.message,profileErr);
   try{
     const local=JSON.parse(safeGet("xzeous_profile_"+user.uid)||"null");
-    currentProfile=local||{username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+    currentProfile=local||{username:user.email.split("@")[0],name:null,bio:null,age:null,email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL,isPremium:false,premiumColor:null};
   }catch(_){
-    currentProfile={username:user.email.split("@")[0],email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL};
+    currentProfile={username:user.email.split("@")[0],name:null,bio:null,age:null,email:user.email,photoURL:null,isOwner:user.email===OWNER_EMAIL,isPremium:false,premiumColor:null};
   }
 }
 }else{
@@ -635,6 +800,7 @@ updateNavUI();
 renderReviewForm();
 if(typeof renderReviewsList==="function")renderReviewsList();
 if(typeof updateMessagesUI==="function")updateMessagesUI();
+if(typeof renderEmojiBar==="function")renderEmojiBar();
 });
 
 function renderReviewForm(){
@@ -668,8 +834,9 @@ errBox.style.display="none";
 submitBtn.disabled=true;
 try{
 await db.collection("reviews").add({
-uid:currentUser.uid,username:currentProfile.username,photoURL:currentProfile.photoURL||null,
-isOwner:!!currentProfile.isOwner,rating:selectedStars,text:text,
+uid:currentUser.uid,username:currentProfile.username,name:currentProfile.name||null,photoURL:currentProfile.photoURL||null,
+isOwner:!!currentProfile.isOwner,isPremium:!!currentProfile.isPremium,premiumColor:currentProfile.premiumColor||null,
+age:currentProfile.age||null,bio:currentProfile.bio||null,rating:selectedStars,text:text,
 createdAt:firebase.firestore.FieldValue.serverTimestamp()
 });
 document.getElementById("reviewText").value="";
@@ -695,15 +862,18 @@ const r=docSnap.data();
 const card=document.createElement("div");
 card.className="review-card";
 const avatarHtml=r.photoURL?'<img src="'+r.photoURL+'" alt="">':(r.username||"?").charAt(0).toUpperCase();
-const avatarStyle=r.photoURL?"":("background:"+avatarColorFor(r.username||"?"));
+const avatarStyle=(r.photoURL?"":("background:"+avatarColorFor(r.username||"?")))+(r.isPremium?(";box-shadow:0 0 0 2px "+(r.premiumColor||"#8b5cf6")):"");
 const canDelete=currentUser&&(currentUser.uid===r.uid||(currentProfile&&currentProfile.isOwner));
 const deleteBtnHtml=canDelete?'<button class="review-delete-btn" data-review-id="'+docSnap.id+'" title="حذف">🗑️</button>':'';
+const nameStyle=r.isOwner?"":('style="'+nameColorStyle(r)+'"');
 card.innerHTML=`
-<div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div>
+<div class="review-avatar clickable-name" style="${avatarStyle}">${avatarHtml}</div>
 <div style="flex:1">
-<div class="review-meta">${r.isOwner?'<span class="review-owner-badge">🖤 Owner</span>':''}<strong>${r.username||"کاربر"}</strong><span class="review-stars">${starsStr(r.rating||5)}</span>${deleteBtnHtml}</div>
+<div class="review-meta"><strong class="clickable-name" ${nameStyle}>${r.username||"کاربر"}</strong>${nameBadgeHtml(r)}<span class="review-stars">${starsStr(r.rating||5)}</span>${deleteBtnHtml}</div>
 <div class="review-text">${(r.text||"").replace(/</g,"&lt;")}</div>
 </div>`;
+const openThis=()=>openProfileView(r);
+card.querySelectorAll(".clickable-name").forEach(el=>el.addEventListener("click",openThis));
 list.appendChild(card);
 });
 }
@@ -763,8 +933,21 @@ const chatPartnerName=document.getElementById("chatPartnerName"),chatPartnerAvat
 let activeChatId=null, activeChatUnsub=null, convUnsub=null, isGroupChat=false;
 const GROUP_CHAT_LABEL="گپ عمومی زعوس 🌐";
 const EMOJI_LIST=["😂","❤️","🔥","😭","🖤","😍","👍","🥺","😎","🎉","😢","🤝","👀","💯","😅","🙏","✨","😡","🤔","🫡"];
+const PREMIUM_STICKER_LIST=["🦄","🌈","🍭","🎀","🧸","🍓","🦋","🌸","🍒","🌚","🥸","🍑"];
 
-document.getElementById("emojiBar").innerHTML=EMOJI_LIST.map(e=>`<button class="emoji-item" data-emoji="${e}">${e}</button>`).join("");
+function renderEmojiBar(){
+const isPremium=!!(currentProfile&&currentProfile.isPremium);
+let html=EMOJI_LIST.map(e=>`<button class="emoji-item" data-emoji="${e}">${e}</button>`).join("");
+if(isPremium){
+html+=PREMIUM_STICKER_LIST.map(e=>`<button class="emoji-item sticker-emoji" data-emoji="${e}">${e}</button>`).join("");
+}else{
+html+='<div class="premium-lock-row">🔒 ایموجی‌های استیکری مخصوص زئوس پرمیومه <a id="emojiPremiumUpsell">فعالش کن 💎</a></div>';
+}
+document.getElementById("emojiBar").innerHTML=html;
+const upsell=document.getElementById("emojiPremiumUpsell");
+if(upsell)upsell.addEventListener("click",()=>{if(!currentUser){openAuthModal();return;}openAccountModal();});
+}
+renderEmojiBar();
 document.getElementById("emojiBar").addEventListener("click",e=>{
 const btn=e.target.closest(".emoji-item");
 if(!btn)return;
@@ -817,9 +1000,9 @@ const u=doc.data();
 const item=document.createElement("div");
 item.className="search-result-item";
 const avatarHtml=u.photoURL?'<img src="'+u.photoURL+'" alt="" style="width:100%;height:100%;object-fit:cover">':(u.username||"?").charAt(0).toUpperCase();
-const avatarStyle=u.photoURL?"":("background:"+avatarColorFor(u.username||"?"));
-item.innerHTML=`<div class="review-avatar" style="width:32px;height:32px;font-size:12px;${avatarStyle}">${avatarHtml}</div><span style="font-size:12px">${u.username||"کاربر"}</span>`;
-item.addEventListener("click",()=>{openChat(doc.id,u.username,u.photoURL);userSearchInput.value="";userSearchResults.innerHTML="";});
+const avatarStyle=(u.photoURL?"":("background:"+avatarColorFor(u.username||"?")))+(u.isPremium?(";box-shadow:0 0 0 2px "+(u.premiumColor||"#8b5cf6")):"");
+item.innerHTML=`<div class="review-avatar" style="width:32px;height:32px;font-size:12px;${avatarStyle}">${avatarHtml}</div><span style="font-size:12px;${u.isOwner?"":nameColorStyle(u)}">${u.username||"کاربر"}</span>${nameBadgeHtml(u)}`;
+item.addEventListener("click",()=>{openChat(doc.id,u.username,u.photoURL,u);userSearchInput.value="";userSearchResults.innerHTML="";});
 userSearchResults.appendChild(item);
 });
 }catch(e){console.error("XZEOUS user search error:",e.code,e.message);}
@@ -842,9 +1025,9 @@ if(unread)hasUnread=true;
 const item=document.createElement("div");
 item.className="conv-item";
 const avatarHtml=otherProfile.photoURL?'<img src="'+otherProfile.photoURL+'" alt="" style="width:100%;height:100%;object-fit:cover">':(otherProfile.username||"?").charAt(0).toUpperCase();
-const avatarStyle=otherProfile.photoURL?"":("background:"+avatarColorFor(otherProfile.username||"?"));
-item.innerHTML=`<div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div><div class="conv-info"><div class="conv-name">${otherProfile.username||"کاربر"}</div><div class="conv-last">${(c.lastMessage||"").replace(/</g,"&lt;")}</div></div>${unread?'<div class="conv-dot"></div>':''}`;
-item.addEventListener("click",()=>openChat(otherUid,otherProfile.username,otherProfile.photoURL));
+const avatarStyle=(otherProfile.photoURL?"":("background:"+avatarColorFor(otherProfile.username||"?")))+(otherProfile.isPremium?(";box-shadow:0 0 0 2px "+(otherProfile.premiumColor||"#8b5cf6")):"");
+item.innerHTML=`<div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div><div class="conv-info"><div class="conv-name" style="${otherProfile.isOwner?"":nameColorStyle(otherProfile)}">${otherProfile.username||"کاربر"}${nameBadgeHtml(otherProfile)}</div><div class="conv-last">${(c.lastMessage||"").replace(/</g,"&lt;")}</div></div>${unread?'<div class="conv-dot"></div>':''}`;
+item.addEventListener("click",()=>openChat(otherUid,otherProfile.username,otherProfile.photoURL,otherProfile));
 conversationsList.appendChild(item);
 });
 document.getElementById("unreadDot").style.display=hasUnread?"block":"none";
@@ -858,6 +1041,12 @@ activeChatId=null;
 msgListView.style.display="none";
 chatView.style.display="flex";
 chatPartnerName.textContent=GROUP_CHAT_LABEL;
+chatPartnerName.style.cssText="";
+chatPartnerName.onclick=null;
+chatPartnerAvatar.onclick=null;
+chatPartnerAvatar.style.boxShadow="";
+chatPartnerName.classList.remove("clickable-name");
+chatPartnerAvatar.classList.remove("clickable-name");
 chatPartnerAvatar.innerHTML="🌐";
 chatPartnerAvatar.style.background="linear-gradient(135deg,#8b5cf6,#2563eb)";
 chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
@@ -873,20 +1062,30 @@ const m=doc.data();
 const mine=m.senderId===currentUser.uid;
 const bubble=document.createElement("div");
 bubble.className="chat-bubble "+(mine?"mine":"theirs");
-bubble.innerHTML=(mine?"":'<span class="sender-name">'+(m.senderUsername||"کاربر")+'</span>')+(m.text||"").replace(/</g,"&lt;");
+const senderProfile={username:m.senderUsername,isOwner:m.senderIsOwner,isPremium:m.senderIsPremium,premiumColor:m.senderPremiumColor};
+const senderHtml=mine?"":('<span class="sender-name clickable-name" style="'+(m.senderIsOwner?"":nameColorStyle(senderProfile))+'">'+(m.senderUsername||"کاربر")+'</span>'+nameBadgeHtml(senderProfile));
+bubble.innerHTML=senderHtml+(m.text||"").replace(/</g,"&lt;");
+if(!mine)bubble.querySelector(".sender-name").addEventListener("click",()=>openProfileView(senderProfile));
 chatMessages.appendChild(bubble);
 });
 chatMessages.scrollTop=chatMessages.scrollHeight;
 });
 }
 
-async function openChat(otherUid,otherUsername,otherPhoto){
+async function openChat(otherUid,otherUsername,otherPhoto,otherProfileFull){
 isGroupChat=false;
 activeChatId=chatIdFor(currentUser.uid,otherUid);
 msgListView.style.display="none";
 chatView.style.display="flex";
-chatPartnerName.textContent=otherUsername||"کاربر";
+const partnerProfile=otherProfileFull||{username:otherUsername,photoURL:otherPhoto};
+chatPartnerName.innerHTML=(otherUsername||"کاربر")+nameBadgeHtml(partnerProfile);
+chatPartnerName.style.cssText=partnerProfile.isOwner?"":nameColorStyle(partnerProfile);
 renderAvatar(chatPartnerAvatar,otherUsername,otherPhoto);
+applyPremiumRing(chatPartnerAvatar,partnerProfile);
+chatPartnerName.onclick=()=>openProfileView(partnerProfile);
+chatPartnerAvatar.onclick=()=>openProfileView(partnerProfile);
+chatPartnerName.classList.add("clickable-name");
+chatPartnerAvatar.classList.add("clickable-name");
 chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
 
 const chatRef=db.collection("chats").doc(activeChatId);
@@ -896,8 +1095,8 @@ if(!chatDoc.exists){
 await chatRef.set({
 participants:[currentUser.uid,otherUid],
 participantProfiles:{
-[currentUser.uid]:{username:currentProfile.username,photoURL:currentProfile.photoURL||null},
-[otherUid]:{username:otherUsername||null,photoURL:otherPhoto||null}
+[currentUser.uid]:{username:currentProfile.username,photoURL:currentProfile.photoURL||null,isOwner:!!currentProfile.isOwner,isPremium:!!currentProfile.isPremium,premiumColor:currentProfile.premiumColor||null},
+[otherUid]:{username:otherUsername||null,photoURL:otherPhoto||null,isOwner:!!partnerProfile.isOwner,isPremium:!!partnerProfile.isPremium,premiumColor:partnerProfile.premiumColor||null}
 },
 lastMessage:"",lastMessageAt:firebase.firestore.FieldValue.serverTimestamp(),
 unread:{[currentUser.uid]:false,[otherUid]:false}
@@ -939,6 +1138,7 @@ chatMessageInput.value="";
 try{
 await db.collection("groupMessages").add({
 senderId:currentUser.uid,senderUsername:currentProfile.username,senderPhoto:currentProfile.photoURL||null,
+senderIsOwner:!!currentProfile.isOwner,senderIsPremium:!!currentProfile.isPremium,senderPremiumColor:currentProfile.premiumColor||null,
 text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()
 });
 }catch(e){
