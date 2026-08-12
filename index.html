@@ -97,6 +97,21 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .review-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .review-delete-btn{margin-right:auto;background:none;border:none;color:#7a7383;cursor:pointer;font-size:13px;opacity:.7;transition:.2s}
 .review-delete-btn:hover{opacity:1;color:#ff6b6b}
+.conv-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;cursor:pointer;transition:.2s}
+.conv-item:hover{background:rgba(255,255,255,.05)}
+.conv-item .conv-info{flex:1;min-width:0}
+.conv-item .conv-name{font-size:12px;font-weight:bold}
+.conv-item .conv-last{font-size:11px;color:#8f889a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-item .conv-dot{width:8px;height:8px;border-radius:50%;background:#8b5cf6;flex-shrink:0}
+.search-result-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;cursor:pointer}
+.search-result-item:hover{background:rgba(255,255,255,.05)}
+.chat-bubble{max-width:75%;padding:9px 13px;border-radius:16px;font-size:12px;line-height:1.6;word-wrap:break-word}
+.chat-bubble .sender-name{font-size:9px;color:#a78bfa;font-weight:bold;display:block;margin-bottom:3px}
+#emojiBar.show{display:flex!important}
+.emoji-item{background:none;border:none;font-size:20px;cursor:pointer;padding:4px;border-radius:8px;transition:.15s}
+.emoji-item:hover{background:rgba(255,255,255,.08);transform:scale(1.15)}
+.chat-bubble.mine{align-self:flex-start;background:linear-gradient(135deg,#8b5cf6,#2563eb);color:#fff;border-bottom-left-radius:4px}
+.chat-bubble.theirs{align-self:flex-end;background:rgba(255,255,255,.07);border-bottom-right-radius:4px}
 .signup-success{display:none;text-align:center;padding:10px 0}
 .signup-success.show{display:block}
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%)!important;z-index:999999!important;width:max-content;min-width:300px;max-width:calc(100vw - 24px);height:70px;display:flex!important;align-items:center;justify-content:center;gap:5px;padding:7px;border-radius:25px;background:rgba(20,16,30,.70);border:1px solid rgba(255,255,255,.17);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);box-shadow:0 20px 60px rgba(0,0,0,.55),inset 0 1px 1px rgba(255,255,255,.18);opacity:1!important;visibility:visible!important;pointer-events:auto!important}
@@ -159,6 +174,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <span id="navAuthLabel">ثبت‌نام</span>
 </button>
 <a href="#contact" class="nav-button">ارتباط</a>
+<button id="messagesOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit;position:relative;display:none">💬<span id="unreadDot" style="display:none;position:absolute;top:-3px;left:-3px;width:9px;height:9px;border-radius:50%;background:#ff5c5c"></span></button>
 </div>
 </nav>
 
@@ -262,7 +278,6 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="glass faq-item"><button class="question">برای دوره و پریست ها باید After Effects بلد باشم؟<span>+</span></button><div class="answer">برای پریست ها نه زیاد اگه داخل اد کردنشون مشکل خوردید به پشتیباینی پیام بدید برای دوره ادیت هم دوتا پنل داریم صفر تا صد و ادیت حرفه ای </div></div>
 <div class="glass faq-item"><button class="question">بعد از خرید محصول چه چیزی دریافت می‌کنم؟<span>+</span></button><div class="answer">بسته به محصول، فایل Preset یا مجموعه CC دریافت می‌کنی. جزئیات دقیق هر محصول در صفحه خرید قرار می‌گیرد.</div></div>
 <div class="glass faq-item"><button class="question">چطور محصول را تهیه کنم؟<span>+</span></button><div class="answer">روی دکمه خرید محصول بزن یا از طریق آیدی تلگرام @XZEOUS_AE پیام بده.</div></div>
-<div class="glass faq-item"><button class="question">شومبول میخوام🥵😭😢<span>+</span></button><div class="answer">تموم کردیم🥺.</div></div>
 </div></div></section>
 
 <section id="contact" class="reveal"><div class="container"><div class="heading"><div class="tag">CONTACT</div><h2>ارتباط با XZEOUS</h2><p>برای سفارش، همکاری یا خرید محصول مستقیماً پیام بده.</p></div>
@@ -345,6 +360,42 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 </div>
 
+<div class="signup-box" id="messagesBox">
+<div class="signup-card" style="max-width:420px;height:min(600px,80vh);display:flex;flex-direction:column;padding:0;overflow:hidden">
+
+<div id="msgListView" style="display:flex;flex-direction:column;height:100%">
+<div style="padding:18px 18px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)">
+<h3 style="margin:0;font-size:16px">پیام‌ها 🖤</h3>
+<button class="signup-close" id="messagesClose" style="position:static">×</button>
+</div>
+<div style="padding:12px 18px">
+<div style="display:flex;gap:6px;margin-bottom:10px">
+<button id="openGroupChatBtn" style="flex:1;background:linear-gradient(135deg,#8b5cf6,#2563eb);border:none;color:#fff;border-radius:12px;padding:10px;cursor:pointer;font-size:12px;font-weight:bold;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">🌐 گپ عمومی زعوس</button>
+</div>
+<input type="text" id="userSearchInput" placeholder="جستجوی یوزرنیم برای شروع چت خصوصی..." style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;color:#fff;font-family:inherit;font-size:12px">
+<div id="userSearchResults"></div>
+</div>
+<div id="conversationsList" style="flex:1;overflow-y:auto;padding:0 10px 10px"></div>
+</div>
+
+<div id="chatView" style="display:none;flex-direction:column;height:100%">
+<div style="padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)">
+<button id="chatBackBtn" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:0 6px">←</button>
+<div class="review-avatar" id="chatPartnerAvatar" style="width:34px;height:34px;font-size:13px"></div>
+<strong id="chatPartnerName" style="font-size:13px">-</strong>
+</div>
+<div id="chatMessages" style="flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:8px"></div>
+<div id="emojiBar" style="display:none;padding:8px 12px;gap:4px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08)"></div>
+<div style="padding:12px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px">
+<button id="emojiToggleBtn" style="background:rgba(255,255,255,.06);border:none;color:#fff;border-radius:12px;padding:0 12px;cursor:pointer;font-size:16px">😊</button>
+<input type="text" id="chatMessageInput" placeholder="پیام بنویس..." style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;color:#fff;font-family:inherit;font-size:12px">
+<button id="chatSendBtn" style="background:linear-gradient(135deg,#8b5cf6,#2563eb);border:none;color:#fff;border-radius:12px;padding:0 16px;cursor:pointer;font-size:16px">↑</button>
+</div>
+</div>
+
+</div>
+</div>
+
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -368,9 +419,13 @@ presets:{tag:"XZEOUS PRESETS",title:"Preset Pack",desc:"پکیج Presetهای ش
 cc:{tag:"XZEOUS CC",title:"Color Collection",desc:"مجموعه اصلاح رنگ و Color Grading برای ساخت رنگ‌های سینمایی و یکدست.",old:"۲۵۰,۰۰۰ تومان",price:"۱۹۹,۰۰۰ تومان",cls:"cc-art"},
 neptune:{tag:"XZEOUS EDIT PACK",title:"Neptune's Prime Edit Pack",desc:"دارای محتویات زیر می‌باشد:\n- 3x Framer\n- 2x Blurs\n- 2x Glows\n- 2x CCs\n- 10x Overlays\n- 3x Random Presets\n- 15x SFX (Whooshes, Useful Sounds)\n- 3x Shakes\n- 2x Twitches",old:"۱۵۰,۰۰۰ تومان",price:"۹۹,۰۰۰ تومان",cls:"neptune-art"}
 };
+// آدرس Cloud Function createPayment رو بعد از دیپلوی اینجا بذار
+const CREATE_PAYMENT_URL="https://REGION-YOUR-PROJECT.cloudfunctions.net/createPayment";
 const modal=document.getElementById("productModal"), modalArt=document.getElementById("modalArt");
+let currentModalProductId=null;
 document.querySelectorAll(".product-view").forEach(btn=>btn.addEventListener("click",()=>{
 const p=products[btn.dataset.product];
+currentModalProductId=btn.dataset.product;
 document.getElementById("modalTag").textContent=p.tag;
 document.getElementById("modalTitle").textContent=p.title;
 document.getElementById("modalDesc").textContent=p.desc;
@@ -382,6 +437,35 @@ modal.classList.add("show");
 document.getElementById("modalClose").onclick=()=>modal.classList.remove("show");
 modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remove("show")});
+
+document.getElementById("modalBuy").addEventListener("click",async(e)=>{
+e.preventDefault();
+if(!currentModalProductId)return;
+const buyBtn=e.currentTarget;
+const originalText=buyBtn.textContent;
+buyBtn.textContent="در حال اتصال به درگاه...";
+buyBtn.style.pointerEvents="none";
+try{
+const res=await fetch(CREATE_PAYMENT_URL,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({productId:currentModalProductId,uid:currentUser?currentUser.uid:null})
+});
+const data=await res.json();
+if(data.ok && data.url){
+window.location.href=data.url;
+}else{
+alert("خطا در اتصال به درگاه پرداخت: "+(data.error?JSON.stringify(data.error):"نامشخص"));
+buyBtn.textContent=originalText;
+buyBtn.style.pointerEvents="auto";
+}
+}catch(err){
+console.error("XZEOUS payment error:",err);
+alert("مشکل در اتصال به سرور پرداخت. دوباره امتحان کن.");
+buyBtn.textContent=originalText;
+buyBtn.style.pointerEvents="auto";
+}
+});
 
 document.querySelectorAll(".question").forEach(button=>{
 button.addEventListener("click",()=>button.parentElement.classList.toggle("open"));
@@ -452,6 +536,7 @@ if(!u){authError.textContent="یوزرنیم رو وارد کن";authError.style
 const cred=await auth.createUserWithEmailAndPassword(em,pw);
 try{
   await db.collection("users").doc(cred.user.uid).set({username:u,email:em,photoURL:null,isOwner:em===OWNER_EMAIL,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  await db.collection("publicProfiles").doc(cred.user.uid).set({username:u,photoURL:null});
 }catch(profileErr){
   console.error("XZEOUS profile save error:",profileErr.code,profileErr.message,profileErr);
   // Authentication succeeded; keep a local profile so the user is not told signup failed.
@@ -496,6 +581,7 @@ if(!newUsername){profileError.textContent="یوزرنیم نمی‌تونه خا
 const saveBtn=document.getElementById("saveProfile");saveBtn.disabled=true;
 try{
 await db.collection("users").doc(currentUser.uid).set({username:newUsername,photoURL:photo||null,email:currentUser.email,isOwner:currentUser.email===OWNER_EMAIL},{merge:true});
+await db.collection("publicProfiles").doc(currentUser.uid).set({username:newUsername,photoURL:photo||null});
 currentProfile.username=newUsername;
 currentProfile.photoURL=photo||null;
 safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
@@ -548,6 +634,7 @@ currentProfile=null;
 updateNavUI();
 renderReviewForm();
 if(typeof renderReviewsList==="function")renderReviewsList();
+if(typeof updateMessagesUI==="function")updateMessagesUI();
 });
 
 function renderReviewForm(){
@@ -666,6 +753,225 @@ const observer=new IntersectionObserver(entries=>{
 entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")});
 },{threshold:.12});
 document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
+
+// ============ پیام‌رسان XZEOUS ============
+const messagesBox=document.getElementById("messagesBox"),messagesOpen=document.getElementById("messagesOpen"),messagesClose=document.getElementById("messagesClose");
+const msgListView=document.getElementById("msgListView"),chatView=document.getElementById("chatView");
+const conversationsList=document.getElementById("conversationsList"),userSearchInput=document.getElementById("userSearchInput"),userSearchResults=document.getElementById("userSearchResults");
+const chatMessages=document.getElementById("chatMessages"),chatMessageInput=document.getElementById("chatMessageInput"),chatSendBtn=document.getElementById("chatSendBtn");
+const chatPartnerName=document.getElementById("chatPartnerName"),chatPartnerAvatar=document.getElementById("chatPartnerAvatar"),chatBackBtn=document.getElementById("chatBackBtn");
+let activeChatId=null, activeChatUnsub=null, convUnsub=null, isGroupChat=false;
+const GROUP_CHAT_LABEL="گپ عمومی زعوس 🌐";
+const EMOJI_LIST=["😂","❤️","🔥","😭","🖤","😍","👍","🥺","😎","🎉","😢","🤝","👀","💯","😅","🙏","✨","😡","🤔","🫡"];
+
+document.getElementById("emojiBar").innerHTML=EMOJI_LIST.map(e=>`<button class="emoji-item" data-emoji="${e}">${e}</button>`).join("");
+document.getElementById("emojiBar").addEventListener("click",e=>{
+const btn=e.target.closest(".emoji-item");
+if(!btn)return;
+chatMessageInput.value+=btn.dataset.emoji;
+chatMessageInput.focus();
+});
+document.getElementById("emojiToggleBtn").addEventListener("click",()=>{
+document.getElementById("emojiBar").classList.toggle("show");
+});
+
+document.getElementById("openGroupChatBtn").addEventListener("click",()=>{
+if(!currentUser){openAuthModal();return;}
+openGroupChat();
+});
+
+function chatIdFor(uid1,uid2){return [uid1,uid2].sort().join("_");}
+
+messagesOpen.addEventListener("click",()=>{
+if(!currentUser){openAuthModal();return;}
+messagesBox.classList.add("open");
+showConvList();
+});
+messagesClose.addEventListener("click",()=>{messagesBox.classList.remove("open");closeActiveChat();});
+messagesBox.addEventListener("click",e=>{if(e.target===messagesBox){messagesBox.classList.remove("open");closeActiveChat();}});
+
+function showConvList(){
+chatView.style.display="none";
+msgListView.style.display="flex";
+closeActiveChat();
+}
+
+// جستجوی کاربر با یوزرنیم
+let searchDebounce=null;
+userSearchInput.addEventListener("input",()=>{
+clearTimeout(searchDebounce);
+const term=userSearchInput.value.trim();
+if(!term){userSearchResults.innerHTML="";return;}
+searchDebounce=setTimeout(async()=>{
+try{
+const snap=await db.collection("publicProfiles").orderBy("username").startAt(term).endAt(term+"\uf8ff").limit(8).get();
+userSearchResults.innerHTML="";
+snap.forEach(doc=>{
+if(doc.id===currentUser.uid)return;
+const u=doc.data();
+const item=document.createElement("div");
+item.className="search-result-item";
+const avatarHtml=u.photoURL?'<img src="'+u.photoURL+'" alt="" style="width:100%;height:100%;object-fit:cover">':(u.username||"?").charAt(0).toUpperCase();
+const avatarStyle=u.photoURL?"":("background:"+avatarColorFor(u.username||"?"));
+item.innerHTML=`<div class="review-avatar" style="width:32px;height:32px;font-size:12px;${avatarStyle}">${avatarHtml}</div><span style="font-size:12px">${u.username||"کاربر"}</span>`;
+item.addEventListener("click",()=>{openChat(doc.id,u.username,u.photoURL);userSearchInput.value="";userSearchResults.innerHTML="";});
+userSearchResults.appendChild(item);
+});
+}catch(e){console.error("XZEOUS user search error:",e.code,e.message);}
+},300);
+});
+
+// لیست مکالمات
+function listenConversations(){
+if(convUnsub)convUnsub();
+convUnsub=db.collection("chats").where("participants","array-contains",currentUser.uid).orderBy("lastMessageAt","desc").onSnapshot(snap=>{
+conversationsList.innerHTML="";
+let hasUnread=false;
+if(snap.empty){conversationsList.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center;margin-top:20px">هنوز مکالمه‌ای نداری، از بالا یه نفر رو جستجو کن</p>';}
+snap.forEach(doc=>{
+const c=doc.data();
+const otherUid=c.participants.find(id=>id!==currentUser.uid);
+const otherProfile=(c.participantProfiles&&c.participantProfiles[otherUid])||{};
+const unread=c.unread&&c.unread[currentUser.uid];
+if(unread)hasUnread=true;
+const item=document.createElement("div");
+item.className="conv-item";
+const avatarHtml=otherProfile.photoURL?'<img src="'+otherProfile.photoURL+'" alt="" style="width:100%;height:100%;object-fit:cover">':(otherProfile.username||"?").charAt(0).toUpperCase();
+const avatarStyle=otherProfile.photoURL?"":("background:"+avatarColorFor(otherProfile.username||"?"));
+item.innerHTML=`<div class="review-avatar" style="${avatarStyle}">${avatarHtml}</div><div class="conv-info"><div class="conv-name">${otherProfile.username||"کاربر"}</div><div class="conv-last">${(c.lastMessage||"").replace(/</g,"&lt;")}</div></div>${unread?'<div class="conv-dot"></div>':''}`;
+item.addEventListener("click",()=>openChat(otherUid,otherProfile.username,otherProfile.photoURL));
+conversationsList.appendChild(item);
+});
+document.getElementById("unreadDot").style.display=hasUnread?"block":"none";
+});
+}
+
+async function openGroupChat(){
+isGroupChat=true;
+activeChatId=null;
+msgListView.style.display="none";
+chatView.style.display="flex";
+chatPartnerName.textContent=GROUP_CHAT_LABEL;
+chatPartnerAvatar.innerHTML="🌐";
+chatPartnerAvatar.style.background="linear-gradient(135deg,#8b5cf6,#2563eb)";
+chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
+
+if(activeChatUnsub)activeChatUnsub();
+activeChatUnsub=db.collection("groupMessages").orderBy("createdAt","desc").limit(100).onSnapshot(snap=>{
+chatMessages.innerHTML="";
+if(snap.empty){chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">اولین نفری باش که تو گپ پیام میده 🖤</p>';}
+const docs=[];
+snap.forEach(doc=>docs.push(doc));
+docs.reverse().forEach(doc=>{
+const m=doc.data();
+const mine=m.senderId===currentUser.uid;
+const bubble=document.createElement("div");
+bubble.className="chat-bubble "+(mine?"mine":"theirs");
+bubble.innerHTML=(mine?"":'<span class="sender-name">'+(m.senderUsername||"کاربر")+'</span>')+(m.text||"").replace(/</g,"&lt;");
+chatMessages.appendChild(bubble);
+});
+chatMessages.scrollTop=chatMessages.scrollHeight;
+});
+}
+
+async function openChat(otherUid,otherUsername,otherPhoto){
+isGroupChat=false;
+activeChatId=chatIdFor(currentUser.uid,otherUid);
+msgListView.style.display="none";
+chatView.style.display="flex";
+chatPartnerName.textContent=otherUsername||"کاربر";
+renderAvatar(chatPartnerAvatar,otherUsername,otherPhoto);
+chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
+
+const chatRef=db.collection("chats").doc(activeChatId);
+try{
+const chatDoc=await chatRef.get();
+if(!chatDoc.exists){
+await chatRef.set({
+participants:[currentUser.uid,otherUid],
+participantProfiles:{
+[currentUser.uid]:{username:currentProfile.username,photoURL:currentProfile.photoURL||null},
+[otherUid]:{username:otherUsername||null,photoURL:otherPhoto||null}
+},
+lastMessage:"",lastMessageAt:firebase.firestore.FieldValue.serverTimestamp(),
+unread:{[currentUser.uid]:false,[otherUid]:false}
+});
+}else{
+await chatRef.update({["unread."+currentUser.uid]:false});
+}
+}catch(e){console.error("XZEOUS open chat error:",e.code,e.message);}
+
+if(activeChatUnsub)activeChatUnsub();
+activeChatUnsub=chatRef.collection("messages").orderBy("createdAt","asc").limit(200).onSnapshot(snap=>{
+chatMessages.innerHTML="";
+if(snap.empty){chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">اولین پیام رو بفرست 🖤</p>';}
+snap.forEach(doc=>{
+const m=doc.data();
+const bubble=document.createElement("div");
+bubble.className="chat-bubble "+(m.senderId===currentUser.uid?"mine":"theirs");
+bubble.textContent=m.text||"";
+chatMessages.appendChild(bubble);
+});
+chatMessages.scrollTop=chatMessages.scrollHeight;
+});
+}
+
+function closeActiveChat(){
+if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null;}
+activeChatId=null;
+isGroupChat=false;
+document.getElementById("emojiBar").classList.remove("show");
+}
+
+chatBackBtn.addEventListener("click",showConvList);
+
+async function sendChatMessage(){
+const text=chatMessageInput.value.trim();
+if(!text||!currentUser)return;
+if(isGroupChat){
+chatMessageInput.value="";
+try{
+await db.collection("groupMessages").add({
+senderId:currentUser.uid,senderUsername:currentProfile.username,senderPhoto:currentProfile.photoURL||null,
+text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()
+});
+}catch(e){
+console.error("XZEOUS group message error:",e.code,e.message);
+alert("پیام ارسال نشد: "+(e.code||e.message));
+chatMessageInput.value=text;
+}
+return;
+}
+if(!activeChatId)return;
+const chatRef=db.collection("chats").doc(activeChatId);
+const otherUid=activeChatId.split("_").find(id=>id!==currentUser.uid);
+chatMessageInput.value="";
+try{
+await chatRef.collection("messages").add({senderId:currentUser.uid,text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+await chatRef.update({
+lastMessage:text,lastMessageAt:firebase.firestore.FieldValue.serverTimestamp(),
+["unread."+otherUid]:true,["unread."+currentUser.uid]:false
+});
+}catch(e){
+console.error("XZEOUS send message error:",e.code,e.message);
+alert("پیام ارسال نشد: "+(e.code||e.message));
+chatMessageInput.value=text;
+}
+}
+chatSendBtn.addEventListener("click",sendChatMessage);
+chatMessageInput.addEventListener("keydown",e=>{if(e.key==="Enter")sendChatMessage();});
+
+// نمایش/مخفی دکمه پیام‌ها بر اساس لاگین بودن
+function updateMessagesUI(){
+if(currentUser){
+messagesOpen.style.display="flex";
+listenConversations();
+}else{
+messagesOpen.style.display="none";
+if(convUnsub){convUnsub();convUnsub=null;}
+document.getElementById("unreadDot").style.display="none";
+}
+}
 </script>
 </body>
 </html>
