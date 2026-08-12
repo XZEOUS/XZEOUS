@@ -197,6 +197,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </button>
 <a href="#contact" class="nav-button">ارتباط</a>
 <button id="messagesOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit;position:relative;display:none">💬<span id="unreadDot" style="display:none;position:absolute;top:-3px;left:-3px;width:9px;height:9px;border-radius:50%;background:#ff5c5c"></span></button>
+<button id="adminOpenBtn" class="nav-button" style="border:0;cursor:pointer;font-family:inherit;display:none">⚙️</button>
 </div>
 </nav>
 
@@ -420,7 +421,8 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 <div style="padding:12px 18px">
 <div style="display:flex;gap:6px;margin-bottom:10px">
-<button id="openGroupChatBtn" style="flex:1;background:linear-gradient(135deg,#8b5cf6,#2563eb);border:none;color:#fff;border-radius:12px;padding:10px;cursor:pointer;font-size:12px;font-weight:bold;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">🌐 گپ عمومی زعوس</button>
+<button id="openGroupChatBtn" style="flex:1;background:linear-gradient(135deg,#8b5cf6,#2563eb);border:none;color:#fff;border-radius:12px;padding:10px;cursor:pointer;font-size:12px;font-weight:bold;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">🌐 گپ عمومی</button>
+<button id="openPremiumChatBtn" style="flex:1;background:linear-gradient(135deg,#f472b6,#a855f7);border:none;color:#fff;border-radius:12px;padding:10px;cursor:pointer;font-size:12px;font-weight:bold;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px">🖤 کلاب زئوس پرمیوم</button>
 </div>
 <input type="text" id="userSearchInput" placeholder="جستجوی یوزرنیم برای شروع چت خصوصی..." style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;color:#fff;font-family:inherit;font-size:12px">
 <div id="userSearchResults"></div>
@@ -443,6 +445,20 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 </div>
 
+</div>
+</div>
+
+<div class="signup-box" id="adminBox">
+<div class="signup-card" style="max-width:420px;height:min(600px,80vh);display:flex;flex-direction:column;padding:0;overflow:hidden">
+<div style="padding:18px 18px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)">
+<h3 style="margin:0;font-size:16px">پنل ادمین ⚙️</h3>
+<button class="signup-close" id="adminClose" style="position:static">×</button>
+</div>
+<div style="padding:14px 18px;flex:1;overflow-y:auto">
+<p style="color:#9991a4;font-size:11px;line-height:1.9;margin-bottom:12px">با یوزرنیم کاربر رو جستجو کن و پرمیومش رو مستقیم از همینجا فعال یا غیرفعال کن.</p>
+<input type="text" id="adminSearchInput" placeholder="جستجوی یوزرنیم..." style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;color:#fff;font-family:inherit;font-size:12px">
+<div id="adminSearchResults" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
+</div>
 </div>
 </div>
 
@@ -776,6 +792,8 @@ navAuthLabel.innerHTML=currentProfile.username+nameBadgeHtml(currentProfile);
 navAvatar.style.display="none";
 navAuthLabel.textContent="ثبت‌نام";
 }
+const adminBtn=document.getElementById("adminOpenBtn");
+if(adminBtn)adminBtn.style.display=(currentUser&&currentProfile&&currentProfile.isOwner)?"flex":"none";
 }
 
 auth.onAuthStateChanged(async user=>{
@@ -930,8 +948,9 @@ const msgListView=document.getElementById("msgListView"),chatView=document.getEl
 const conversationsList=document.getElementById("conversationsList"),userSearchInput=document.getElementById("userSearchInput"),userSearchResults=document.getElementById("userSearchResults");
 const chatMessages=document.getElementById("chatMessages"),chatMessageInput=document.getElementById("chatMessageInput"),chatSendBtn=document.getElementById("chatSendBtn");
 const chatPartnerName=document.getElementById("chatPartnerName"),chatPartnerAvatar=document.getElementById("chatPartnerAvatar"),chatBackBtn=document.getElementById("chatBackBtn");
-let activeChatId=null, activeChatUnsub=null, convUnsub=null, isGroupChat=false;
+let activeChatId=null, activeChatUnsub=null, convUnsub=null, isGroupChat=false, isPremiumChat=false;
 const GROUP_CHAT_LABEL="گپ عمومی زعوس 🌐";
+const PREMIUM_CHAT_LABEL="کلاب زئوس پرمیوم 🖤";
 const EMOJI_LIST=["😂","❤️","🔥","😭","🖤","😍","👍","🥺","😎","🎉","😢","🤝","👀","💯","😅","🙏","✨","😡","🤔","🫡"];
 const PREMIUM_STICKER_LIST=["🦄","🌈","🍭","🎀","🧸","🍓","🦋","🌸","🍒","🌚","🥸","🍑"];
 
@@ -962,6 +981,10 @@ document.getElementById("openGroupChatBtn").addEventListener("click",()=>{
 if(!currentUser){openAuthModal();return;}
 openGroupChat();
 });
+document.getElementById("openPremiumChatBtn").addEventListener("click",()=>{
+if(!currentUser){openAuthModal();return;}
+openPremiumChat();
+});
 
 function chatIdFor(uid1,uid2){return [uid1,uid2].sort().join("_");}
 
@@ -977,6 +1000,67 @@ showConvList();
 });
 messagesClose.addEventListener("click",()=>{messagesBox.classList.remove("open");closeActiveChat();});
 messagesBox.addEventListener("click",e=>{if(e.target===messagesBox){messagesBox.classList.remove("open");closeActiveChat();}});
+
+// پنل ادمین
+const adminBox=document.getElementById("adminBox"),adminOpenBtn=document.getElementById("adminOpenBtn"),adminClose=document.getElementById("adminClose");
+const adminSearchInput=document.getElementById("adminSearchInput"),adminSearchResults=document.getElementById("adminSearchResults");
+adminOpenBtn.addEventListener("click",()=>{
+if(!currentUser||!currentProfile||!currentProfile.isOwner)return;
+adminBox.classList.add("open");
+adminSearchInput.value="";
+adminSearchResults.innerHTML="";
+});
+adminClose.addEventListener("click",()=>adminBox.classList.remove("open"));
+adminBox.addEventListener("click",e=>{if(e.target===adminBox)adminBox.classList.remove("open");});
+
+function renderAdminUserRow(uid,u){
+const row=document.createElement("div");
+row.style.cssText="display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)";
+const avatarHtml=u.photoURL?'<img src="'+u.photoURL+'" alt="" style="width:100%;height:100%;object-fit:cover">':(u.username||"?").charAt(0).toUpperCase();
+const avatarStyle=(u.photoURL?"":("background:"+avatarColorFor(u.username||"?")))+(u.isPremium?(";box-shadow:0 0 0 2px "+(u.premiumColor||"#8b5cf6")):"");
+const isPremiumNow=!!u.isPremium;
+row.innerHTML=`<div class="review-avatar" style="width:32px;height:32px;font-size:12px;flex-shrink:0;${avatarStyle}">${avatarHtml}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12px;font-weight:bold;${u.isOwner?"":nameColorStyle(u)}">${u.username||"کاربر"}${nameBadgeHtml(u)}</div>
+<div style="font-size:10px;color:${isPremiumNow?"#c4b5fd":"#7a7383"};margin-top:2px">${isPremiumNow?"پرمیوم فعاله":"پرمیوم غیرفعاله"}</div>
+</div>
+<button class="admin-toggle-btn" style="border:0;border-radius:10px;padding:8px 12px;font-size:11px;font-weight:bold;cursor:pointer;font-family:inherit;background:${isPremiumNow?"rgba(255,255,255,.08)":"linear-gradient(135deg,#8b5cf6,#7c3aed)"};color:#fff">${isPremiumNow?"غیرفعال کن":"فعال کن 💎"}</button>`;
+row.querySelector(".admin-toggle-btn").addEventListener("click",async()=>{
+const btn=row.querySelector(".admin-toggle-btn");
+btn.disabled=true;btn.textContent="...";
+try{
+const makePremium=!isPremiumNow;
+const data=makePremium?{isPremium:true,premiumColor:u.premiumColor||PREMIUM_COLORS[0]}:{isPremium:false,premiumColor:null};
+await db.collection("users").doc(uid).set(data,{merge:true});
+await db.collection("publicProfiles").doc(uid).set(data,{merge:true});
+Object.assign(u,data);
+const newRow=renderAdminUserRow(uid,u);
+row.replaceWith(newRow);
+}catch(e){
+console.error("XZEOUS admin premium toggle error:",e.code,e.message);
+alert("تغییر انجام نشد: "+(e.code||e.message));
+btn.disabled=false;btn.textContent=isPremiumNow?"غیرفعال کن":"فعال کن 💎";
+}
+});
+return row;
+}
+
+let adminSearchDebounce=null;
+adminSearchInput.addEventListener("input",()=>{
+clearTimeout(adminSearchDebounce);
+const term=adminSearchInput.value.trim();
+if(!term){adminSearchResults.innerHTML="";return;}
+adminSearchDebounce=setTimeout(async()=>{
+try{
+const snap=await db.collection("publicProfiles").orderBy("username").startAt(term).endAt(term+"\uf8ff").limit(10).get();
+adminSearchResults.innerHTML="";
+if(snap.empty){adminSearchResults.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">کاربری پیدا نشد</p>';return;}
+snap.forEach(doc=>{
+adminSearchResults.appendChild(renderAdminUserRow(doc.id,doc.data()));
+});
+}catch(e){console.error("XZEOUS admin search error:",e.code,e.message);}
+},300);
+});
 
 function showConvList(){
 chatView.style.display="none";
@@ -1035,8 +1119,18 @@ document.getElementById("dockUnreadDot").style.display=hasUnread?"block":"none";
 });
 }
 
+function setChatInputEnabled(enabled,placeholder){
+chatMessageInput.disabled=!enabled;
+chatSendBtn.disabled=!enabled;
+chatSendBtn.style.opacity=enabled?"1":".4";
+chatSendBtn.style.cursor=enabled?"pointer":"not-allowed";
+chatMessageInput.style.opacity=enabled?"1":".6";
+chatMessageInput.placeholder=placeholder||"پیام بنویس...";
+}
+
 async function openGroupChat(){
 isGroupChat=true;
+isPremiumChat=false;
 activeChatId=null;
 msgListView.style.display="none";
 chatView.style.display="flex";
@@ -1050,6 +1144,7 @@ chatPartnerAvatar.classList.remove("clickable-name");
 chatPartnerAvatar.innerHTML="🌐";
 chatPartnerAvatar.style.background="linear-gradient(135deg,#8b5cf6,#2563eb)";
 chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
+setChatInputEnabled(true,"پیام بنویس...");
 
 if(activeChatUnsub)activeChatUnsub();
 activeChatUnsub=db.collection("groupMessages").orderBy("createdAt","desc").limit(100).onSnapshot(snap=>{
@@ -1072,8 +1167,50 @@ chatMessages.scrollTop=chatMessages.scrollHeight;
 });
 }
 
+async function openPremiumChat(){
+isGroupChat=false;
+isPremiumChat=true;
+activeChatId=null;
+msgListView.style.display="none";
+chatView.style.display="flex";
+chatPartnerName.textContent=PREMIUM_CHAT_LABEL;
+chatPartnerName.style.cssText="";
+chatPartnerName.onclick=null;
+chatPartnerAvatar.onclick=null;
+chatPartnerAvatar.style.boxShadow="";
+chatPartnerName.classList.remove("clickable-name");
+chatPartnerAvatar.classList.remove("clickable-name");
+chatPartnerAvatar.innerHTML="🖤";
+chatPartnerAvatar.style.background="linear-gradient(135deg,#f472b6,#a855f7)";
+chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">در حال بارگذاری...</p>';
+const canSend=!!(currentProfile&&(currentProfile.isPremium||currentProfile.isOwner));
+setChatInputEnabled(canSend,canSend?"پیام بنویس...":"🔒 فقط اعضای پرمیوم می‌تونن اینجا پیام بدن");
+
+if(activeChatUnsub)activeChatUnsub();
+activeChatUnsub=db.collection("premiumChannelMessages").orderBy("createdAt","desc").limit(100).onSnapshot(snap=>{
+chatMessages.innerHTML="";
+if(snap.empty){chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;text-align:center">اولین عضو پرمیومی باش که تو کلاب پیام میده 🖤</p>';}
+const docs=[];
+snap.forEach(doc=>docs.push(doc));
+docs.reverse().forEach(doc=>{
+const m=doc.data();
+const mine=m.senderId===currentUser.uid;
+const bubble=document.createElement("div");
+bubble.className="chat-bubble "+(mine?"mine":"theirs");
+const senderProfile={username:m.senderUsername,isOwner:m.senderIsOwner,isPremium:m.senderIsPremium,premiumColor:m.senderPremiumColor};
+const senderHtml=mine?"":('<span class="sender-name clickable-name" style="'+(m.senderIsOwner?"":nameColorStyle(senderProfile))+'">'+(m.senderUsername||"کاربر")+'</span>'+nameBadgeHtml(senderProfile));
+bubble.innerHTML=senderHtml+(m.text||"").replace(/</g,"&lt;");
+if(!mine)bubble.querySelector(".sender-name").addEventListener("click",()=>openProfileView(senderProfile));
+chatMessages.appendChild(bubble);
+});
+chatMessages.scrollTop=chatMessages.scrollHeight;
+});
+}
+
 async function openChat(otherUid,otherUsername,otherPhoto,otherProfileFull){
 isGroupChat=false;
+isPremiumChat=false;
+setChatInputEnabled(true,"پیام بنویس...");
 activeChatId=chatIdFor(currentUser.uid,otherUid);
 msgListView.style.display="none";
 chatView.style.display="flex";
@@ -1125,6 +1262,7 @@ function closeActiveChat(){
 if(activeChatUnsub){activeChatUnsub();activeChatUnsub=null;}
 activeChatId=null;
 isGroupChat=false;
+isPremiumChat=false;
 document.getElementById("emojiBar").classList.remove("show");
 }
 
@@ -1143,6 +1281,23 @@ text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()
 });
 }catch(e){
 console.error("XZEOUS group message error:",e.code,e.message);
+alert("پیام ارسال نشد: "+(e.code||e.message));
+chatMessageInput.value=text;
+}
+return;
+}
+if(isPremiumChat){
+const canSend=!!(currentProfile&&(currentProfile.isPremium||currentProfile.isOwner));
+if(!canSend){alert("این قسمت مخصوص اعضای پرمیومه. برای پیام دادن اول پرمیوم رو فعال کن 💎");return;}
+chatMessageInput.value="";
+try{
+await db.collection("premiumChannelMessages").add({
+senderId:currentUser.uid,senderUsername:currentProfile.username,senderPhoto:currentProfile.photoURL||null,
+senderIsOwner:!!currentProfile.isOwner,senderIsPremium:!!currentProfile.isPremium,senderPremiumColor:currentProfile.premiumColor||null,
+text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()
+});
+}catch(e){
+console.error("XZEOUS premium channel message error:",e.code,e.message);
 alert("پیام ارسال نشد: "+(e.code||e.message));
 chatMessageInput.value=text;
 }
