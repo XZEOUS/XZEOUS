@@ -239,19 +239,33 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 .cr-divider{height:1px;background:rgba(255,255,255,.08);margin:24px 0 20px}
 .cr-game-head h3{font-size:16px;margin-bottom:6px}
 .cr-game-head p{color:#9991a4;font-size:11px;line-height:1.8;margin-bottom:14px}
-.cr-battle-arena{margin-top:16px;display:flex;flex-direction:column;gap:8px}
-.cr-round{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-size:12px;opacity:0;transform:translateY(8px);animation:crRoundIn .4s ease forwards}
-@keyframes crRoundIn{to{opacity:1;transform:none}}
-.cr-round-side{flex:1;display:flex;align-items:center;gap:6px}
-.cr-round-side.mine{justify-content:flex-start}
-.cr-round-side.bot{justify-content:flex-end;flex-direction:row-reverse}
-.cr-round-vs{color:#7a7383;font-size:10px;flex:0 0 auto}
-.cr-round.win-mine .cr-round-side.mine{color:#34d399;font-weight:bold}
-.cr-round.win-bot .cr-round-side.bot{color:#fca5a5;font-weight:bold}
-.cr-battle-result{margin-top:6px;padding:16px;border-radius:14px;text-align:center;font-size:15px;font-weight:900;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
-.cr-battle-result.win{color:#34d399}
-.cr-battle-result.lose{color:#fca5a5}
-.cr-battle-result.draw{color:#facc15}
+.cr-elixir-bar-wrap{display:flex;align-items:center;gap:10px;margin:16px 0 12px}
+.cr-elixir-bar{flex:1;height:14px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden}
+.cr-elixir-fill{height:100%;background:linear-gradient(90deg,#a855f7,#38bdf8);transition:width .3s}
+.cr-elixir-num{font-size:12px;color:#c4b5fd;font-weight:900;min-width:16px;text-align:center}
+.cr-timer{font-size:11px;color:#9991a4;white-space:nowrap}
+.cr-field{position:relative;width:100%;max-width:340px;height:420px;margin:0 auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#1b0f2e 0%,#241542 48%,#241542 52%,#0f0b1d 100%);border:1px solid rgba(255,255,255,.12);touch-action:none}
+.cr-field:before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(56,189,248,.5);transform:translateY(-50%);pointer-events:none}
+.cr-field.placing{cursor:crosshair}
+.cr-tower{position:absolute;left:50%;transform:translateX(-50%);width:56px;text-align:center;pointer-events:none}
+.cr-tower.enemy{top:10px}
+.cr-tower.mine{bottom:10px}
+.cr-tower-icon{font-size:26px}
+.cr-tower-hp-bar{width:56px;height:6px;border-radius:4px;background:rgba(255,255,255,.15);margin-top:4px;overflow:hidden}
+.cr-tower-hp-fill{height:100%;background:linear-gradient(90deg,#34d399,#22d3ee);transition:width .3s}
+.cr-tower.enemy .cr-tower-hp-fill{background:linear-gradient(90deg,#fb7185,#f97316)}
+.cr-troop{position:absolute;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:18px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
+.cr-hand{display:flex;gap:8px;overflow-x:auto;padding:4px 2px;margin-top:14px}
+.cr-hand-card{flex:0 0 auto;width:64px;border-radius:12px;padding:8px 3px 6px;text-align:center;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);position:relative;transition:.2s}
+.cr-hand-card.selected{border-color:#a78bfa;box-shadow:0 0 0 2px rgba(167,139,250,.4)}
+.cr-hand-card.disabled{opacity:.4;pointer-events:none}
+.cr-hand-card .cr-card-emoji{font-size:20px;display:block}
+.cr-hand-card .cr-card-name{font-size:7.5px;margin-top:5px;color:#e8e4ee;display:block;line-height:1.3}
+.cr-hand-card .cr-cd-overlay{position:absolute;inset:0;border-radius:12px;background:rgba(5,3,10,.72);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.cr-game-over{margin-top:14px;padding:16px;border-radius:14px;text-align:center;font-size:15px;font-weight:900;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.cr-game-over.win{color:#34d399}
+.cr-game-over.lose{color:#fca5a5}
+.cr-game-over.draw{color:#facc15}
 .cr-card.r-zeous,.cr-deck-slot.filled.r-zeous,.pv-deck-card.r-zeous{border-color:rgba(167,139,250,.7);background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(56,189,248,.16));box-shadow:0 0 20px rgba(139,92,246,.4)}
 .cr-card.r-zeous .cr-card-name{color:#e0d4ff;font-weight:bold}
 .pv-deck{margin:0 20px 22px}
@@ -424,22 +438,23 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="cr-divider"></div>
 <div class="cr-game-head">
 <h3>نبرد با زئوس ⚡</h3>
-<p>دسته‌ی ذخیره‌شده‌ت رو در برابر یه دسته‌ی رندوم امتحان کن و ببین کی می‌بره.</p>
+<p>رو یه کارت از دستت بزن، بعد رو نصف زمین خودت (پایین) بزن تا بزاریش زمین. مراقب اکسیرت باش و برج حریف رو بزن پایین!</p>
 </div>
 <button id="crStartBattleBtn" class="signup-submit" style="width:auto;padding:11px 24px">شروع نبرد</button>
-<div id="crBattleArena" class="cr-battle-arena"></div>
+<div id="crGameArea" style="display:none">
+<div class="cr-elixir-bar-wrap">
+<span class="cr-elixir-num" id="crElixirNum">5</span>
+<div class="cr-elixir-bar"><div class="cr-elixir-fill" id="crElixirFill" style="width:50%"></div></div>
+<span class="cr-timer">⏱ <span id="crTimeLeft">60</span>s</span>
 </div>
-
-<div id="crBattleBox" class="glass" style="padding:28px;margin-top:18px;display:none">
-<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-<h3 style="font-size:16px">نبرد با ربات زئوس ⚔️</h3>
-<button id="crStartBattleBtn" class="signup-submit" style="width:auto;padding:10px 22px">شروع نبرد</button>
+<div class="cr-field" id="crField">
+<div class="cr-tower enemy"><div class="cr-tower-icon">🏯</div><div class="cr-tower-hp-bar"><div class="cr-tower-hp-fill" id="crBotHpFill" style="width:100%"></div></div></div>
+<div class="cr-tower mine"><div class="cr-tower-icon">🏯</div><div class="cr-tower-hp-bar"><div class="cr-tower-hp-fill" id="crMyHpFill" style="width:100%"></div></div></div>
 </div>
-<p style="color:#9991a4;font-size:11px;margin-top:8px;line-height:1.9">دسته‌ی ذخیره‌شده‌ی خودت رو در برابر یه دسته‌ی رندوم از ربات زئوس امتحان کن.</p>
-<div class="cr-battle-log" id="crBattleLog"></div>
-<div id="crBattleFinal"></div>
+<div class="cr-hand" id="crHand"></div>
 </div>
-
+<div id="crGameOverBox" class="cr-game-over" style="display:none"></div>
+</div>
 </div></section>
 
 
@@ -1054,51 +1069,132 @@ crRenderAll();
 loggedOut.style.display="block";loggedIn.style.display="none";
 }
 }
-const CR_RARITY_POWER={common:1,rare:2,epic:3,legendary:4,zeous:5};
-function crCardPower(id){
+let crGameState=null;
+function crStopGame(){
+if(crGameState){
+clearInterval(crGameState.elixirId);
+clearInterval(crGameState.botId);
+clearInterval(crGameState.timerId);
+clearInterval(crGameState.loopId);
+crGameState=null;
+}
+}
+function crRenderElixir(){
+if(!crGameState)return;
+document.getElementById("crElixirNum").textContent=crGameState.elixir;
+document.getElementById("crElixirFill").style.width=(crGameState.elixir/10*100)+"%";
+crRenderHand();
+}
+function crRenderTowers(){
+if(!crGameState)return;
+document.getElementById("crMyHpFill").style.width=Math.max(0,crGameState.myHp)+"%";
+document.getElementById("crBotHpFill").style.width=Math.max(0,crGameState.botHp)+"%";
+}
+function crRenderHand(){
+if(!crGameState)return;
+const hand=document.getElementById("crHand");
+hand.innerHTML=crGameState.deck.map(id=>{
 const c=crCardById(id);
-if(!c)return 0;
-return c.elixir+CR_RARITY_POWER[c.rarity]*1.5+Math.random()*2;
+const cd=crGameState.cooldowns[id]||0;
+const cantAfford=crGameState.elixir<c.elixir;
+const cls="cr-hand-card r-"+c.rarity+(crGameState.selectedCardId===id?" selected":"")+((cd>0||cantAfford)?" disabled":"");
+const cdHtml=cd>0?'<div class="cr-cd-overlay">'+Math.ceil(cd/1000)+'</div>':"";
+return '<div class="'+cls+'" data-card-id="'+id+'"><span class="cr-card-elixir">'+c.elixir+'</span><span class="cr-card-emoji">'+c.emoji+'</span><span class="cr-card-name">'+c.name+'</span>'+cdHtml+'</div>';
+}).join("");
 }
-function crRandomBotDeck(){
-const pool=CR_CARDS.filter(c=>c.rarity!=="zeous");
-const shuffled=pool.slice().sort(()=>Math.random()-0.5);
-return shuffled.slice(0,8).map(c=>c.id);
-}
-function crRunBattle(myDeck){
-const botDeck=crRandomBotDeck();
-const arena=document.getElementById("crBattleArena");
-arena.innerHTML="";
-const startBtn=document.getElementById("crStartBattleBtn");
-startBtn.disabled=true;
-let myWins=0,botWins=0;
-myDeck.forEach((myId,i)=>{
-setTimeout(()=>{
-const botId=botDeck[i];
-const myCard=crCardById(myId),botCard=crCardById(botId);
-if(!myCard||!botCard)return;
-const myPower=crCardPower(myId),botPower=crCardPower(botId);
-let cls="draw";
-if(myPower>botPower){myWins++;cls="win-mine";}
-else if(botPower>myPower){botWins++;cls="win-bot";}
-const row=document.createElement("div");
-row.className="cr-round "+cls;
-row.innerHTML='<div class="cr-round-side mine">'+myCard.emoji+' '+myCard.name+'</div><div class="cr-round-vs">راند '+(i+1)+'</div><div class="cr-round-side bot">'+botCard.name+' '+botCard.emoji+'</div>';
-arena.appendChild(row);
-if(i===myDeck.length-1){
-setTimeout(()=>{
-let resultCls="draw",resultText="مساوی شد 🤝 ("+myWins+" - "+botWins+")";
-if(myWins>botWins){resultCls="win";resultText="بردی! 🏆 ("+myWins+" - "+botWins+")";}
-else if(botWins>myWins){resultCls="lose";resultText="زئوس برد 😅 ("+botWins+" - "+myWins+")";}
-const resultBox=document.createElement("div");
-resultBox.className="cr-battle-result "+resultCls;
-resultBox.textContent=resultText;
-arena.appendChild(resultBox);
-startBtn.disabled=false;
-},450);
-}
-},i*450);
+const crHandEl=document.getElementById("crHand");
+if(crHandEl)crHandEl.addEventListener("click",e=>{
+if(!crGameState)return;
+const el=e.target.closest(".cr-hand-card");
+if(!el||el.classList.contains("disabled"))return;
+crGameState.selectedCardId=el.dataset.cardId;
+document.getElementById("crField").classList.add("placing");
+crRenderHand();
 });
+const crFieldEl=document.getElementById("crField");
+if(crFieldEl)crFieldEl.addEventListener("click",e=>{
+if(!crGameState||!crGameState.selectedCardId)return;
+const rect=crFieldEl.getBoundingClientRect();
+const x=e.clientX-rect.left,y=e.clientY-rect.top;
+if(y<rect.height/2)return;
+const cardId=crGameState.selectedCardId;
+const card=crCardById(cardId);
+if(crGameState.elixir<card.elixir)return;
+crGameState.elixir-=card.elixir;
+crSpawnTroop(cardId,x,Math.min(y,rect.height-40),"mine");
+crGameState.cooldowns[cardId]=5000;
+crGameState.selectedCardId=null;
+crFieldEl.classList.remove("placing");
+crRenderElixir();
+});
+function crSpawnTroop(cardId,x,y,side){
+const card=crCardById(cardId);
+const el=document.createElement("div");
+el.className="cr-troop "+side;
+el.textContent=card.emoji;
+el.style.left=x+"px";
+el.style.top=y+"px";
+crFieldEl.appendChild(el);
+crGameState.troops.push({el:el,x:x,y:y,side:side,power:card.elixir*10+CR_ZEOUS_POWER[card.rarity]});
+}
+const CR_ZEOUS_POWER={common:2,rare:6,epic:10,legendary:14,zeous:20};
+function crBotMaybePlay(){
+if(!crGameState)return;
+const pool=CR_CARDS.filter(c=>c.rarity!=="zeous"&&c.elixir<=crGameState.botElixir);
+if(!pool.length)return;
+const card=pool[Math.floor(Math.random()*pool.length)];
+crGameState.botElixir-=card.elixir;
+const rect=crFieldEl.getBoundingClientRect();
+const x=20+Math.random()*(rect.width-40);
+crSpawnTroop(card.id,x,50,"bot");
+}
+function crGameTick(){
+if(!crGameState)return;
+const rect=crFieldEl.getBoundingClientRect();
+const remaining=[];
+crGameState.troops.forEach(t=>{
+if(t.side==="mine"){t.y-=3;}else{t.y+=3;}
+t.el.style.top=t.y+"px";
+if(t.side==="mine"&&t.y<=40){
+crGameState.botHp-=t.power;
+t.el.remove();
+crRenderTowers();
+if(crGameState.botHp<=0){crEndGame("destroyed","mine");return;}
+}else if(t.side==="bot"&&t.y>=rect.height-40){
+crGameState.myHp-=t.power;
+t.el.remove();
+crRenderTowers();
+if(crGameState.myHp<=0){crEndGame("destroyed","bot");return;}
+}else{
+remaining.push(t);
+}
+});
+crGameState.troops=remaining;
+let cdChanged=false;
+Object.keys(crGameState.cooldowns).forEach(id=>{
+if(crGameState.cooldowns[id]>0){crGameState.cooldowns[id]-=100;cdChanged=true;if(crGameState.cooldowns[id]<=0)delete crGameState.cooldowns[id];}
+});
+if(cdChanged)crRenderHand();
+}
+function crEndGame(reason,winnerSide){
+if(!crGameState)return;
+crStopGame();
+document.getElementById("crField").querySelectorAll(".cr-troop").forEach(t=>t.remove());
+const box=document.getElementById("crGameOverBox");
+let cls="draw",text="مساوی شد 🤝";
+if(reason==="destroyed"){
+if(winnerSide==="mine"){cls="win";text="برج زئوس رو داغون کردی! 🏆";}
+else{cls="lose";text="زئوس برجتو داغون کرد 😅";}
+}else{
+if(crGameState&&crGameState.myHp>crGameState.botHp){cls="win";text="زمان تموم شد، بردی! 🏆";}
+else if(crGameState&&crGameState.botHp>crGameState.myHp){cls="lose";text="زمان تموم شد، زئوس برد 😅";}
+else{text="زمان تموم شد، مساوی شد 🤝";}
+}
+box.className="cr-game-over "+cls;
+box.textContent=text;
+box.style.display="block";
+document.getElementById("crStartBattleBtn").disabled=false;
+document.getElementById("crStartBattleBtn").textContent="بازی دوباره";
 }
 const crStartBattleBtnEl=document.getElementById("crStartBattleBtn");
 if(crStartBattleBtnEl)crStartBattleBtnEl.addEventListener("click",()=>{
@@ -1107,7 +1203,37 @@ if(!currentProfile||!Array.isArray(currentProfile.clashDeck)||currentProfile.cla
 alert("اول باید یه دسته‌ی ۸ تایی بسازی و ذخیره کنی 🏆");
 return;
 }
-crRunBattle(currentProfile.clashDeck);
+crStopGame();
+crFieldEl.querySelectorAll(".cr-troop").forEach(t=>t.remove());
+document.getElementById("crGameOverBox").style.display="none";
+document.getElementById("crGameArea").style.display="block";
+crGameState={
+deck:currentProfile.clashDeck.slice(),
+elixir:5,botElixir:5,
+myHp:100,botHp:100,
+selectedCardId:null,
+cooldowns:{},
+troops:[],
+timeLeft:60
+};
+crRenderElixir();
+crRenderTowers();
+document.getElementById("crTimeLeft").textContent=crGameState.timeLeft;
+crGameState.elixirId=setInterval(()=>{
+if(!crGameState)return;
+crGameState.elixir=Math.min(10,crGameState.elixir+1);
+crGameState.botElixir=Math.min(10,crGameState.botElixir+1);
+crRenderElixir();
+},2800);
+crGameState.botId=setInterval(crBotMaybePlay,1800);
+crGameState.timerId=setInterval(()=>{
+if(!crGameState)return;
+crGameState.timeLeft--;
+document.getElementById("crTimeLeft").textContent=crGameState.timeLeft;
+if(crGameState.timeLeft<=0)crEndGame("time");
+},1000);
+crGameState.loopId=setInterval(crGameTick,100);
+crStartBattleBtnEl.disabled=true;
 });
 
 const profileViewBox=document.getElementById("profileViewBox");
