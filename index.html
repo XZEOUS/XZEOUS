@@ -233,10 +233,46 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 .cr-card.r-rare{border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.06)}
 .cr-card.r-epic{border-color:rgba(192,132,252,.4);background:rgba(192,132,252,.08)}
 .cr-card.r-legendary{border-color:rgba(250,204,21,.45);background:rgba(250,204,21,.08)}
+.cr-card.r-zeous{border-color:rgba(167,139,250,.6);background:linear-gradient(160deg,rgba(139,92,246,.18),rgba(56,189,248,.12));box-shadow:0 0 18px rgba(139,92,246,.35)}
+.cr-deck-slot.filled.r-zeous{border-color:rgba(167,139,250,.6);background:linear-gradient(160deg,rgba(139,92,246,.18),rgba(56,189,248,.12));box-shadow:0 0 16px rgba(139,92,246,.4)}
+.pv-deck-card.r-zeous{border-color:rgba(167,139,250,.6);box-shadow:0 0 10px rgba(139,92,246,.4)}
+.cr-divider{height:1px;background:rgba(255,255,255,.08);margin:24px 0 20px}
+.cr-game-head h3{font-size:16px;margin-bottom:6px}
+.cr-game-head p{color:#9991a4;font-size:11px;line-height:1.8;margin-bottom:14px}
+.cr-battle-arena{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.cr-round{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-size:12px;opacity:0;transform:translateY(8px);animation:crRoundIn .4s ease forwards}
+@keyframes crRoundIn{to{opacity:1;transform:none}}
+.cr-round-side{flex:1;display:flex;align-items:center;gap:6px}
+.cr-round-side.mine{justify-content:flex-start}
+.cr-round-side.bot{justify-content:flex-end;flex-direction:row-reverse}
+.cr-round-vs{color:#7a7383;font-size:10px;flex:0 0 auto}
+.cr-round.win-mine .cr-round-side.mine{color:#34d399;font-weight:bold}
+.cr-round.win-bot .cr-round-side.bot{color:#fca5a5;font-weight:bold}
+.cr-battle-result{margin-top:6px;padding:16px;border-radius:14px;text-align:center;font-size:15px;font-weight:900;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.cr-battle-result.win{color:#34d399}
+.cr-battle-result.lose{color:#fca5a5}
+.cr-battle-result.draw{color:#facc15}
+.cr-card.r-zeous,.cr-deck-slot.filled.r-zeous,.pv-deck-card.r-zeous{border-color:rgba(167,139,250,.7);background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(56,189,248,.16));box-shadow:0 0 20px rgba(139,92,246,.4)}
+.cr-card.r-zeous .cr-card-name{color:#e0d4ff;font-weight:bold}
 .pv-deck{margin:0 20px 22px}
 .pv-deck-label{font-size:11px;color:#7a7383;margin-bottom:8px}
 .pv-deck-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .pv-deck-card{aspect-ratio:1/1;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px}
+.cr-battle-log{display:flex;flex-direction:column;gap:8px;margin-top:16px;max-height:400px;overflow-y:auto;padding-right:2px}
+.cr-battle-round{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);opacity:0;transform:translateY(10px);animation:crRoundIn .4s forwards}
+@keyframes crRoundIn{to{opacity:1;transform:none}}
+.cr-battle-card{display:flex;align-items:center;gap:6px;font-size:12px;flex:1;min-width:0}
+.cr-battle-card span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cr-battle-card.theirs{flex-direction:row-reverse;text-align:left}
+.cr-battle-card .emoji{font-size:20px;flex-shrink:0}
+.cr-battle-vs{font-size:10px;color:#9991a4;font-weight:900;white-space:nowrap;flex-shrink:0}
+.cr-battle-round.win{border-color:rgba(74,222,128,.4)}
+.cr-battle-round.lose{border-color:rgba(248,113,113,.4)}
+.cr-battle-round.draw{border-color:rgba(250,204,21,.4)}
+.cr-battle-final{margin-top:14px;padding:16px;border-radius:16px;text-align:center;font-size:16px;font-weight:900}
+.cr-battle-final.win{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#86efac}
+.cr-battle-final.lose{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.4);color:#fca5a5}
+.cr-battle-final.draw{background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.4);color:#fde68a}
 @media(max-width:600px){.cr-deck-head{justify-content:center;text-align:center}.cr-deck-slots{margin:auto}.cr-card-grid{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}}
 </style>
 </head>
@@ -385,7 +421,25 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 </div>
 <div class="cr-hint">روی هر کارت بزن تا به دسته اضافه بشه (حداکثر ۸ تا). برای حذف، رو همون کارت داخل دسته بزن.</div>
 <div class="cr-card-grid" id="crCardGrid"></div>
+<div class="cr-divider"></div>
+<div class="cr-game-head">
+<h3>نبرد با زئوس ⚡</h3>
+<p>دسته‌ی ذخیره‌شده‌ت رو در برابر یه دسته‌ی رندوم امتحان کن و ببین کی می‌بره.</p>
 </div>
+<button id="crStartBattleBtn" class="signup-submit" style="width:auto;padding:11px 24px">شروع نبرد</button>
+<div id="crBattleArena" class="cr-battle-arena"></div>
+</div>
+
+<div id="crBattleBox" class="glass" style="padding:28px;margin-top:18px;display:none">
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+<h3 style="font-size:16px">نبرد با ربات زئوس ⚔️</h3>
+<button id="crStartBattleBtn" class="signup-submit" style="width:auto;padding:10px 22px">شروع نبرد</button>
+</div>
+<p style="color:#9991a4;font-size:11px;margin-top:8px;line-height:1.9">دسته‌ی ذخیره‌شده‌ی خودت رو در برابر یه دسته‌ی رندوم از ربات زئوس امتحان کن.</p>
+<div class="cr-battle-log" id="crBattleLog"></div>
+<div id="crBattleFinal"></div>
+</div>
+
 </div></section>
 
 
@@ -880,6 +934,8 @@ accountBox.classList.remove("open");
 });
 
 const CR_CARDS=[
+{id:"xzeous",name:"X Zeous",emoji:"🌩️",rarity:"zeous",elixir:4},
+{id:"xzeous",name:"X Zeous",emoji:"🌩️",rarity:"zeous",elixir:5},
 {id:"knight",name:"Knight",emoji:"⚔️",rarity:"common",elixir:3},
 {id:"archers",name:"Archers",emoji:"🏹",rarity:"common",elixir:3},
 {id:"goblins",name:"Goblins",emoji:"👺",rarity:"common",elixir:2},
@@ -998,6 +1054,61 @@ crRenderAll();
 loggedOut.style.display="block";loggedIn.style.display="none";
 }
 }
+const CR_RARITY_POWER={common:1,rare:2,epic:3,legendary:4,zeous:5};
+function crCardPower(id){
+const c=crCardById(id);
+if(!c)return 0;
+return c.elixir+CR_RARITY_POWER[c.rarity]*1.5+Math.random()*2;
+}
+function crRandomBotDeck(){
+const pool=CR_CARDS.filter(c=>c.rarity!=="zeous");
+const shuffled=pool.slice().sort(()=>Math.random()-0.5);
+return shuffled.slice(0,8).map(c=>c.id);
+}
+function crRunBattle(myDeck){
+const botDeck=crRandomBotDeck();
+const arena=document.getElementById("crBattleArena");
+arena.innerHTML="";
+const startBtn=document.getElementById("crStartBattleBtn");
+startBtn.disabled=true;
+let myWins=0,botWins=0;
+myDeck.forEach((myId,i)=>{
+setTimeout(()=>{
+const botId=botDeck[i];
+const myCard=crCardById(myId),botCard=crCardById(botId);
+if(!myCard||!botCard)return;
+const myPower=crCardPower(myId),botPower=crCardPower(botId);
+let cls="draw";
+if(myPower>botPower){myWins++;cls="win-mine";}
+else if(botPower>myPower){botWins++;cls="win-bot";}
+const row=document.createElement("div");
+row.className="cr-round "+cls;
+row.innerHTML='<div class="cr-round-side mine">'+myCard.emoji+' '+myCard.name+'</div><div class="cr-round-vs">راند '+(i+1)+'</div><div class="cr-round-side bot">'+botCard.name+' '+botCard.emoji+'</div>';
+arena.appendChild(row);
+if(i===myDeck.length-1){
+setTimeout(()=>{
+let resultCls="draw",resultText="مساوی شد 🤝 ("+myWins+" - "+botWins+")";
+if(myWins>botWins){resultCls="win";resultText="بردی! 🏆 ("+myWins+" - "+botWins+")";}
+else if(botWins>myWins){resultCls="lose";resultText="زئوس برد 😅 ("+botWins+" - "+myWins+")";}
+const resultBox=document.createElement("div");
+resultBox.className="cr-battle-result "+resultCls;
+resultBox.textContent=resultText;
+arena.appendChild(resultBox);
+startBtn.disabled=false;
+},450);
+}
+},i*450);
+});
+}
+const crStartBattleBtnEl=document.getElementById("crStartBattleBtn");
+if(crStartBattleBtnEl)crStartBattleBtnEl.addEventListener("click",()=>{
+if(!currentUser)return;
+if(!currentProfile||!Array.isArray(currentProfile.clashDeck)||currentProfile.clashDeck.length!==8){
+alert("اول باید یه دسته‌ی ۸ تایی بسازی و ذخیره کنی 🏆");
+return;
+}
+crRunBattle(currentProfile.clashDeck);
+});
 
 const profileViewBox=document.getElementById("profileViewBox");
 document.getElementById("profileViewClose").addEventListener("click",()=>profileViewBox.classList.remove("open"));
@@ -1019,7 +1130,7 @@ document.getElementById("pvBio").textContent=profile.bio||"";
 const pvDeckWrap=document.getElementById("pvDeckWrap"),pvDeckGrid=document.getElementById("pvDeckGrid");
 if(pvDeckWrap&&pvDeckGrid){
 if(Array.isArray(profile.clashDeck)&&profile.clashDeck.length){
-pvDeckGrid.innerHTML=profile.clashDeck.map(id=>{const c=crCardById(id);return c?'<div class="pv-deck-card" title="'+c.name+'">'+c.emoji+'</div>':"";}).join("");
+pvDeckGrid.innerHTML=profile.clashDeck.map(id=>{const c=crCardById(id);return c?'<div class="pv-deck-card r-'+c.rarity+'" title="'+c.name+'">'+c.emoji+'</div>':"";}).join("");
 pvDeckWrap.style.display="block";
 }else{
 pvDeckWrap.style.display="none";
