@@ -128,7 +128,16 @@ body:after{width:550px;height:550px;bottom:-250px;left:-180px;background:#2563eb
 .chat-skeleton-row.right{justify-content:flex-end}
 .chat-skeleton-bubble{height:32px;border-radius:14px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.13) 37%,rgba(255,255,255,.05) 63%);background-size:400% 100%;animation:skeleton-shimmer 1.4s ease infinite}
 @keyframes skeleton-shimmer{0%{background-position:100% 50%}100%{background-position:0 50%}}
-.emoji-item.sticker-emoji{font-size:19px}
+.emoji-item.sticker-emoji{padding:3px}
+.emoji-item.sticker-emoji img{width:34px;height:34px;object-fit:contain;display:block;border-radius:8px}
+.emoji-row{flex:1 1 100%;display:flex;gap:4px;flex-wrap:wrap}
+.sticker-pack-label{flex:1 1 100%;display:flex;align-items:center;gap:6px;font-size:10px;color:#9991a4;margin:6px 0 2px}
+.sticker-pack-row{flex:1 1 100%;display:flex;gap:6px;flex-wrap:wrap}
+.sticker-pack-row.locked{filter:blur(4px);opacity:.55;pointer-events:none}
+.lock-tag{color:#facc15;font-size:9px}
+.msg-sticker-inline{width:20px;height:20px;object-fit:contain;vertical-align:middle;margin:0 1px}
+.msg-sticker-solo{width:120px;height:120px;object-fit:contain;display:block}
+.chat-bubble.sticker-bubble{background:none!important;padding:0!important;max-width:130px}
 .premium-lock-row{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;font-size:10px;color:#9991a4;width:100%}
 .premium-lock-row a{color:#c4b5fd;cursor:pointer}
 .premium-plans{display:flex;flex-direction:column;gap:8px;margin-top:12px}
@@ -200,6 +209,35 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 .xzeous-dock{position:fixed!important;left:50%!important;bottom:max(10px,env(safe-area-inset-bottom))!important;transform:translateX(-50%)!important;width:calc(100vw - 20px)!important;min-width:0!important;max-width:none!important;height:66px!important;padding:6px!important;gap:3px!important;border-radius:23px!important;display:flex!important;visibility:visible!important;opacity:1!important;z-index:999999!important}
 .xzeous-dock a{width:16.6%!important;flex:1 1 16.6%!important;height:54px!important;min-width:0!important;display:flex!important;border-radius:17px!important}.dock-icon{font-size:17px!important}.dock-label{font-size:6.5px!important}footer{padding-bottom:130px}
 }
+/* ===== Clash Royale deck builder ===== */
+.cr-deck-head{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.cr-deck-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(320px,100%)}
+.cr-deck-slot{aspect-ratio:1/1.2;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#4b4555;font-size:20px;cursor:pointer;transition:.2s;position:relative;text-align:center;padding:4px}
+.cr-deck-slot:hover{border-color:rgba(167,139,250,.4)}
+.cr-deck-slot.filled{border-style:solid;background:rgba(255,255,255,.05)}
+.cr-deck-slot.filled.r-rare{border-color:rgba(251,146,60,.45)}
+.cr-deck-slot.filled.r-epic{border-color:rgba(192,132,252,.5)}
+.cr-deck-slot.filled.r-legendary{border-color:rgba(250,204,21,.55)}
+.cr-slot-name{font-size:8px;color:#c8c0d0;margin-top:3px;line-height:1.3}
+.cr-slot-elixir{position:absolute;top:3px;right:3px;width:15px;height:15px;border-radius:50%;background:#38bdf8;color:#04121a;font-size:8px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.cr-deck-meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.cr-elixir{font-size:12px;color:#9991a4}.cr-elixir strong{color:#38bdf8;font-size:16px}
+.cr-hint{font-size:11px;color:#7a7383;margin-bottom:16px;line-height:1.8}
+.cr-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;max-height:360px;overflow-y:auto;padding:2px 4px 2px 2px}
+.cr-card{border-radius:12px;padding:9px 4px 7px;text-align:center;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:.2s;position:relative}
+.cr-card:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.4)}
+.cr-card.selected{opacity:.32;pointer-events:none}
+.cr-card-emoji{font-size:24px;display:block}
+.cr-card-name{font-size:8.5px;margin-top:6px;color:#e8e4ee;line-height:1.3;display:block}
+.cr-card-elixir{position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#38bdf8;color:#04121a;font-size:7.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.cr-card.r-rare{border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.06)}
+.cr-card.r-epic{border-color:rgba(192,132,252,.4);background:rgba(192,132,252,.08)}
+.cr-card.r-legendary{border-color:rgba(250,204,21,.45);background:rgba(250,204,21,.08)}
+.pv-deck{margin:0 20px 22px}
+.pv-deck-label{font-size:11px;color:#7a7383;margin-bottom:8px}
+.pv-deck-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pv-deck-card{aspect-ratio:1/1;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px}
+@media(max-width:600px){.cr-deck-head{justify-content:center;text-align:center}.cr-deck-slots{margin:auto}.cr-card-grid{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}}
 </style>
 </head>
 <body>
@@ -207,7 +245,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <nav class="nav">
 <a href="#home" class="logo">XZ<span>EOUS</span></a>
 <div class="navlinks">
-<a href="#course">محصولات</a><a href="#reviews">نظرات</a><a href="#faq">FAQ</a>
+<a href="#course">محصولات</a><a href="#reviews">نظرات</a><a href="#clashDeck">کلش رویال</a><a href="#faq">FAQ</a>
 </div>
 <div style="display:flex;gap:10px;align-items:center">
 <button id="signupOpen" class="nav-button" style="border:0;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px">
@@ -331,6 +369,24 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="glass contact-box"><h2>آماده همکاری؟</h2><p>برای سفارش ادیت، پروژه یا هر سوالی از طریق تلگرام پیام بده.</p><a href="https://t.me/XZEOUS_AE" target="_blank" class="btn primary" style="margin-top:25px">پیام به XZEOUS ↗</a></div>
 </div></div></section>
 
+<section id="clashDeck" class="reveal"><div class="container">
+<div class="heading"><div class="tag">CLASH ROYALE</div><h2>دسته کلش رویاله خودتو بساز 🏆</h2><p>۸ تا کارت انتخاب کن و دسته اختصاصیتو بچین؛ دسته‌ت داخل پروفایلت به بقیه نشون داده می‌شه.</p></div>
+<div id="crLoggedOut" class="glass" style="padding:34px;text-align:center;display:none">
+<p style="color:#9991a4;font-size:13px;line-height:2">برای ساختن دسته اول باید وارد حساب زئوس بشی.</p>
+<button id="crLoginBtn" class="btn primary" style="margin-top:14px;border:0;cursor:pointer;font-family:inherit">ورود / ثبت‌نام</button>
+</div>
+<div id="crLoggedIn" class="glass" style="padding:28px;display:none">
+<div class="cr-deck-head">
+<div class="cr-deck-slots" id="crDeckSlots"></div>
+<div class="cr-deck-meta">
+<div class="cr-elixir">میانگین اکسیر: <strong id="crAvgElixir">0.0</strong></div>
+<button id="crSaveDeckBtn" class="signup-submit" style="width:auto;padding:11px 24px">ذخیره دسته</button>
+</div>
+</div>
+<div class="cr-hint">روی هر کارت بزن تا به دسته اضافه بشه (حداکثر ۸ تا). برای حذف، رو همون کارت داخل دسته بزن.</div>
+<div class="cr-card-grid" id="crCardGrid"></div>
+</div>
+</div></section>
 
 
 <footer><div class="container"><div class="footer-logo">XZEOUS</div><div class="footer-text">XZEOUS × ROXY<br>Built with imagination.</div></div></footer>
@@ -428,6 +484,10 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <div class="pv-info-row" id="pvBioRow"><p id="pvBio" class="pv-info-value"></p><span class="pv-info-label">بیو</span></div>
 <div class="pv-info-row" id="pvAgeRow"><p id="pvAge" class="pv-info-value"></p><span class="pv-info-label">سن</span></div>
 <div class="pv-info-row"><p id="pvUsername2" class="pv-info-value" dir="ltr"></p><span class="pv-info-label">یوزرنیم</span></div>
+</div>
+<div class="pv-deck" id="pvDeckWrap" style="display:none">
+<div class="pv-deck-label">دسته کلش رویال 🏆</div>
+<div class="pv-deck-grid" id="pvDeckGrid"></div>
 </div>
 </div>
 </div>
@@ -819,6 +879,126 @@ await auth.signOut();
 accountBox.classList.remove("open");
 });
 
+const CR_CARDS=[
+{id:"knight",name:"Knight",emoji:"⚔️",rarity:"common",elixir:3},
+{id:"archers",name:"Archers",emoji:"🏹",rarity:"common",elixir:3},
+{id:"goblins",name:"Goblins",emoji:"👺",rarity:"common",elixir:2},
+{id:"skeletons",name:"Skeletons",emoji:"☠️",rarity:"common",elixir:1},
+{id:"barbarians",name:"Barbarians",emoji:"🪖",rarity:"common",elixir:5},
+{id:"minions",name:"Minions",emoji:"🦇",rarity:"common",elixir:3},
+{id:"zap",name:"Zap",emoji:"⚡",rarity:"common",elixir:2},
+{id:"cannon",name:"Cannon",emoji:"💣",rarity:"common",elixir:3},
+{id:"tesla",name:"Tesla",emoji:"🔌",rarity:"common",elixir:4},
+{id:"royalgiant",name:"Royal Giant",emoji:"👑",rarity:"common",elixir:6},
+{id:"mortar",name:"Mortar",emoji:"🧨",rarity:"common",elixir:4},
+{id:"giant",name:"Giant",emoji:"🛡️",rarity:"rare",elixir:5},
+{id:"wizard",name:"Wizard",emoji:"🔮",rarity:"rare",elixir:5},
+{id:"minipekka",name:"Mini P.E.K.K.A",emoji:"🤖",rarity:"rare",elixir:4},
+{id:"musketeer",name:"Musketeer",emoji:"🔫",rarity:"rare",elixir:4},
+{id:"hogrider",name:"Hog Rider",emoji:"🐗",rarity:"rare",elixir:4},
+{id:"valkyrie",name:"Valkyrie",emoji:"🪓",rarity:"rare",elixir:4},
+{id:"fireball",name:"Fireball",emoji:"🔥",rarity:"rare",elixir:4},
+{id:"inferno",name:"Inferno Tower",emoji:"🗼",rarity:"rare",elixir:5},
+{id:"babydragon",name:"Baby Dragon",emoji:"🐉",rarity:"epic",elixir:4},
+{id:"skeletonarmy",name:"Skeleton Army",emoji:"💀",rarity:"epic",elixir:3},
+{id:"balloon",name:"Balloon",emoji:"🎈",rarity:"epic",elixir:5},
+{id:"pekka",name:"P.E.K.K.A",emoji:"🗡️",rarity:"epic",elixir:7},
+{id:"witch",name:"Witch",emoji:"🧙‍♀️",rarity:"epic",elixir:5},
+{id:"xbow",name:"X-Bow",emoji:"🎯",rarity:"epic",elixir:6},
+{id:"golem",name:"Golem",emoji:"🪨",rarity:"epic",elixir:8},
+{id:"threemusketeers",name:"Three Musketeers",emoji:"👥",rarity:"epic",elixir:9},
+{id:"princess",name:"Princess",emoji:"👸",rarity:"legendary",elixir:3},
+{id:"icewizard",name:"Ice Wizard",emoji:"❄️",rarity:"legendary",elixir:3},
+{id:"miner",name:"Miner",emoji:"⛏️",rarity:"legendary",elixir:3},
+{id:"sparky",name:"Sparky",emoji:"🎇",rarity:"legendary",elixir:6},
+{id:"lavahound",name:"Lava Hound",emoji:"🦖",rarity:"legendary",elixir:7},
+{id:"bandit",name:"Bandit",emoji:"🥷",rarity:"legendary",elixir:3},
+{id:"megaknight",name:"Mega Knight",emoji:"🦾",rarity:"legendary",elixir:7},
+{id:"electrowizard",name:"Electro Wizard",emoji:"⚡",rarity:"legendary",elixir:4}
+];
+function crCardById(id){return CR_CARDS.find(c=>c.id===id);}
+let crSelectedDeck=[];
+function renderCrCardGrid(){
+const grid=document.getElementById("crCardGrid");
+if(!grid)return;
+grid.innerHTML=CR_CARDS.map(c=>
+'<div class="cr-card r-'+c.rarity+(crSelectedDeck.includes(c.id)?" selected":"")+'" data-card-id="'+c.id+'">'+
+'<span class="cr-card-elixir">'+c.elixir+'</span>'+
+'<span class="cr-card-emoji">'+c.emoji+'</span>'+
+'<span class="cr-card-name">'+c.name+'</span>'+
+'</div>'
+).join("");
+}
+function renderCrDeckSlots(){
+const slots=document.getElementById("crDeckSlots");
+if(!slots)return;
+let html="";
+for(let i=0;i<8;i++){
+const cardId=crSelectedDeck[i];
+const card=cardId?crCardById(cardId):null;
+if(card){
+html+='<div class="cr-deck-slot filled r-'+card.rarity+'" data-slot-index="'+i+'"><span class="cr-slot-elixir">'+card.elixir+'</span><span style="font-size:22px">'+card.emoji+'</span><span class="cr-slot-name">'+card.name+'</span></div>';
+}else{
+html+='<div class="cr-deck-slot" data-slot-index="'+i+'">+</div>';
+}
+}
+slots.innerHTML=html;
+const total=crSelectedDeck.reduce((sum,id)=>{const c=crCardById(id);return sum+(c?c.elixir:0);},0);
+const avgEl=document.getElementById("crAvgElixir");
+if(avgEl)avgEl.textContent=crSelectedDeck.length?(total/crSelectedDeck.length).toFixed(1):"0.0";
+}
+function crRenderAll(){renderCrCardGrid();renderCrDeckSlots();}
+const crCardGridEl=document.getElementById("crCardGrid");
+if(crCardGridEl)crCardGridEl.addEventListener("click",e=>{
+const el=e.target.closest(".cr-card");
+if(!el||!currentUser)return;
+const id=el.dataset.cardId;
+if(crSelectedDeck.includes(id)||crSelectedDeck.length>=8)return;
+crSelectedDeck.push(id);
+crRenderAll();
+});
+const crDeckSlotsEl=document.getElementById("crDeckSlots");
+if(crDeckSlotsEl)crDeckSlotsEl.addEventListener("click",e=>{
+const el=e.target.closest(".cr-deck-slot");
+if(!el)return;
+const idx=parseInt(el.dataset.slotIndex);
+if(crSelectedDeck[idx]){crSelectedDeck.splice(idx,1);crRenderAll();}
+});
+const crLoginBtnEl=document.getElementById("crLoginBtn");
+if(crLoginBtnEl)crLoginBtnEl.addEventListener("click",openAuthModal);
+const crSaveDeckBtnEl=document.getElementById("crSaveDeckBtn");
+if(crSaveDeckBtnEl)crSaveDeckBtnEl.addEventListener("click",async()=>{
+if(!currentUser)return;
+if(crSelectedDeck.length!==8){alert("اول باید دقیقاً ۸ تا کارت انتخاب کنی 🏆");return;}
+const btn=crSaveDeckBtnEl;const oldText=btn.textContent;
+btn.disabled=true;btn.textContent="در حال ذخیره...";
+try{
+const data={clashDeck:crSelectedDeck.slice()};
+await db.collection("users").doc(currentUser.uid).set(data,{merge:true});
+await db.collection("publicProfiles").doc(currentUser.uid).set(data,{merge:true});
+currentProfile.clashDeck=crSelectedDeck.slice();
+safeSet("xzeous_profile_"+currentUser.uid,JSON.stringify(currentProfile));
+btn.textContent="ذخیره شد 🖤";
+setTimeout(()=>{btn.textContent=oldText;},1600);
+}catch(e){
+console.error("XZEOUS clash deck save error:",e.code,e.message,e);
+alert("دسته ذخیره نشد: "+(e.code||e.message));
+btn.textContent=oldText;
+}
+btn.disabled=false;
+});
+function updateClashDeckUI(){
+const loggedOut=document.getElementById("crLoggedOut"),loggedIn=document.getElementById("crLoggedIn");
+if(!loggedOut||!loggedIn)return;
+if(currentUser){
+loggedOut.style.display="none";loggedIn.style.display="block";
+crSelectedDeck=(currentProfile&&Array.isArray(currentProfile.clashDeck))?currentProfile.clashDeck.slice(0,8):[];
+crRenderAll();
+}else{
+loggedOut.style.display="block";loggedIn.style.display="none";
+}
+}
+
 const profileViewBox=document.getElementById("profileViewBox");
 document.getElementById("profileViewClose").addEventListener("click",()=>profileViewBox.classList.remove("open"));
 profileViewBox.addEventListener("click",e=>{if(e.target===profileViewBox)profileViewBox.classList.remove("open");});
@@ -836,6 +1016,15 @@ document.getElementById("pvAgeRow").style.display=profile.age?"block":"none";
 document.getElementById("pvAge").textContent=profile.age||"";
 document.getElementById("pvBioRow").style.display=profile.bio?"block":"none";
 document.getElementById("pvBio").textContent=profile.bio||"";
+const pvDeckWrap=document.getElementById("pvDeckWrap"),pvDeckGrid=document.getElementById("pvDeckGrid");
+if(pvDeckWrap&&pvDeckGrid){
+if(Array.isArray(profile.clashDeck)&&profile.clashDeck.length){
+pvDeckGrid.innerHTML=profile.clashDeck.map(id=>{const c=crCardById(id);return c?'<div class="pv-deck-card" title="'+c.name+'">'+c.emoji+'</div>':"";}).join("");
+pvDeckWrap.style.display="block";
+}else{
+pvDeckWrap.style.display="none";
+}
+}
 profileViewBox.classList.add("open");
 }
 function bindProfileOpen(el,profile){
@@ -881,6 +1070,7 @@ renderReviewForm();
 if(typeof renderReviewsList==="function")renderReviewsList();
 if(typeof updateMessagesUI==="function")updateMessagesUI();
 if(typeof renderEmojiBar==="function")renderEmojiBar();
+if(typeof updateClashDeckUI==="function")updateClashDeckUI();
 });
 
 function renderReviewForm(){
@@ -1014,15 +1204,45 @@ let activeChatId=null, activeChatUnsub=null, convUnsub=null, isGroupChat=false, 
 const GROUP_CHAT_LABEL="گپ عمومی زعوس 🌐";
 const PREMIUM_CHAT_LABEL="کلاب زئوس پرمیوم 🖤";
 const EMOJI_LIST=["😂","❤️","🔥","😭","🖤","😍","👍","🥺","😎","🎉","😢","🤝","👀","💯","😅","🙏","✨","😡","🤔","🫡"];
-const PREMIUM_STICKER_LIST=["🦄","🌈","🍭","🎀","🧸","🍓","🦋","🌸","🍒","🌚","🥸","🍑"];
+const STICKER_PACKS=[
+{id:"zeous-memes",label:"میم آقو زئوس",icon:"😹",items:[
+{code:"zeous_jelly",file:"shocked-blue-jelly.png"},
+{code:"zeous_doge",file:"Doge-holding-a-gun.png"},
+{code:"zeous_danger",file:"danger-patrik.png"},
+{code:"zeous_dagestan",file:"2-3-years-Dagestan-is-calling.png"},
+{code:"zeous_wisdom",file:"Wisdom-in-the-butt.png"},
+{code:"zeous_khosravi",file:"Colonel-Khosravi.png"},
+{code:"zeous_messi",file:"sigma-messi-in-baber.png"},
+{code:"zeous_sadsponge",file:"Sad-Spongebob.png"},
+{code:"zeous_alonesponge",file:"Sponge-Bob-being-sad-and-alone.png"}
+]}
+];
+const STICKER_MAP={};
+STICKER_PACKS.forEach(p=>p.items.forEach(it=>STICKER_MAP[it.code]=it.file));
+function renderMessageContent(text){
+text=text||"";
+const trimmed=text.trim();
+const soleMatch=trimmed.match(/^:([a-zA-Z0-9_]+):$/);
+if(soleMatch&&STICKER_MAP[soleMatch[1]]){
+return '<img class="msg-sticker-solo" src="'+STICKER_MAP[soleMatch[1]]+'" alt="">';
+}
+let escaped=text.replace(/</g,"&lt;");
+escaped=escaped.replace(/:([a-zA-Z0-9_]+):/g,(match,code)=>STICKER_MAP[code]?('<img class="msg-sticker-inline" src="'+STICKER_MAP[code]+'" alt="">'):match);
+return escaped;
+}
+function isSoloSticker(text){
+return !!((text||"").trim().match(/^:([a-zA-Z0-9_]+):$/)&&STICKER_MAP[(text||"").trim().slice(1,-1)]);
+}
 
 function renderEmojiBar(){
 const isPremium=!!(currentProfile&&currentProfile.isPremium);
-let html=EMOJI_LIST.map(e=>`<button class="emoji-item" data-emoji="${e}">${e}</button>`).join("");
-if(isPremium){
-html+=PREMIUM_STICKER_LIST.map(e=>`<button class="emoji-item sticker-emoji" data-emoji="${e}">${e}</button>`).join("");
-}else{
-html+='<div class="premium-lock-row">🔒 ایموجی‌های استیکری مخصوص زئوس پرمیومه <a id="emojiPremiumUpsell">فعالش کن 💎</a></div>';
+let html='<div class="emoji-row">'+EMOJI_LIST.map(e=>`<button class="emoji-item" data-emoji="${e}">${e}</button>`).join("")+'</div>';
+STICKER_PACKS.forEach(pack=>{
+html+='<div class="sticker-pack-label">'+pack.icon+' '+pack.label+(isPremium?"":' <span class="lock-tag">🔒 پرمیوم</span>')+'</div>';
+html+='<div class="sticker-pack-row'+(isPremium?"":" locked")+'">'+pack.items.map(it=>`<button class="emoji-item sticker-emoji" data-sticker=":${it.code}:"><img src="${it.file}" alt=""></button>`).join("")+'</div>';
+});
+if(!isPremium){
+html+='<div class="premium-lock-row">🔒 پک استیکر مخصوص زئوس پرمیومه <a id="emojiPremiumUpsell">فعالش کن 💎</a></div>';
 }
 document.getElementById("emojiBar").innerHTML=html;
 const upsell=document.getElementById("emojiPremiumUpsell");
@@ -1032,7 +1252,8 @@ renderEmojiBar();
 document.getElementById("emojiBar").addEventListener("click",e=>{
 const btn=e.target.closest(".emoji-item");
 if(!btn)return;
-chatMessageInput.value+=btn.dataset.emoji;
+if(btn.closest(".sticker-pack-row.locked"))return;
+chatMessageInput.value+=(btn.dataset.sticker||btn.dataset.emoji);
 chatMessageInput.focus();
 });
 document.getElementById("emojiToggleBtn").addEventListener("click",()=>{
@@ -1233,7 +1454,8 @@ const bubble=document.createElement("div");
 bubble.className="chat-bubble "+(mine?"mine":"theirs");
 const senderProfile={username:m.senderUsername,isOwner:m.senderIsOwner,isPremium:m.senderIsPremium,premiumColor:m.senderPremiumColor};
 const senderHtml=mine?"":('<span class="sender-name clickable-name" style="'+(m.senderIsOwner?"":nameColorStyle(senderProfile))+'">'+(m.senderUsername||"کاربر")+'</span>'+nameBadgeHtml(senderProfile));
-bubble.innerHTML=senderHtml+(m.text||"").replace(/</g,"&lt;");
+if(isSoloSticker(m.text))bubble.classList.add("sticker-bubble");
+bubble.innerHTML=senderHtml+renderMessageContent(m.text);
 if(!mine)bubble.querySelector(".sender-name").addEventListener("click",()=>openProfileView(senderProfile));
 chatMessages.appendChild(bubble);
 });
@@ -1273,7 +1495,8 @@ const bubble=document.createElement("div");
 bubble.className="chat-bubble "+(mine?"mine":"theirs");
 const senderProfile={username:m.senderUsername,isOwner:m.senderIsOwner,isPremium:m.senderIsPremium,premiumColor:m.senderPremiumColor};
 const senderHtml=mine?"":('<span class="sender-name clickable-name" style="'+(m.senderIsOwner?"":nameColorStyle(senderProfile))+'">'+(m.senderUsername||"کاربر")+'</span>'+nameBadgeHtml(senderProfile));
-bubble.innerHTML=senderHtml+(m.text||"").replace(/</g,"&lt;");
+if(isSoloSticker(m.text))bubble.classList.add("sticker-bubble");
+bubble.innerHTML=senderHtml+renderMessageContent(m.text);
 if(!mine)bubble.querySelector(".sender-name").addEventListener("click",()=>openProfileView(senderProfile));
 chatMessages.appendChild(bubble);
 });
@@ -1324,8 +1547,8 @@ if(snap.empty){chatMessages.innerHTML='<p style="color:#7a7383;font-size:11px;te
 snap.forEach(doc=>{
 const m=doc.data();
 const bubble=document.createElement("div");
-bubble.className="chat-bubble "+(m.senderId===currentUser.uid?"mine":"theirs");
-bubble.textContent=m.text||"";
+bubble.className="chat-bubble "+(m.senderId===currentUser.uid?"mine":"theirs")+(isSoloSticker(m.text)?" sticker-bubble":"");
+bubble.innerHTML=renderMessageContent(m.text);
 chatMessages.appendChild(bubble);
 });
 chatMessages.scrollTop=chatMessages.scrollHeight;
