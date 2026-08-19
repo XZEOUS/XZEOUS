@@ -623,6 +623,21 @@ firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth(), db=firebase.firestore();
 const OWNER_EMAIL="kiyan3461@gmail.com";
 let currentUser=null, currentProfile=null;
+// درست بعد از signup/login گاهی توکن هنوز به Firestore نرسیده و نوشتن اول با permission-denied رد می‌شه.
+// این تابع اون نوشتن رو با یه تاخیر کوتاه دوباره امتحان می‌کنه تا این ریس‌کاندیشن رو دور بزنه.
+async function withAuthRetry(fn,retries){
+if(retries===undefined)retries=2;
+try{
+return await fn();
+}catch(e){
+if(e&&e.code==="permission-denied"&&retries>0){
+if(auth.currentUser){try{await auth.currentUser.getIdToken(true);}catch(_){}}
+await new Promise(r=>setTimeout(r,600));
+return withAuthRetry(fn,retries-1);
+}
+throw e;
+}
+}
 function avatarColorFor(str){let h=0;for(let i=0;i<str.length;i++)h=str.charCodeAt(i)+((h<<5)-h);return "hsl("+(h%360)+",65%,45%)";}
 function renderAvatar(el,username,photoURL){
 if(photoURL){el.innerHTML='<img src="'+photoURL+'" alt="">';}
@@ -876,16 +891,21 @@ try{
 if(authMode==="signup"){
 if(!u){authError.textContent="یوزرنیم رو وارد کن";authError.style.display="block";suSubmit.disabled=false;return;}
 const cred=await auth.createUserWithEmailAndPassword(em,pw);
+let profileSaveFailed=false;
 try{
   const newProfileData={username:u,name:null,bio:null,age:null,photoURL:null,isOwner:em===OWNER_EMAIL,isPremium:false,premiumColor:null};
-  await db.collection("users").doc(cred.user.uid).set(Object.assign({email:em,createdAt:firebase.firestore.FieldValue.serverTimestamp()},newProfileData));
-  await db.collection("publicProfiles").doc(cred.user.uid).set(newProfileData);
+  await withAuthRetry(()=>db.collection("users").doc(cred.user.uid).set(Object.assign({email:em,createdAt:firebase.firestore.FieldValue.serverTimestamp()},newProfileData)));
+  await withAuthRetry(()=>db.collection("publicProfiles").doc(cred.user.uid).set(newProfileData));
 }catch(profileErr){
   console.error("XZEOUS profile save error:",profileErr.code,profileErr.message,profileErr);
-  // Authentication succeeded; keep a local profile so the user is not told signup failed.
+  profileSaveFailed=true;
+  // Authentication succeeded but profile write failed (likely Firestore Rules). Keep a local
+  // fallback so the app doesn't crash, but we still warn the user below instead of hiding it.
   safeSet("xzeous_profile_"+cred.user.uid,JSON.stringify({username:u,name:null,bio:null,age:null,photoURL:null,isOwner:em===OWNER_EMAIL,isPremium:false,premiumColor:null}));
 }
-successMsg.textContent="خوش اومدی "+u+"! 🖤";
+successMsg.textContent=profileSaveFailed
+  ?"حسابت ساخته شد ولی پروفایلت روی سرور ذخیره نشد (مشکل Rules فایرستور). فعلاً روی همین مرورگر کار می‌کنه، ولی برای رفعش باید Rules رو درست کنی."
+  :"خوش اومدی "+u+"! 🖤";
 }else{
 await auth.signInWithEmailAndPassword(em,pw);
 successMsg.textContent="خوش برگشتی! 🖤";
@@ -1338,19 +1358,28 @@ const submitBtn=document.getElementById("submitReview");
 let errBox=document.getElementById("reviewSubmitError");
 if(!errBox){errBox=document.createElement("div");errBox.id="reviewSubmitError";errBox.style.cssText="color:#ff6b6b;font-size:11px;margin-top:8px;display:none";submitBtn.insertAdjacentElement("afterend",errBox);}
 errBox.style.display="none";
+if(!currentProfile){
+errBox.textContent="پروفایلت هنوز کامل لود نشده، چند ثانیه صبر کن و دوباره امتحان کن.";
+errBox.style.display="block";
+return;
+}
 submitBtn.disabled=true;
 try{
-await db.collection("reviews").add({
+await withAuthRetry(()=>db.collection("reviews").add({
 uid:currentUser.uid,username:currentProfile.username,name:currentProfile.name||null,photoURL:currentProfile.photoURL||null,
 isOwner:!!currentProfile.isOwner,isPremium:!!currentProfile.isPremium,premiumColor:currentProfile.premiumColor||null,
 age:currentProfile.age||null,bio:currentProfile.bio||null,rating:selectedStars,text:text,
 createdAt:firebase.firestore.FieldValue.serverTimestamp()
-});
+}));
 document.getElementById("reviewText").value="";
 selectedStars=5;renderStarPicker();
 }catch(e){
 console.error("XZEOUS review submit error:",e.code,e.message,e);
-errBox.textContent="ثبت نظر با خطا مواجه شد: Rule فایراستور بخش reviews رو چک کن ("+(e.code||e.message)+")";
+if(e.code==="permission-denied"){
+errBox.textContent="ثبت نظر رد شد چون Firestore Rules اجازه‌ی نوشتن رو نمی‌ده (permission-denied). این یعنی نظر یه لحظه نمایش داده می‌شه و بعد خودش پاک می‌شه. باید Rules کالکشن reviews رو تو Firebase Console درست کنی.";
+}else{
+errBox.textContent="ثبت نظر با خطا مواجه شد ("+(e.code||e.message)+")";
+}
 errBox.style.display="block";
 }
 submitBtn.disabled=false;
