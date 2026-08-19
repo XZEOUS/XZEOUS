@@ -200,22 +200,7 @@ footer{padding:120px 0 160px;border-top:1px solid rgba(255,255,255,.08)}.footer-
 .product-card:hover .cc-frame{transform:translate(-50%,-50%) rotate(1deg) scale(1.04)}
 .raw,.graded{width:50%;height:100%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:22px;font-size:9px;letter-spacing:2px;font-weight:bold}.raw{color:#aaa2ac}.graded{color:#e0c4ff;text-shadow:0 0 15px #a855f7}.arrow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(8,6,13,.75);border:1px solid rgba(255,255,255,.25);z-index:2;font-size:13px}.cc-label{position:absolute;top:54px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:3px;color:#c4b5fd;z-index:3;white-space:nowrap}
 .product-body{padding:28px}.product-tag{font-size:9px;letter-spacing:2px;color:#a78bfa}.product-body h3{font-size:28px;margin:9px 0}.product-body p{font-size:12px;color:#9991a4;line-height:2;min-height:48px}.product-price{display:flex;align-items:baseline;gap:12px;margin-top:20px}.product-price .old-price{font-size:11px}.product-price strong{font-size:25px;color:#fff}.product-view{border:0;color:#fff;cursor:pointer;margin-top:20px;font-family:inherit}
-.product-page{display:none;padding:150px 0 100px;min-height:100vh}
-.product-page.show{display:block}
-.pp-back{display:inline-flex;align-items:center;gap:6px;color:#a78bfa;font-size:12px;margin-bottom:28px}.pp-back:hover{color:#fff}
-.pp-breadcrumb{color:#7a7383;font-size:11px;margin-bottom:18px}
-.pp-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:55px;align-items:start}
-.pp-art-wrap{position:relative;border-radius:28px;overflow:hidden;height:440px}
-.pp-art-wrap .product-art{height:100%;position:static}
-.pp-tag{color:#a78bfa;font-size:10px;font-weight:bold;letter-spacing:2px;margin-bottom:16px}
-.pp-title{font-size:clamp(32px,5vw,50px);line-height:1.1;margin-bottom:22px}
-.pp-desc{color:#c8c0d0;line-height:2;font-size:13.5px;white-space:pre-line;margin-bottom:26px}
-.pp-price-row{display:flex;align-items:baseline;gap:15px;margin-bottom:24px}
-.pp-price-row .old-price{font-size:13px}
-.pp-price-row strong{font-size:36px;color:#fff}
-.pp-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.pp-restock{margin-top:6px}
-@media(max-width:850px){.pp-grid{grid-template-columns:1fr}.pp-art-wrap{height:290px}}
+.product-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:1000000;display:none;align-items:center;justify-content:center;padding:20px}.product-modal.show{display:flex}.modal-box{width:min(680px,100%);max-height:calc(100vh - 40px);overflow-y:auto;padding:30px;border-radius:28px;background:rgba(18,13,27,.88);border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 100px rgba(0,0,0,.65);position:relative}.modal-close{position:absolute;top:15px;left:15px;width:35px;height:35px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;cursor:pointer}.modal-content{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:start}.modal-art{height:300px;border-radius:20px;overflow:hidden}.modal-box h2{font-size:32px}.modal-box p{color:#aaa2b2;line-height:1.6;font-size:12px;margin:15px 0}.modal-price{font-size:27px;font-weight:900}.modal-price del{font-size:11px;color:#625d69;margin-left:8px;font-weight:normal}
 
 @media(max-width:850px){.navlinks{display:none}.hero-grid,.course-grid,.about,.contact-grid{grid-template-columns:1fr}.hero{text-align:center}.hero-description{margin-left:auto;margin-right:auto}.buttons{justify-content:center}.cards,.portfolio,.resources{grid-template-columns:1fr 1fr}.nav>div>a.nav-button{display:none}#signupOpen{padding:9px 12px!important;font-size:11px!important}}
 @media(max-width:600px){
@@ -369,7 +354,6 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <p>پک پریست شیک این پک دارای 12 تا پریست شیک هستش قبلش پیشنایز هارو دانلود کنین.</p>
 <div class="product-price"><span class="old-price">۴۹۰,۰۰۰ تومان</span><strong>۲۲۱,۰۰۰ تومان</strong></div>
 <div class="sold-badge">🔥 7 نفر خریدن</div>
-<a href="?product=presets" target="_blank" class="btn secondary product-view" data-product="presets" style="display:block;text-align:center;margin-top:10px">مشاهده محصول ↗</a>
 <button class="btn buy-disabled" disabled>ناموجود</button>
 <div class="restock-box">
 <span class="restock-count">😭 <strong data-restock-count="presets">۰</strong> نفر خواستن موجود شه</span>
@@ -387,7 +371,6 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <p>دارای 10 الا 15 تا پریست اصلاح رنگ تمیز خوراک ادیت های تیک تاکی.</p>
 <div class="product-price"><span class="old-price">۲۵۰,۰۰۰ تومان</span><strong>۱۹۹,۰۰۰ تومان</strong></div>
 <div class="sold-badge">🔥 ۱۰ نفر خریدن</div>
-<a href="?product=cc" target="_blank" class="btn secondary product-view" data-product="cc" style="display:block;text-align:center;margin-top:10px">مشاهده محصول ↗</a>
 <button class="btn buy-disabled" disabled>ناموجود</button>
 <div class="restock-box">
 <span class="restock-count">😭 <strong data-restock-count="cc">۰</strong> نفر خواستن موجود شه</span>
@@ -404,7 +387,7 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <h3>Neptune's Prime Edit Pack</h3>
 <p>دارای محتویات: 3x Framer، 2x Blurs، 2x Glows، 2x CCs، 10x Overlays، 3x Random Presets، 15x SFX (Whooshes + Useful Sounds)، 3x Shakes، 2x Twitches.</p>
 <div class="product-price"><span class="old-price">۱۵۰,۰۰۰ تومان</span><strong>۹۹,۰۰۰ تومان</strong></div>
-<a href="?product=neptune" target="_blank" class="btn primary product-view" data-product="neptune" style="display:inline-block">مشاهده محصول ↗</a>
+<button class="btn primary product-view" data-product="neptune">مشاهده محصول ↗</button>
 </div>
 </div>
 
@@ -478,21 +461,6 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <footer><div class="container"><div class="footer-logo">XZEOUS</div><div class="footer-text">XZEOUS × ROXY<br>Built with imagination.</div></div></footer>
 </div>
 
-<section class="product-page" id="productPage"><div class="container">
-<a href="index.html" class="pp-back">→ بازگشت به سایت</a>
-<div class="pp-breadcrumb"><a href="index.html">خانه</a> » <a href="index.html#course">محصولات</a> » <span id="ppCrumbTitle"></span></div>
-<div class="pp-grid">
-<div class="pp-art-wrap glass" id="ppArtWrap"><div class="product-art" id="ppArt"></div></div>
-<div>
-<div class="pp-tag" id="ppTag">XZEOUS PRODUCT</div>
-<h1 class="pp-title" id="ppTitle">Product</h1>
-<p class="pp-desc" id="ppDesc">توضیحات محصول</p>
-<div class="pp-price-row"><span class="old-price" id="ppOld">۰</span><strong id="ppNew">۰</strong></div>
-<div class="pp-actions" id="ppActions"></div>
-</div>
-</div>
-</div></section>
-
 
 <nav class="xzeous-dock">
 <a href="#home"><span class="dock-icon">⌂</span><span class="dock-label">خانه</span></a>
@@ -502,6 +470,24 @@ section{padding:80px 0}.hero h1{font-size:76px;letter-spacing:-5px}.avatar-ring{
 <a href="#faq"><span class="dock-icon">?</span><span class="dock-label">سوالات</span></a>
 <a href="javascript:void(0)" id="themeToggle"><span class="dock-icon" id="themeIcon">🎀</span><span class="dock-label" id="themeLabel">کیوت</span></a>
 </nav>
+
+<div class="product-modal" id="productModal">
+<div class="modal-box">
+<button class="modal-close" id="modalClose">×</button>
+<div class="modal-content">
+<div class="modal-art" id="modalArt"></div>
+<div>
+<div class="tag" id="modalTag">XZEOUS PRODUCT</div>
+<h2 id="modalTitle">Product</h2>
+<p id="modalDesc" style="white-space:pre-line">توضیحات محصول</p>
+<div class="modal-price"><del id="modalOld">۰</del> <span id="modalNew">۰</span></div>
+<a id="modalBuy" class="btn primary" target="_blank" href="https://t.me/XZEOUS_AE" style="margin-top:20px">خرید محصول ↗</a>
+
+</div>
+</div>
+</div>
+</div>
+
 
 <div class="signup-box" id="signupBox">
 <div class="signup-card">
@@ -715,81 +701,57 @@ return (profile&&profile.isPremium)?("color:"+premiumSolidColor(profile.premiumC
 <script>
 
 const products={
-presets:{tag:"XZEOUS SHAKE PRESETS",title:"Preset Pack",desc:"پک پریست شیک این پک دارای 12 تا پریست شیک هستش قبلش پیشنایز هارو دانلود کنین.",old:"۴۹۰,۰۰۰ تومان",price:"۲۲۱,۰۰۰ تومان",cls:"preset-art",status:"out"},
-cc:{tag:"XZEOUS CC",title:"Color Collection",desc:"دارای 10 الا 15 تا پریست اصلاح رنگ تمیز خوراک ادیت های تیک تاکی.",old:"۲۵۰,۰۰۰ تومان",price:"۱۹۹,۰۰۰ تومان",cls:"cc-art",status:"out"},
-neptune:{tag:"XZEOUS EDIT PACK",title:"Neptune's Prime Edit Pack",desc:"دارای محتویات زیر می‌باشد:\n- 3x Framer\n- 2x Blurs\n- 2x Glows\n- 2x CCs\n- 10x Overlays\n- 3x Random Presets\n- 15x SFX (Whooshes, Useful Sounds)\n- 3x Shakes\n- 2x Twitches",old:"۱۵۰,۰۰۰ تومان",price:"۹۹,۰۰۰ تومان",cls:"neptune-art",status:"limited"}
+presets:{tag:"XZEOUS PRESETS",title:"Preset Pack",desc:"پکیج Presetهای شیک برای Motion، Glow، Transitions و سریع‌تر کردن Workflow ادیت.",old:"۴۹۰,۰۰۰ تومان",price:"۲۲۱,۰۰۰ تومان",cls:"preset-art"},
+cc:{tag:"XZEOUS CC",title:"Color Collection",desc:"مجموعه اصلاح رنگ و Color Grading برای ساخت رنگ‌های سینمایی و یکدست.",old:"۲۵۰,۰۰۰ تومان",price:"۱۹۹,۰۰۰ تومان",cls:"cc-art"},
+neptune:{tag:"XZEOUS EDIT PACK",title:"Neptune's Prime Edit Pack",desc:"دارای محتویات زیر می‌باشد:\n- 3x Framer\n- 2x Blurs\n- 2x Glows\n- 2x CCs\n- 10x Overlays\n- 3x Random Presets\n- 15x SFX (Whooshes, Useful Sounds)\n- 3x Shakes\n- 2x Twitches",old:"۱۵۰,۰۰۰ تومان",price:"۹۹,۰۰۰ تومان",cls:"neptune-art"}
 };
 // آدرس Cloud Function createPayment رو بعد از دیپلوی اینجا بذار
 const CREATE_PAYMENT_URL="https://REGION-YOUR-PROJECT.cloudfunctions.net/createPayment";
+const modal=document.getElementById("productModal"), modalArt=document.getElementById("modalArt");
+let currentModalProductId=null;
+document.querySelectorAll(".product-view").forEach(btn=>btn.addEventListener("click",()=>{
+const p=products[btn.dataset.product];
+currentModalProductId=btn.dataset.product;
+document.getElementById("modalTag").textContent=p.tag;
+document.getElementById("modalTitle").textContent=p.title;
+document.getElementById("modalDesc").textContent=p.desc;
+document.getElementById("modalOld").textContent=p.old;
+document.getElementById("modalNew").textContent=p.price;
+modalArt.className="modal-art product-art "+p.cls;
+modal.classList.add("show");
+}));
+document.getElementById("modalClose").onclick=()=>modal.classList.remove("show");
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")modal.classList.remove("show")});
 
-async function startPurchase(productId,btn){
-const originalText=btn.textContent;
-btn.textContent="در حال اتصال به درگاه...";
-btn.style.pointerEvents="none";
+document.getElementById("modalBuy").addEventListener("click",async(e)=>{
+e.preventDefault();
+if(!currentModalProductId)return;
+const buyBtn=e.currentTarget;
+const originalText=buyBtn.textContent;
+buyBtn.textContent="در حال اتصال به درگاه...";
+buyBtn.style.pointerEvents="none";
 try{
 const res=await fetch(CREATE_PAYMENT_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({productId:productId,uid:currentUser?currentUser.uid:null})
+body:JSON.stringify({productId:currentModalProductId,uid:currentUser?currentUser.uid:null})
 });
 const data=await res.json();
 if(data.ok && data.url){
 window.location.href=data.url;
 }else{
 alert("خطا در اتصال به درگاه پرداخت: "+(data.error?JSON.stringify(data.error):"نامشخص"));
-btn.textContent=originalText;
-btn.style.pointerEvents="auto";
+buyBtn.textContent=originalText;
+buyBtn.style.pointerEvents="auto";
 }
 }catch(err){
 console.error("XZEOUS payment error:",err);
 alert("مشکل در اتصال به سرور پرداخت. دوباره امتحان کن.");
-btn.textContent=originalText;
-btn.style.pointerEvents="auto";
+buyBtn.textContent=originalText;
+buyBtn.style.pointerEvents="auto";
 }
-}
-
-// ============ صفحه اختصاصی محصول (باز شونده در تب جدید) ============
-function initProductPage(){
-const pid=new URLSearchParams(location.search).get("product");
-const p=products[pid];
-if(!p)return;
-document.getElementById("themeScope").style.display="none";
-const page=document.getElementById("productPage");
-page.classList.add("show");
-document.title=p.title+" — XZEOUS";
-document.getElementById("ppCrumbTitle").textContent=p.title;
-document.getElementById("ppTag").textContent=p.tag;
-document.getElementById("ppTitle").textContent=p.title;
-document.getElementById("ppDesc").textContent=p.desc;
-document.getElementById("ppOld").textContent=p.old;
-document.getElementById("ppNew").textContent=p.price;
-document.getElementById("ppArt").className="product-art "+p.cls;
-const wrap=document.getElementById("ppArtWrap");
-if(p.status==="out")wrap.classList.add("out-of-stock");
-const actions=document.getElementById("ppActions");
-if(p.status==="out"){
-actions.innerHTML=
-'<button class="btn buy-disabled" disabled>ناموجود</button>'+
-'<div class="restock-box pp-restock" style="width:100%">'+
-'<span class="restock-count">😭 <strong data-restock-count="'+pid+'">۰</strong> نفر خواستن موجود شه</span>'+
-'<button class="restock-btn" data-restock-btn="'+pid+'">تروخدا موجودش کن 😭</button>'+
-'</div>';
-wireRestockButtons();
-}else{
-if(p.status==="limited"){
-const ribbon=document.createElement("div");
-ribbon.className="stock-ribbon limited";
-ribbon.textContent="فقط ۴ عدد باقی مونده";
-wrap.appendChild(ribbon);
-}
-const buyBtn=document.createElement("button");
-buyBtn.className="btn primary";
-buyBtn.textContent="خرید محصول ↗";
-buyBtn.addEventListener("click",()=>startPurchase(pid,buyBtn));
-actions.appendChild(buyBtn);
-}
-}
-initProductPage();
+});
 
 document.querySelectorAll(".question").forEach(button=>{
 button.addEventListener("click",()=>button.parentElement.classList.toggle("open"));
@@ -1472,10 +1434,7 @@ btn.disabled=false;
 
 function toFa(n){return String(n).replace(/[0-9]/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);}
 const restockBase={presets:24,cc:31};
-function wireRestockButtons(){
 document.querySelectorAll("[data-restock-btn]").forEach(btn=>{
-if(btn.dataset.wired)return;
-btn.dataset.wired="1";
 const key=btn.dataset.restockBtn;
 const countEl=document.querySelector('[data-restock-count="'+key+'"]');
 const storeKey="restock_"+key, votedKey="restock_voted_"+key;
@@ -1492,8 +1451,6 @@ btn.disabled=true;
 btn.textContent="مرسی، ثبت شد 🖤";
 });
 });
-}
-wireRestockButtons();
 const glow=document.createElement("div");
 glow.style.cssText="position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(139,92,246,.12),transparent 70%);filter:blur(20px);transform:translate(-50%,-50%)";
 document.body.appendChild(glow);
