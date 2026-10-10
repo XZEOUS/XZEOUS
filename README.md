@@ -1,16 +1,17 @@
-## Hi there 👋
+# XZEOUS × ROXY — Android Studio project
 
-<!--
-**XZEOUS/XZEOUS** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+A native Android starter app built with Kotlin + Jetpack Compose. Includes:
+- Calculator with parentheses, powers, pi/e, trig (degrees), sqrt, abs, log and ln
+- Local calculation history (SharedPreferences)
+- Length, weight and temperature conversion
+- Discount, tip, bill split, percentage and percent-change tools
+- Three selectable accent themes
 
-Here are some ideas to get you started:
+## Open and build
+1. Install Android Studio and a JDK 17.
+2. Open this folder (`XZEOUS_ROXY_Android`) in Android Studio.
+3. Let Gradle sync. If prompted, install Android SDK Platform 35 and Build Tools.
+4. Run on an emulator or Android phone with USB debugging enabled.
+5. To create an APK: **Build → Build Bundle(s) / APK(s) → Build APK(s)**.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+The app does not require network access. Currency conversion is intentionally not included until a reliable live-rate source is configured. The ROXY label is an in-app helper identity; cloud AI chat is not connected in this starter version.
